@@ -1,0 +1,18 @@
+
+package emfer.reachability
+
+import org.eclipse.emf.ecore.EObject
+
+class ReachabilityGraph
+{
+	contains ReachableState[] states opposite parent
+}
+
+class ReachableState
+{
+	long number
+	
+	container ReachabilityGraph parent opposite states
+	
+	contains EObject root
+}
