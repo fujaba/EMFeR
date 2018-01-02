@@ -6,6 +6,8 @@ import org.eclipse.emf.ecore.EObject
 class ReachabilityGraph
 {
 	contains ReachableState[] states opposite parent
+
+	contains TrafoApplication[] trafoApplications opposite parent
 }
 
 class ReachableState
@@ -15,4 +17,20 @@ class ReachableState
 	container ReachabilityGraph parent opposite states
 	
 	contains EObject root
+	
+	refers TrafoApplication[] resultOf opposite tgt
+
+	refers TrafoApplication[] trafoApplications opposite src
+}
+
+class TrafoApplication
+{
+	String description
+	
+	container ReachabilityGraph parent opposite trafoApplications
+	
+	refers ReachableState src opposite trafoApplications
+	
+	refers ReachableState tgt opposite resultOf
+	
 }
