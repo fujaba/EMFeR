@@ -1,0 +1,79 @@
+
+package emfer.examples.ferryman
+
+class River 
+{
+	contains Bank[] banks
+	
+	contains Boat boat
+	
+	op String toString()
+	{
+		var StringBuilder buf = new StringBuilder()
+		
+		if (banks !== null && banks.size >= 2 && boat !== null)
+		{
+			var Bank left = banks.get(0);
+			var Bank right = banks.get(1);
+		
+			buf.append(left.toString).append("\n")
+			buf.append(boat.toString).append("\n")
+			buf.append(right.toString).append("\n")
+		}
+		
+		return buf.toString()
+	}
+}
+
+class Bank
+{
+	String name
+	
+	contains Cargo[] cargos	
+	
+	op String toString()
+	{
+		var StringBuilder buf = new StringBuilder()
+		
+		buf.append(name).append(": ")
+		
+		for (Cargo c : cargos)
+		{
+			buf.append(c.name).append(" ")
+		}
+		
+		return buf.toString
+	}
+}
+
+class Boat
+{
+	refers Bank at
+	refers Cargo cargo
+	
+	op String toString()
+	{
+		var StringBuilder buf = new StringBuilder()
+		
+		buf.append("boat at: ")
+
+		if (at !== null)
+		{
+			buf.append(at.name).append(" ")
+		}
+		
+		buf.append("cargo: ")
+		
+		if (cargo !== null)
+		{
+			buf.append(cargo.name)
+		}
+		
+		return buf.toString
+	}
+}
+
+class Cargo
+{
+	String name
+}

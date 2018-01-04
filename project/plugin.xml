@@ -14,4 +14,12 @@
             genModel="model/ReachabilityGraph.xcore"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated FerryMansProblem -->
+      <package
+            uri="emfer.examples.ferryman"
+            class="emfer.examples.ferryman.FerrymanPackage"
+            genModel="model/FerryMansProblem.xcore"/>
+   </extension>
+
 </plugin>
