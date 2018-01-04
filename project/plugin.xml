@@ -22,4 +22,12 @@
             genModel="model/FerryMansProblem.xcore"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated RoadWork -->
+      <package
+            uri="emfer.examples.roadwork"
+            class="emfer.examples.roadwork.RoadworkPackage"
+            genModel="model/RoadWork.xcore"/>
+   </extension>
+
 </plugin>

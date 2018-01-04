@@ -2,10 +2,14 @@ package emfer.examples.ferryman;
 
 import static org.junit.Assert.*;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 
+import org.eclipse.emf.ecore.EObject;
 import org.junit.Test;
 
+import emfer.EMFeR;
 import emfer.stories.Storyboard;
 
 public class FerryMansProblem
@@ -45,10 +49,110 @@ public class FerryMansProblem
       
       boat.setAt(left);
       
+      Logger.getGlobal().info(river.toString());
       
-      Logger global = Logger.getGlobal();
-      global.info(river.toString());
+      EMFeR emfer = new EMFeR()
+            .withEPackage(FerrymanPackage.eINSTANCE)
+            .withTrafo("load goat", root -> getCargos(root), (root, cargo) -> loadCargo(root, cargo))
+            .withTrafo("move boat", root -> moveBoat(root))
+            .withStart(river)
+            .withStatic(wolf, goat, cabbage)
+            ;
+      
+      emfer.explore();
+      
       
       story.dumpHtml();
+   }
+
+   private void moveBoat(EObject root)
+   {
+      River river = (River) root;
+      
+      Boat boat = river.getBoat();
+      
+      Bank otherBank = null;
+      
+      for (Bank b : river.getBanks())
+      {
+         if (boat.getAt() != b)
+         {
+            otherBank = b;
+            break;
+         }
+      }
+      
+      boat.setAt(otherBank);
+      
+      Cargo cargo = boat.getCargo();
+      if (cargo != null)
+      {
+         boat.setCargo(null);
+         otherBank.getCargos().add(cargo);
+      }
+      
+      return;
+   }
+
+   private void loadCargo(EObject root, EObject handle)
+   {
+      if ( ! (root instanceof River) || ! (handle instanceof Cargo))
+      {
+         return;
+      }
+      
+      River river = (River) root;
+      Cargo cargo = (Cargo) handle;
+      
+      Bank bank = null;
+      
+      for (Bank b : river.getBanks())
+      {
+         if (b.getCargos().contains(cargo))
+         {
+            bank = b;
+            break;
+         }
+      }
+      
+      if (bank == null)
+      {
+         return;
+      }
+      
+      Boat boat = river.getBoat();
+      
+      if (boat == null || boat.getAt() != bank || boat.getCargo() != null)
+      {
+         return;
+      }
+      
+      if (bank.getCargos().size() == 3 && ! cargo.getName().equals("goat"))
+      {
+         return;
+      }
+      
+      // load it
+      bank.getCargos().remove(cargo);
+      boat.setCargo(cargo);
+      
+      return;
+   }
+
+   private Set<EObject> getCargos(EObject root)
+   {
+      Set<EObject> cargos = new LinkedHashSet<EObject>();
+
+      if (root instanceof River)
+      {
+         River river = (River) root;
+         
+         for (Bank b : river.getBanks())
+         {
+            cargos.addAll(b.getCargos());
+         }
+      }
+
+      return cargos;
    }
 }

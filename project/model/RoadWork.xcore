@@ -1,0 +1,92 @@
+
+package emfer.examples.roadwork
+
+class RoadMap
+{
+	contains Road road
+	
+	contains Car[] cars
+	
+	contains Signal westernSignal
+	contains Signal easternSignal
+	
+	op String toString()
+	{
+		var bufNorthSignal = new StringBuilder("       \n")
+		var bufNorthCars = new StringBuilder("-------\n")
+		var bufSouthCars = new StringBuilder("--/ \\--\n")
+		var bufSouthSignal = new StringBuilder("       \n")
+		
+		if (westernSignal.pass)
+		{
+			bufNorthSignal.setCharAt(5, 'T')
+		}
+		else
+		{
+			bufNorthSignal.setCharAt(5, 'F')			
+		}
+		
+		if (easternSignal.pass)
+		{
+			bufSouthSignal.setCharAt(1, 'T')
+		}
+		else
+		{
+			bufSouthSignal.setCharAt(1, 'F')			
+		}
+		
+		for (Car c : cars)
+		{
+			var trackName = c.track.name
+			var dir = trackName.charAt(0);
+			var int index = trackName.charAt(1) - '0';
+			
+			if (dir == 'n')
+			{
+				bufNorthCars.setCharAt(index, 'c');
+			}
+			else
+			{
+				bufSouthCars.setCharAt(index, 'c');
+			}
+		}
+		
+		
+		return "\n" + bufNorthSignal.append(bufNorthCars).append(bufSouthCars).append(bufSouthSignal).toString;
+	}
+}
+
+class Road
+{
+	contains Track[] tracks
+}
+
+class Track
+{
+	String name
+	TravelDirection travelDirection
+	
+	refers Track[] west opposite east
+	refers Track[] east opposite west
+}
+
+class Signal
+{
+	boolean pass
+	
+	refers Track track
+}
+
+class Car
+{
+	TravelDirection travelDirection
+	
+	refers Track track
+}
+
+enum TravelDirection
+{
+	UNDEFINED,
+	EAST, 
+	WEST
+}
