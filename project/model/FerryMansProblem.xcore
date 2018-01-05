@@ -3,7 +3,7 @@ package emfer.examples.ferryman
 
 class River 
 {
-	contains Bank[] banks
+	refers Bank[] banks
 	
 	contains Boat boat
 	
@@ -15,6 +15,12 @@ class River
 		{
 			var Bank left = banks.get(0);
 			var Bank right = banks.get(1);
+			
+			if (left.name.equals("right"))
+			{
+				left = banks.get(1);
+				right = banks.get(0);
+			}
 		
 			buf.append(left.toString).append("\n")
 			buf.append(boat.toString).append("\n")
@@ -29,7 +35,7 @@ class Bank
 {
 	String name
 	
-	contains Cargo[] cargos	
+	refers Cargo[] cargos	
 	
 	op String toString()
 	{
@@ -76,4 +82,9 @@ class Boat
 class Cargo
 {
 	String name
+	
+	op String toString()
+	{
+		return "Cargo: " + name
+	}
 }

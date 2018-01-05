@@ -10,6 +10,7 @@ import emfer.reachability.TrafoApplication;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -166,9 +167,9 @@ public class ReachabilityPackageImpl extends EPackageImpl implements Reachabilit
     * <!-- end-user-doc -->
     * @generated
     */
-   public EReference getReachableState_Parent()
+   public EAttribute getReachableState_MetricValue()
    {
-      return (EReference)reachableStateEClass.getEStructuralFeatures().get(1);
+      return (EAttribute)reachableStateEClass.getEStructuralFeatures().get(1);
    }
 
    /**
@@ -176,7 +177,7 @@ public class ReachabilityPackageImpl extends EPackageImpl implements Reachabilit
     * <!-- end-user-doc -->
     * @generated
     */
-   public EReference getReachableState_Root()
+   public EReference getReachableState_Parent()
    {
       return (EReference)reachableStateEClass.getEStructuralFeatures().get(2);
    }
@@ -186,7 +187,7 @@ public class ReachabilityPackageImpl extends EPackageImpl implements Reachabilit
     * <!-- end-user-doc -->
     * @generated
     */
-   public EReference getReachableState_ResultOf()
+   public EReference getReachableState_Root()
    {
       return (EReference)reachableStateEClass.getEStructuralFeatures().get(3);
    }
@@ -196,9 +197,29 @@ public class ReachabilityPackageImpl extends EPackageImpl implements Reachabilit
     * <!-- end-user-doc -->
     * @generated
     */
-   public EReference getReachableState_TrafoApplications()
+   public EReference getReachableState_ResultOf()
    {
       return (EReference)reachableStateEClass.getEStructuralFeatures().get(4);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public EReference getReachableState_TrafoApplications()
+   {
+      return (EReference)reachableStateEClass.getEStructuralFeatures().get(5);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public EOperation getReachableState__ToString()
+   {
+      return reachableStateEClass.getEOperations().get(0);
    }
 
    /**
@@ -287,10 +308,12 @@ public class ReachabilityPackageImpl extends EPackageImpl implements Reachabilit
 
       reachableStateEClass = createEClass(REACHABLE_STATE);
       createEAttribute(reachableStateEClass, REACHABLE_STATE__NUMBER);
+      createEAttribute(reachableStateEClass, REACHABLE_STATE__METRIC_VALUE);
       createEReference(reachableStateEClass, REACHABLE_STATE__PARENT);
       createEReference(reachableStateEClass, REACHABLE_STATE__ROOT);
       createEReference(reachableStateEClass, REACHABLE_STATE__RESULT_OF);
       createEReference(reachableStateEClass, REACHABLE_STATE__TRAFO_APPLICATIONS);
+      createEOperation(reachableStateEClass, REACHABLE_STATE___TO_STRING);
 
       trafoApplicationEClass = createEClass(TRAFO_APPLICATION);
       createEAttribute(trafoApplicationEClass, TRAFO_APPLICATION__DESCRIPTION);
@@ -339,10 +362,13 @@ public class ReachabilityPackageImpl extends EPackageImpl implements Reachabilit
 
       initEClass(reachableStateEClass, ReachableState.class, "ReachableState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getReachableState_Number(), theEcorePackage.getELong(), "number", null, 0, 1, ReachableState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEAttribute(getReachableState_MetricValue(), theEcorePackage.getEDouble(), "metricValue", null, 0, 1, ReachableState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
       initEReference(getReachableState_Parent(), this.getReachabilityGraph(), this.getReachabilityGraph_States(), "parent", null, 0, 1, ReachableState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEReference(getReachableState_Root(), theEcorePackage.getEObject(), null, "root", null, 0, 1, ReachableState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEReference(getReachableState_Root(), theEcorePackage.getEObject(), null, "root", null, 0, 1, ReachableState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
       initEReference(getReachableState_ResultOf(), this.getTrafoApplication(), this.getTrafoApplication_Tgt(), "resultOf", null, 0, -1, ReachableState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
       initEReference(getReachableState_TrafoApplications(), this.getTrafoApplication(), this.getTrafoApplication_Src(), "trafoApplications", null, 0, -1, ReachableState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+      initEOperation(getReachableState__ToString(), theEcorePackage.getEString(), "toString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
       initEClass(trafoApplicationEClass, TrafoApplication.class, "TrafoApplication", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getTrafoApplication_Description(), theEcorePackage.getEString(), "description", null, 0, 1, TrafoApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

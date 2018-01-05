@@ -14,13 +14,29 @@ class ReachableState
 {
 	long number
 	
+	double metricValue
+	
 	container ReachabilityGraph parent opposite states
 	
-	contains EObject root
+	refers EObject root
 	
 	refers TrafoApplication[] resultOf opposite tgt
 
 	refers TrafoApplication[] trafoApplications opposite src
+	
+	op String toString()
+	{
+		var StringBuilder buf = new StringBuilder()
+		
+		buf.append("ReachableState: number: ").append(number).append(" metricValue: ").append(metricValue).append("\n")
+		
+		if (root != null)
+		{
+			buf.append(root.toString)
+		}
+		
+		return buf.toString()
+	}
 }
 
 class TrafoApplication

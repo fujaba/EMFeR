@@ -52,17 +52,17 @@ public interface Bank extends EObject
    void setName(String value);
 
    /**
-    * Returns the value of the '<em><b>Cargos</b></em>' containment reference list.
+    * Returns the value of the '<em><b>Cargos</b></em>' reference list.
     * The list contents are of type {@link emfer.examples.ferryman.Cargo}.
     * <!-- begin-user-doc -->
     * <p>
-    * If the meaning of the '<em>Cargos</em>' containment reference list isn't clear,
+    * If the meaning of the '<em>Cargos</em>' reference list isn't clear,
     * there really should be more of a description here...
     * </p>
     * <!-- end-user-doc -->
-    * @return the value of the '<em>Cargos</em>' containment reference list.
+    * @return the value of the '<em>Cargos</em>' reference list.
     * @see emfer.examples.ferryman.FerrymanPackage#getBank_Cargos()
-    * @model containment="true"
+    * @model
     * @generated
     */
    EList<Cargo> getCargos();

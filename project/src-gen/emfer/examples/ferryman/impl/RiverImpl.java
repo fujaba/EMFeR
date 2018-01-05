@@ -22,8 +22,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -42,7 +41,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class RiverImpl extends MinimalEObjectImpl.Container implements River
 {
    /**
-    * The cached value of the '{@link #getBanks() <em>Banks</em>}' containment reference list.
+    * The cached value of the '{@link #getBanks() <em>Banks</em>}' reference list.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @see #getBanks()
@@ -91,7 +90,7 @@ public class RiverImpl extends MinimalEObjectImpl.Container implements River
    {
       if (banks == null)
       {
-         banks = new EObjectContainmentEList<Bank>(Bank.class, this, FerrymanPackage.RIVER__BANKS);
+         banks = new EObjectResolvingEList<Bank>(Bank.class, this, FerrymanPackage.RIVER__BANKS);
       }
       return banks;
    }
@@ -156,6 +155,12 @@ public class RiverImpl extends MinimalEObjectImpl.Container implements River
       {
          Bank left = this.getBanks().get(0);
          Bank right = this.getBanks().get(1);
+         boolean _equals = left.getName().equals("right");
+         if (_equals)
+         {
+            left = this.getBanks().get(1);
+            right = this.getBanks().get(0);
+         }
          buf.append(left.toString()).append("\n");
          buf.append(this.getBoat().toString()).append("\n");
          buf.append(right.toString()).append("\n");
@@ -173,8 +178,6 @@ public class RiverImpl extends MinimalEObjectImpl.Container implements River
    {
       switch (featureID)
       {
-         case FerrymanPackage.RIVER__BANKS:
-            return ((InternalEList<?>)getBanks()).basicRemove(otherEnd, msgs);
          case FerrymanPackage.RIVER__BOAT:
             return basicSetBoat(null, msgs);
       }

@@ -5,7 +5,11 @@ package emfer.examples.ferryman.impl;
 import emfer.examples.ferryman.Cargo;
 import emfer.examples.ferryman.FerrymanPackage;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -96,6 +100,17 @@ public class CargoImpl extends MinimalEObjectImpl.Container implements Cargo
     * <!-- end-user-doc -->
     * @generated
     */
+   public String toString()
+   {
+      String _name = this.getName();
+      return ("Cargo: " + _name);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    @Override
    public Object eGet(int featureID, boolean resolve, boolean coreType)
    {
@@ -163,15 +178,14 @@ public class CargoImpl extends MinimalEObjectImpl.Container implements Cargo
     * @generated
     */
    @Override
-   public String toString()
+   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
    {
-      if (eIsProxy()) return super.toString();
-
-      StringBuffer result = new StringBuffer(super.toString());
-      result.append(" (name: ");
-      result.append(name);
-      result.append(')');
-      return result.toString();
+      switch (operationID)
+      {
+         case FerrymanPackage.CARGO___TO_STRING:
+            return toString();
+      }
+      return super.eInvoke(operationID, arguments);
    }
 
 } //CargoImpl

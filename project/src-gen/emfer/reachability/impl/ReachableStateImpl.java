@@ -2,10 +2,14 @@
  */
 package emfer.reachability.impl;
 
+import com.google.common.base.Objects;
+
 import emfer.reachability.ReachabilityGraph;
 import emfer.reachability.ReachabilityPackage;
 import emfer.reachability.ReachableState;
 import emfer.reachability.TrafoApplication;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
 
@@ -34,6 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link emfer.reachability.impl.ReachableStateImpl#getNumber <em>Number</em>}</li>
+ *   <li>{@link emfer.reachability.impl.ReachableStateImpl#getMetricValue <em>Metric Value</em>}</li>
  *   <li>{@link emfer.reachability.impl.ReachableStateImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link emfer.reachability.impl.ReachableStateImpl#getRoot <em>Root</em>}</li>
  *   <li>{@link emfer.reachability.impl.ReachableStateImpl#getResultOf <em>Result Of</em>}</li>
@@ -65,7 +70,27 @@ public class ReachableStateImpl extends MinimalEObjectImpl.Container implements 
    protected long number = NUMBER_EDEFAULT;
 
    /**
-    * The cached value of the '{@link #getRoot() <em>Root</em>}' containment reference.
+    * The default value of the '{@link #getMetricValue() <em>Metric Value</em>}' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getMetricValue()
+    * @generated
+    * @ordered
+    */
+   protected static final double METRIC_VALUE_EDEFAULT = 0.0;
+
+   /**
+    * The cached value of the '{@link #getMetricValue() <em>Metric Value</em>}' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getMetricValue()
+    * @generated
+    * @ordered
+    */
+   protected double metricValue = METRIC_VALUE_EDEFAULT;
+
+   /**
+    * The cached value of the '{@link #getRoot() <em>Root</em>}' reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @see #getRoot()
@@ -143,6 +168,29 @@ public class ReachableStateImpl extends MinimalEObjectImpl.Container implements 
     * <!-- end-user-doc -->
     * @generated
     */
+   public double getMetricValue()
+   {
+      return metricValue;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public void setMetricValue(double newMetricValue)
+   {
+      double oldMetricValue = metricValue;
+      metricValue = newMetricValue;
+      if (eNotificationRequired())
+         eNotify(new ENotificationImpl(this, Notification.SET, ReachabilityPackage.REACHABLE_STATE__METRIC_VALUE, oldMetricValue, metricValue));
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    public ReachabilityGraph getParent()
    {
       if (eContainerFeatureID() != ReachabilityPackage.REACHABLE_STATE__PARENT) return null;
@@ -201,6 +249,16 @@ public class ReachableStateImpl extends MinimalEObjectImpl.Container implements 
     */
    public EObject getRoot()
    {
+      if (root != null && root.eIsProxy())
+      {
+         InternalEObject oldRoot = (InternalEObject)root;
+         root = eResolveProxy(oldRoot);
+         if (root != oldRoot)
+         {
+            if (eNotificationRequired())
+               eNotify(new ENotificationImpl(this, Notification.RESOLVE, ReachabilityPackage.REACHABLE_STATE__ROOT, oldRoot, root));
+         }
+      }
       return root;
    }
 
@@ -209,16 +267,9 @@ public class ReachableStateImpl extends MinimalEObjectImpl.Container implements 
     * <!-- end-user-doc -->
     * @generated
     */
-   public NotificationChain basicSetRoot(EObject newRoot, NotificationChain msgs)
+   public EObject basicGetRoot()
    {
-      EObject oldRoot = root;
-      root = newRoot;
-      if (eNotificationRequired())
-      {
-         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ReachabilityPackage.REACHABLE_STATE__ROOT, oldRoot, newRoot);
-         if (msgs == null) msgs = notification; else msgs.add(notification);
-      }
-      return msgs;
+      return root;
    }
 
    /**
@@ -228,18 +279,10 @@ public class ReachableStateImpl extends MinimalEObjectImpl.Container implements 
     */
    public void setRoot(EObject newRoot)
    {
-      if (newRoot != root)
-      {
-         NotificationChain msgs = null;
-         if (root != null)
-            msgs = ((InternalEObject)root).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ReachabilityPackage.REACHABLE_STATE__ROOT, null, msgs);
-         if (newRoot != null)
-            msgs = ((InternalEObject)newRoot).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ReachabilityPackage.REACHABLE_STATE__ROOT, null, msgs);
-         msgs = basicSetRoot(newRoot, msgs);
-         if (msgs != null) msgs.dispatch();
-      }
-      else if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, ReachabilityPackage.REACHABLE_STATE__ROOT, newRoot, newRoot));
+      EObject oldRoot = root;
+      root = newRoot;
+      if (eNotificationRequired())
+         eNotify(new ENotificationImpl(this, Notification.SET, ReachabilityPackage.REACHABLE_STATE__ROOT, oldRoot, root));
    }
 
    /**
@@ -268,6 +311,24 @@ public class ReachableStateImpl extends MinimalEObjectImpl.Container implements 
          trafoApplications = new EObjectWithInverseResolvingEList<TrafoApplication>(TrafoApplication.class, this, ReachabilityPackage.REACHABLE_STATE__TRAFO_APPLICATIONS, ReachabilityPackage.TRAFO_APPLICATION__SRC);
       }
       return trafoApplications;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public String toString()
+   {
+      StringBuilder buf = new StringBuilder();
+      buf.append("ReachableState: number: ").append(this.getNumber()).append(" metricValue: ").append(this.getMetricValue()).append("\n");
+      EObject _root = this.getRoot();
+      boolean _notEquals = (!Objects.equal(_root, null));
+      if (_notEquals)
+      {
+         buf.append(this.getRoot().toString());
+      }
+      return buf.toString();
    }
 
    /**
@@ -305,8 +366,6 @@ public class ReachableStateImpl extends MinimalEObjectImpl.Container implements 
       {
          case ReachabilityPackage.REACHABLE_STATE__PARENT:
             return basicSetParent(null, msgs);
-         case ReachabilityPackage.REACHABLE_STATE__ROOT:
-            return basicSetRoot(null, msgs);
          case ReachabilityPackage.REACHABLE_STATE__RESULT_OF:
             return ((InternalEList<?>)getResultOf()).basicRemove(otherEnd, msgs);
          case ReachabilityPackage.REACHABLE_STATE__TRAFO_APPLICATIONS:
@@ -343,11 +402,14 @@ public class ReachableStateImpl extends MinimalEObjectImpl.Container implements 
       {
          case ReachabilityPackage.REACHABLE_STATE__NUMBER:
             return getNumber();
+         case ReachabilityPackage.REACHABLE_STATE__METRIC_VALUE:
+            return getMetricValue();
          case ReachabilityPackage.REACHABLE_STATE__PARENT:
             if (resolve) return getParent();
             return basicGetParent();
          case ReachabilityPackage.REACHABLE_STATE__ROOT:
-            return getRoot();
+            if (resolve) return getRoot();
+            return basicGetRoot();
          case ReachabilityPackage.REACHABLE_STATE__RESULT_OF:
             return getResultOf();
          case ReachabilityPackage.REACHABLE_STATE__TRAFO_APPLICATIONS:
@@ -369,6 +431,9 @@ public class ReachableStateImpl extends MinimalEObjectImpl.Container implements 
       {
          case ReachabilityPackage.REACHABLE_STATE__NUMBER:
             setNumber((Long)newValue);
+            return;
+         case ReachabilityPackage.REACHABLE_STATE__METRIC_VALUE:
+            setMetricValue((Double)newValue);
             return;
          case ReachabilityPackage.REACHABLE_STATE__PARENT:
             setParent((ReachabilityGraph)newValue);
@@ -401,6 +466,9 @@ public class ReachableStateImpl extends MinimalEObjectImpl.Container implements 
          case ReachabilityPackage.REACHABLE_STATE__NUMBER:
             setNumber(NUMBER_EDEFAULT);
             return;
+         case ReachabilityPackage.REACHABLE_STATE__METRIC_VALUE:
+            setMetricValue(METRIC_VALUE_EDEFAULT);
+            return;
          case ReachabilityPackage.REACHABLE_STATE__PARENT:
             setParent((ReachabilityGraph)null);
             return;
@@ -429,6 +497,8 @@ public class ReachableStateImpl extends MinimalEObjectImpl.Container implements 
       {
          case ReachabilityPackage.REACHABLE_STATE__NUMBER:
             return number != NUMBER_EDEFAULT;
+         case ReachabilityPackage.REACHABLE_STATE__METRIC_VALUE:
+            return metricValue != METRIC_VALUE_EDEFAULT;
          case ReachabilityPackage.REACHABLE_STATE__PARENT:
             return basicGetParent() != null;
          case ReachabilityPackage.REACHABLE_STATE__ROOT:
@@ -447,15 +517,14 @@ public class ReachableStateImpl extends MinimalEObjectImpl.Container implements 
     * @generated
     */
    @Override
-   public String toString()
+   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
    {
-      if (eIsProxy()) return super.toString();
-
-      StringBuffer result = new StringBuffer(super.toString());
-      result.append(" (number: ");
-      result.append(number);
-      result.append(')');
-      return result.toString();
+      switch (operationID)
+      {
+         case ReachabilityPackage.REACHABLE_STATE___TO_STRING:
+            return toString();
+      }
+      return super.eInvoke(operationID, arguments);
    }
 
 } //ReachableStateImpl

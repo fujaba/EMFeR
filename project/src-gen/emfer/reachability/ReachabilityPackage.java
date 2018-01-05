@@ -4,6 +4,7 @@ package emfer.reachability;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -124,22 +125,31 @@ public interface ReachabilityPackage extends EPackage
    int REACHABLE_STATE__NUMBER = 0;
 
    /**
+    * The feature id for the '<em><b>Metric Value</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int REACHABLE_STATE__METRIC_VALUE = 1;
+
+   /**
     * The feature id for the '<em><b>Parent</b></em>' container reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int REACHABLE_STATE__PARENT = 1;
+   int REACHABLE_STATE__PARENT = 2;
 
    /**
-    * The feature id for the '<em><b>Root</b></em>' containment reference.
+    * The feature id for the '<em><b>Root</b></em>' reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int REACHABLE_STATE__ROOT = 2;
+   int REACHABLE_STATE__ROOT = 3;
 
    /**
     * The feature id for the '<em><b>Result Of</b></em>' reference list.
@@ -148,7 +158,7 @@ public interface ReachabilityPackage extends EPackage
     * @generated
     * @ordered
     */
-   int REACHABLE_STATE__RESULT_OF = 3;
+   int REACHABLE_STATE__RESULT_OF = 4;
 
    /**
     * The feature id for the '<em><b>Trafo Applications</b></em>' reference list.
@@ -157,7 +167,7 @@ public interface ReachabilityPackage extends EPackage
     * @generated
     * @ordered
     */
-   int REACHABLE_STATE__TRAFO_APPLICATIONS = 4;
+   int REACHABLE_STATE__TRAFO_APPLICATIONS = 5;
 
    /**
     * The number of structural features of the '<em>Reachable State</em>' class.
@@ -166,7 +176,16 @@ public interface ReachabilityPackage extends EPackage
     * @generated
     * @ordered
     */
-   int REACHABLE_STATE_FEATURE_COUNT = 5;
+   int REACHABLE_STATE_FEATURE_COUNT = 6;
+
+   /**
+    * The operation id for the '<em>To String</em>' operation.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int REACHABLE_STATE___TO_STRING = 0;
 
    /**
     * The number of operations of the '<em>Reachable State</em>' class.
@@ -175,7 +194,7 @@ public interface ReachabilityPackage extends EPackage
     * @generated
     * @ordered
     */
-   int REACHABLE_STATE_OPERATION_COUNT = 0;
+   int REACHABLE_STATE_OPERATION_COUNT = 1;
 
    /**
     * The meta object id for the '{@link emfer.reachability.impl.TrafoApplicationImpl <em>Trafo Application</em>}' class.
@@ -296,6 +315,17 @@ public interface ReachabilityPackage extends EPackage
    EAttribute getReachableState_Number();
 
    /**
+    * Returns the meta object for the attribute '{@link emfer.reachability.ReachableState#getMetricValue <em>Metric Value</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Metric Value</em>'.
+    * @see emfer.reachability.ReachableState#getMetricValue()
+    * @see #getReachableState()
+    * @generated
+    */
+   EAttribute getReachableState_MetricValue();
+
+   /**
     * Returns the meta object for the container reference '{@link emfer.reachability.ReachableState#getParent <em>Parent</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -307,10 +337,10 @@ public interface ReachabilityPackage extends EPackage
    EReference getReachableState_Parent();
 
    /**
-    * Returns the meta object for the containment reference '{@link emfer.reachability.ReachableState#getRoot <em>Root</em>}'.
+    * Returns the meta object for the reference '{@link emfer.reachability.ReachableState#getRoot <em>Root</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the containment reference '<em>Root</em>'.
+    * @return the meta object for the reference '<em>Root</em>'.
     * @see emfer.reachability.ReachableState#getRoot()
     * @see #getReachableState()
     * @generated
@@ -338,6 +368,16 @@ public interface ReachabilityPackage extends EPackage
     * @generated
     */
    EReference getReachableState_TrafoApplications();
+
+   /**
+    * Returns the meta object for the '{@link emfer.reachability.ReachableState#toString() <em>To String</em>}' operation.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the '<em>To String</em>' operation.
+    * @see emfer.reachability.ReachableState#toString()
+    * @generated
+    */
+   EOperation getReachableState__ToString();
 
    /**
     * Returns the meta object for class '{@link emfer.reachability.TrafoApplication <em>Trafo Application</em>}'.
@@ -462,6 +502,14 @@ public interface ReachabilityPackage extends EPackage
       EAttribute REACHABLE_STATE__NUMBER = eINSTANCE.getReachableState_Number();
 
       /**
+       * The meta object literal for the '<em><b>Metric Value</b></em>' attribute feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute REACHABLE_STATE__METRIC_VALUE = eINSTANCE.getReachableState_MetricValue();
+
+      /**
        * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
@@ -470,7 +518,7 @@ public interface ReachabilityPackage extends EPackage
       EReference REACHABLE_STATE__PARENT = eINSTANCE.getReachableState_Parent();
 
       /**
-       * The meta object literal for the '<em><b>Root</b></em>' containment reference feature.
+       * The meta object literal for the '<em><b>Root</b></em>' reference feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
@@ -492,6 +540,14 @@ public interface ReachabilityPackage extends EPackage
        * @generated
        */
       EReference REACHABLE_STATE__TRAFO_APPLICATIONS = eINSTANCE.getReachableState_TrafoApplications();
+
+      /**
+       * The meta object literal for the '<em><b>To String</b></em>' operation.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EOperation REACHABLE_STATE___TO_STRING = eINSTANCE.getReachableState__ToString();
 
       /**
        * The meta object literal for the '{@link emfer.reachability.impl.TrafoApplicationImpl <em>Trafo Application</em>}' class.

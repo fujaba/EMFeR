@@ -70,7 +70,7 @@ public interface FerrymanPackage extends EPackage
    int RIVER = 0;
 
    /**
-    * The feature id for the '<em><b>Banks</b></em>' containment reference list.
+    * The feature id for the '<em><b>Banks</b></em>' reference list.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -134,7 +134,7 @@ public interface FerrymanPackage extends EPackage
    int BANK__NAME = 0;
 
    /**
-    * The feature id for the '<em><b>Cargos</b></em>' containment reference list.
+    * The feature id for the '<em><b>Cargos</b></em>' reference list.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -253,13 +253,22 @@ public interface FerrymanPackage extends EPackage
    int CARGO_FEATURE_COUNT = 1;
 
    /**
+    * The operation id for the '<em>To String</em>' operation.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int CARGO___TO_STRING = 0;
+
+   /**
     * The number of operations of the '<em>Cargo</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int CARGO_OPERATION_COUNT = 0;
+   int CARGO_OPERATION_COUNT = 1;
 
 
    /**
@@ -273,10 +282,10 @@ public interface FerrymanPackage extends EPackage
    EClass getRiver();
 
    /**
-    * Returns the meta object for the containment reference list '{@link emfer.examples.ferryman.River#getBanks <em>Banks</em>}'.
+    * Returns the meta object for the reference list '{@link emfer.examples.ferryman.River#getBanks <em>Banks</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the containment reference list '<em>Banks</em>'.
+    * @return the meta object for the reference list '<em>Banks</em>'.
     * @see emfer.examples.ferryman.River#getBanks()
     * @see #getRiver()
     * @generated
@@ -326,10 +335,10 @@ public interface FerrymanPackage extends EPackage
    EAttribute getBank_Name();
 
    /**
-    * Returns the meta object for the containment reference list '{@link emfer.examples.ferryman.Bank#getCargos <em>Cargos</em>}'.
+    * Returns the meta object for the reference list '{@link emfer.examples.ferryman.Bank#getCargos <em>Cargos</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the containment reference list '<em>Cargos</em>'.
+    * @return the meta object for the reference list '<em>Cargos</em>'.
     * @see emfer.examples.ferryman.Bank#getCargos()
     * @see #getBank()
     * @generated
@@ -410,6 +419,16 @@ public interface FerrymanPackage extends EPackage
    EAttribute getCargo_Name();
 
    /**
+    * Returns the meta object for the '{@link emfer.examples.ferryman.Cargo#toString() <em>To String</em>}' operation.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the '<em>To String</em>' operation.
+    * @see emfer.examples.ferryman.Cargo#toString()
+    * @generated
+    */
+   EOperation getCargo__ToString();
+
+   /**
     * Returns the factory that creates the instances of the model.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -444,7 +463,7 @@ public interface FerrymanPackage extends EPackage
       EClass RIVER = eINSTANCE.getRiver();
 
       /**
-       * The meta object literal for the '<em><b>Banks</b></em>' containment reference list feature.
+       * The meta object literal for the '<em><b>Banks</b></em>' reference list feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
@@ -486,7 +505,7 @@ public interface FerrymanPackage extends EPackage
       EAttribute BANK__NAME = eINSTANCE.getBank_Name();
 
       /**
-       * The meta object literal for the '<em><b>Cargos</b></em>' containment reference list feature.
+       * The meta object literal for the '<em><b>Cargos</b></em>' reference list feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
@@ -552,6 +571,14 @@ public interface FerrymanPackage extends EPackage
        * @generated
        */
       EAttribute CARGO__NAME = eINSTANCE.getCargo_Name();
+
+      /**
+       * The meta object literal for the '<em><b>To String</b></em>' operation.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EOperation CARGO___TO_STRING = eINSTANCE.getCargo__ToString();
 
    }
 

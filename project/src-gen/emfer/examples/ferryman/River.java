@@ -26,17 +26,17 @@ import org.eclipse.emf.ecore.EObject;
 public interface River extends EObject
 {
    /**
-    * Returns the value of the '<em><b>Banks</b></em>' containment reference list.
+    * Returns the value of the '<em><b>Banks</b></em>' reference list.
     * The list contents are of type {@link emfer.examples.ferryman.Bank}.
     * <!-- begin-user-doc -->
     * <p>
-    * If the meaning of the '<em>Banks</em>' containment reference list isn't clear,
+    * If the meaning of the '<em>Banks</em>' reference list isn't clear,
     * there really should be more of a description here...
     * </p>
     * <!-- end-user-doc -->
-    * @return the value of the '<em>Banks</em>' containment reference list.
+    * @return the value of the '<em>Banks</em>' reference list.
     * @see emfer.examples.ferryman.FerrymanPackage#getRiver_Banks()
-    * @model containment="true"
+    * @model
     * @generated
     */
    EList<Bank> getBanks();
@@ -71,7 +71,7 @@ public interface River extends EObject
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @model unique="false"
-    *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.lang.StringBuilder%&gt; buf = new &lt;%java.lang.StringBuilder%&gt;();\nif ((((this.getBanks() != null) &amp;&amp; (this.getBanks().size() &gt;= 2)) &amp;&amp; (this.getBoat() != null)))\n{\n\t&lt;%emfer.examples.ferryman.Bank%&gt; left = this.getBanks().get(0);\n\t&lt;%emfer.examples.ferryman.Bank%&gt; right = this.getBanks().get(1);\n\tbuf.append(left.toString()).append(\"\\n\");\n\tbuf.append(this.getBoat().toString()).append(\"\\n\");\n\tbuf.append(right.toString()).append(\"\\n\");\n}\nreturn buf.toString();'"
+    *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.lang.StringBuilder%&gt; buf = new &lt;%java.lang.StringBuilder%&gt;();\nif ((((this.getBanks() != null) &amp;&amp; (this.getBanks().size() &gt;= 2)) &amp;&amp; (this.getBoat() != null)))\n{\n\t&lt;%emfer.examples.ferryman.Bank%&gt; left = this.getBanks().get(0);\n\t&lt;%emfer.examples.ferryman.Bank%&gt; right = this.getBanks().get(1);\n\tboolean _equals = left.getName().equals(\"right\");\n\tif (_equals)\n\t{\n\t\tleft = this.getBanks().get(1);\n\t\tright = this.getBanks().get(0);\n\t}\n\tbuf.append(left.toString()).append(\"\\n\");\n\tbuf.append(this.getBoat().toString()).append(\"\\n\");\n\tbuf.append(right.toString()).append(\"\\n\");\n}\nreturn buf.toString();'"
     * @generated
     */
    String toString();

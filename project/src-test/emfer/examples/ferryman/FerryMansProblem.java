@@ -7,9 +7,12 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import org.eclipse.emf.ecore.EObject;
+import org.junit.Assert;
 import org.junit.Test;
 
 import emfer.EMFeR;
+import emfer.reachability.ReachableState;
+import emfer.reachability.TrafoApplication;
 import emfer.stories.Storyboard;
 
 public class FerryMansProblem
@@ -53,13 +56,38 @@ public class FerryMansProblem
       
       EMFeR emfer = new EMFeR()
             .withEPackage(FerrymanPackage.eINSTANCE)
-            .withTrafo("load goat", root -> getCargos(root), (root, cargo) -> loadCargo(root, cargo))
+            .withTrafo("load cargo", root -> getCargos(root), (root, cargo) -> loadCargo(root, cargo))
             .withTrafo("move boat", root -> moveBoat(root))
             .withStart(river)
             .withStatic(wolf, goat, cabbage)
             ;
       
-      emfer.explore();
+      int size = emfer.explore();
+      
+      Assert.assertEquals("Number of states:", 26, size);
+      
+      for (ReachableState s : emfer.getReachabilityGraph().getStates())
+      {
+         StringBuilder buf = new StringBuilder();
+         
+         for (TrafoApplication t : s.getResultOf())
+         {
+            ReachableState src = t.getSrc();
+            
+            buf.append(src.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(s.getNumber()).append("\n");
+         }
+         
+         buf.append(s.getRoot().toString());
+         
+         for (TrafoApplication t : s.getTrafoApplications())
+         {
+            ReachableState tgt = t.getTgt();
+            
+            buf.append(s.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(tgt.getNumber()).append("\n");
+         }
+         
+         Logger.getGlobal().info(buf.toString());
+      }
       
       
       story.dumpHtml();
@@ -70,6 +98,20 @@ public class FerryMansProblem
       River river = (River) root;
       
       Boat boat = river.getBoat();
+      
+      Bank bank = boat.getAt();
+      
+      if (bank.getCargos().size() >= 2)
+      {
+         for (Cargo c : bank.getCargos())
+         {
+            if (c.getName().equals("goat"))
+            {
+               // do not leave the goat and some other cargo alone
+               return;
+            }
+         }
+      }
       
       Bank otherBank = null;
       

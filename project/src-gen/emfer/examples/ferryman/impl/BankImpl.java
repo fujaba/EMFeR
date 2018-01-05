@@ -11,18 +11,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -61,7 +58,7 @@ public class BankImpl extends MinimalEObjectImpl.Container implements Bank
    protected String name = NAME_EDEFAULT;
 
    /**
-    * The cached value of the '{@link #getCargos() <em>Cargos</em>}' containment reference list.
+    * The cached value of the '{@link #getCargos() <em>Cargos</em>}' reference list.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @see #getCargos()
@@ -123,7 +120,7 @@ public class BankImpl extends MinimalEObjectImpl.Container implements Bank
    {
       if (cargos == null)
       {
-         cargos = new EObjectContainmentEList<Cargo>(Cargo.class, this, FerrymanPackage.BANK__CARGOS);
+         cargos = new EObjectResolvingEList<Cargo>(Cargo.class, this, FerrymanPackage.BANK__CARGOS);
       }
       return cargos;
    }
@@ -143,22 +140,6 @@ public class BankImpl extends MinimalEObjectImpl.Container implements Bank
          buf.append(c.getName()).append(" ");
       }
       return buf.toString();
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-   {
-      switch (featureID)
-      {
-         case FerrymanPackage.BANK__CARGOS:
-            return ((InternalEList<?>)getCargos()).basicRemove(otherEnd, msgs);
-      }
-      return super.eInverseRemove(otherEnd, featureID, msgs);
    }
 
    /**

@@ -265,6 +265,16 @@ public class FerrymanPackageImpl extends EPackageImpl implements FerrymanPackage
     * <!-- end-user-doc -->
     * @generated
     */
+   public EOperation getCargo__ToString()
+   {
+      return cargoEClass.getEOperations().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    public FerrymanFactory getFerrymanFactory()
    {
       return (FerrymanFactory)getEFactoryInstance();
@@ -307,6 +317,7 @@ public class FerrymanPackageImpl extends EPackageImpl implements FerrymanPackage
 
       cargoEClass = createEClass(CARGO);
       createEAttribute(cargoEClass, CARGO__NAME);
+      createEOperation(cargoEClass, CARGO___TO_STRING);
    }
 
    /**
@@ -344,14 +355,14 @@ public class FerrymanPackageImpl extends EPackageImpl implements FerrymanPackage
 
       // Initialize classes, features, and operations; add parameters
       initEClass(riverEClass, River.class, "River", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEReference(getRiver_Banks(), this.getBank(), null, "banks", null, 0, -1, River.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEReference(getRiver_Banks(), this.getBank(), null, "banks", null, 0, -1, River.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
       initEReference(getRiver_Boat(), this.getBoat(), null, "boat", null, 0, 1, River.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       initEOperation(getRiver__ToString(), theEcorePackage.getEString(), "toString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
       initEClass(bankEClass, Bank.class, "Bank", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getBank_Name(), theEcorePackage.getEString(), "name", null, 0, 1, Bank.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEReference(getBank_Cargos(), this.getCargo(), null, "cargos", null, 0, -1, Bank.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEReference(getBank_Cargos(), this.getCargo(), null, "cargos", null, 0, -1, Bank.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       initEOperation(getBank__ToString(), theEcorePackage.getEString(), "toString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -363,6 +374,8 @@ public class FerrymanPackageImpl extends EPackageImpl implements FerrymanPackage
 
       initEClass(cargoEClass, Cargo.class, "Cargo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getCargo_Name(), theEcorePackage.getEString(), "name", null, 0, 1, Cargo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+      initEOperation(getCargo__ToString(), theEcorePackage.getEString(), "toString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
       // Create resource
       createResource(eNS_URI);
