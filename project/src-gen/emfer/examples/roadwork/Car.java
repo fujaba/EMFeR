@@ -78,4 +78,13 @@ public interface Car extends EObject
     */
    void setTrack(Track value);
 
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @model unique="false"
+    *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%emfer.examples.roadwork.TravelDirection%&gt; _travelDirection = this.getTravelDirection();\n&lt;%java.lang.String%&gt; result = (\"Car: \" + _travelDirection);\n&lt;%emfer.examples.roadwork.Track%&gt; _track = this.getTrack();\nboolean _tripleNotEquals = (_track != null);\nif (_tripleNotEquals)\n{\n\t&lt;%java.lang.String%&gt; _result = result;\n\t&lt;%emfer.examples.roadwork.Track%&gt; _track_1 = this.getTrack();\n\t&lt;%java.lang.String%&gt; _plus = (\" at: \" + _track_1);\n\tresult = (_result + _plus);\n}\nreturn result;'"
+    * @generated
+    */
+   String toString();
+
 } // Car

@@ -71,7 +71,7 @@ public interface RoadworkPackage extends EPackage
    int ROAD_MAP = 0;
 
    /**
-    * The feature id for the '<em><b>Road</b></em>' containment reference.
+    * The feature id for the '<em><b>Road</b></em>' reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -80,7 +80,7 @@ public interface RoadworkPackage extends EPackage
    int ROAD_MAP__ROAD = 0;
 
    /**
-    * The feature id for the '<em><b>Cars</b></em>' containment reference list.
+    * The feature id for the '<em><b>Cars</b></em>' reference list.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -89,7 +89,7 @@ public interface RoadworkPackage extends EPackage
    int ROAD_MAP__CARS = 1;
 
    /**
-    * The feature id for the '<em><b>Western Signal</b></em>' containment reference.
+    * The feature id for the '<em><b>Western Signal</b></em>' reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -98,7 +98,7 @@ public interface RoadworkPackage extends EPackage
    int ROAD_MAP__WESTERN_SIGNAL = 2;
 
    /**
-    * The feature id for the '<em><b>Eastern Signal</b></em>' containment reference.
+    * The feature id for the '<em><b>Eastern Signal</b></em>' reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -226,13 +226,22 @@ public interface RoadworkPackage extends EPackage
    int TRACK_FEATURE_COUNT = 4;
 
    /**
+    * The operation id for the '<em>To String</em>' operation.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TRACK___TO_STRING = 0;
+
+   /**
     * The number of operations of the '<em>Track</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int TRACK_OPERATION_COUNT = 0;
+   int TRACK_OPERATION_COUNT = 1;
 
    /**
     * The meta object id for the '{@link emfer.examples.roadwork.impl.SignalImpl <em>Signal</em>}' class.
@@ -318,13 +327,22 @@ public interface RoadworkPackage extends EPackage
    int CAR_FEATURE_COUNT = 2;
 
    /**
+    * The operation id for the '<em>To String</em>' operation.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int CAR___TO_STRING = 0;
+
+   /**
     * The number of operations of the '<em>Car</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int CAR_OPERATION_COUNT = 0;
+   int CAR_OPERATION_COUNT = 1;
 
    /**
     * The meta object id for the '{@link emfer.examples.roadwork.TravelDirection <em>Travel Direction</em>}' enum.
@@ -348,10 +366,10 @@ public interface RoadworkPackage extends EPackage
    EClass getRoadMap();
 
    /**
-    * Returns the meta object for the containment reference '{@link emfer.examples.roadwork.RoadMap#getRoad <em>Road</em>}'.
+    * Returns the meta object for the reference '{@link emfer.examples.roadwork.RoadMap#getRoad <em>Road</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the containment reference '<em>Road</em>'.
+    * @return the meta object for the reference '<em>Road</em>'.
     * @see emfer.examples.roadwork.RoadMap#getRoad()
     * @see #getRoadMap()
     * @generated
@@ -359,10 +377,10 @@ public interface RoadworkPackage extends EPackage
    EReference getRoadMap_Road();
 
    /**
-    * Returns the meta object for the containment reference list '{@link emfer.examples.roadwork.RoadMap#getCars <em>Cars</em>}'.
+    * Returns the meta object for the reference list '{@link emfer.examples.roadwork.RoadMap#getCars <em>Cars</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the containment reference list '<em>Cars</em>'.
+    * @return the meta object for the reference list '<em>Cars</em>'.
     * @see emfer.examples.roadwork.RoadMap#getCars()
     * @see #getRoadMap()
     * @generated
@@ -370,10 +388,10 @@ public interface RoadworkPackage extends EPackage
    EReference getRoadMap_Cars();
 
    /**
-    * Returns the meta object for the containment reference '{@link emfer.examples.roadwork.RoadMap#getWesternSignal <em>Western Signal</em>}'.
+    * Returns the meta object for the reference '{@link emfer.examples.roadwork.RoadMap#getWesternSignal <em>Western Signal</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the containment reference '<em>Western Signal</em>'.
+    * @return the meta object for the reference '<em>Western Signal</em>'.
     * @see emfer.examples.roadwork.RoadMap#getWesternSignal()
     * @see #getRoadMap()
     * @generated
@@ -381,10 +399,10 @@ public interface RoadworkPackage extends EPackage
    EReference getRoadMap_WesternSignal();
 
    /**
-    * Returns the meta object for the containment reference '{@link emfer.examples.roadwork.RoadMap#getEasternSignal <em>Eastern Signal</em>}'.
+    * Returns the meta object for the reference '{@link emfer.examples.roadwork.RoadMap#getEasternSignal <em>Eastern Signal</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the containment reference '<em>Eastern Signal</em>'.
+    * @return the meta object for the reference '<em>Eastern Signal</em>'.
     * @see emfer.examples.roadwork.RoadMap#getEasternSignal()
     * @see #getRoadMap()
     * @generated
@@ -477,6 +495,16 @@ public interface RoadworkPackage extends EPackage
    EReference getTrack_East();
 
    /**
+    * Returns the meta object for the '{@link emfer.examples.roadwork.Track#toString() <em>To String</em>}' operation.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the '<em>To String</em>' operation.
+    * @see emfer.examples.roadwork.Track#toString()
+    * @generated
+    */
+   EOperation getTrack__ToString();
+
+   /**
     * Returns the meta object for class '{@link emfer.examples.roadwork.Signal <em>Signal</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -541,6 +569,16 @@ public interface RoadworkPackage extends EPackage
    EReference getCar_Track();
 
    /**
+    * Returns the meta object for the '{@link emfer.examples.roadwork.Car#toString() <em>To String</em>}' operation.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the '<em>To String</em>' operation.
+    * @see emfer.examples.roadwork.Car#toString()
+    * @generated
+    */
+   EOperation getCar__ToString();
+
+   /**
     * Returns the meta object for enum '{@link emfer.examples.roadwork.TravelDirection <em>Travel Direction</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -585,7 +623,7 @@ public interface RoadworkPackage extends EPackage
       EClass ROAD_MAP = eINSTANCE.getRoadMap();
 
       /**
-       * The meta object literal for the '<em><b>Road</b></em>' containment reference feature.
+       * The meta object literal for the '<em><b>Road</b></em>' reference feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
@@ -593,7 +631,7 @@ public interface RoadworkPackage extends EPackage
       EReference ROAD_MAP__ROAD = eINSTANCE.getRoadMap_Road();
 
       /**
-       * The meta object literal for the '<em><b>Cars</b></em>' containment reference list feature.
+       * The meta object literal for the '<em><b>Cars</b></em>' reference list feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
@@ -601,7 +639,7 @@ public interface RoadworkPackage extends EPackage
       EReference ROAD_MAP__CARS = eINSTANCE.getRoadMap_Cars();
 
       /**
-       * The meta object literal for the '<em><b>Western Signal</b></em>' containment reference feature.
+       * The meta object literal for the '<em><b>Western Signal</b></em>' reference feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
@@ -609,7 +647,7 @@ public interface RoadworkPackage extends EPackage
       EReference ROAD_MAP__WESTERN_SIGNAL = eINSTANCE.getRoadMap_WesternSignal();
 
       /**
-       * The meta object literal for the '<em><b>Eastern Signal</b></em>' containment reference feature.
+       * The meta object literal for the '<em><b>Eastern Signal</b></em>' reference feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
@@ -685,6 +723,14 @@ public interface RoadworkPackage extends EPackage
       EReference TRACK__EAST = eINSTANCE.getTrack_East();
 
       /**
+       * The meta object literal for the '<em><b>To String</b></em>' operation.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EOperation TRACK___TO_STRING = eINSTANCE.getTrack__ToString();
+
+      /**
        * The meta object literal for the '{@link emfer.examples.roadwork.impl.SignalImpl <em>Signal</em>}' class.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
@@ -735,6 +781,14 @@ public interface RoadworkPackage extends EPackage
        * @generated
        */
       EReference CAR__TRACK = eINSTANCE.getCar_Track();
+
+      /**
+       * The meta object literal for the '<em><b>To String</b></em>' operation.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EOperation CAR___TO_STRING = eINSTANCE.getCar__ToString();
 
       /**
        * The meta object literal for the '{@link emfer.examples.roadwork.TravelDirection <em>Travel Direction</em>}' enum.

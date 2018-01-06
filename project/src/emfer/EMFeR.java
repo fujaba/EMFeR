@@ -39,7 +39,7 @@ public class EMFeR
    @FunctionalInterface
    public interface Path
    {
-      public Set<EObject> run(EObject root);
+      public Collection<EObject> run(EObject root);
    }
 
    @FunctionalInterface
@@ -326,7 +326,7 @@ public class EMFeR
       // run trafos
       for (PathTrafo pathTrafo : this.pathTrafosList)
       {
-         Set<EObject> handles = pathTrafo.path.run(current.getRoot());
+         Collection<EObject> handles = pathTrafo.path.run(current.getRoot());
 
          String trafoName = pathTrafo.name;
 
@@ -423,14 +423,5 @@ public class EMFeR
          o.eAdapters().remove(lazyCloneOp);
       }
    }
-
-
-
-   private Object lazyMatch(ReachableState oldState, ReachableState newReachableState)
-   {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
 
 }

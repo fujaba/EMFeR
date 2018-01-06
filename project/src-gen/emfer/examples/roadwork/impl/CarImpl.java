@@ -7,7 +7,11 @@ import emfer.examples.roadwork.RoadworkPackage;
 import emfer.examples.roadwork.Track;
 import emfer.examples.roadwork.TravelDirection;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -153,6 +157,27 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car
     * <!-- end-user-doc -->
     * @generated
     */
+   public String toString()
+   {
+      TravelDirection _travelDirection = this.getTravelDirection();
+      String result = ("Car: " + _travelDirection);
+      Track _track = this.getTrack();
+      boolean _tripleNotEquals = (_track != null);
+      if (_tripleNotEquals)
+      {
+         String _result = result;
+         Track _track_1 = this.getTrack();
+         String _plus = (" at: " + _track_1);
+         result = (_result + _plus);
+      }
+      return result;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    @Override
    public Object eGet(int featureID, boolean resolve, boolean coreType)
    {
@@ -231,15 +256,14 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car
     * @generated
     */
    @Override
-   public String toString()
+   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
    {
-      if (eIsProxy()) return super.toString();
-
-      StringBuffer result = new StringBuffer(super.toString());
-      result.append(" (travelDirection: ");
-      result.append(travelDirection);
-      result.append(')');
-      return result.toString();
+      switch (operationID)
+      {
+         case RoadworkPackage.CAR___TO_STRING:
+            return toString();
+      }
+      return super.eInvoke(operationID, arguments);
    }
 
 } //CarImpl

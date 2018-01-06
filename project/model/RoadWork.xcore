@@ -3,12 +3,12 @@ package emfer.examples.roadwork
 
 class RoadMap
 {
-	contains Road road
+	refers Road road
 	
-	contains Car[] cars
+	refers Car[] cars
 	
-	contains Signal westernSignal
-	contains Signal easternSignal
+	refers Signal westernSignal
+	refers Signal easternSignal
 	
 	op String toString()
 	{
@@ -37,17 +37,22 @@ class RoadMap
 		
 		for (Car c : cars)
 		{
-			var trackName = c.track.name
-			var dir = trackName.charAt(0);
-			var int index = trackName.charAt(1) - '0';
-			
-			if (dir == 'n')
+			var char carChar = 'E'
+			if (c.travelDirection == TravelDirection.WEST)
 			{
-				bufNorthCars.setCharAt(index, 'c');
+				carChar = 'W'
+			}
+			
+			var trackName = c.track.name
+			var int index = trackName.charAt(1) - '1';
+
+			if (trackName.startsWith("n"))
+			{
+				bufNorthCars.setCharAt(6 - index, carChar);
 			}
 			else
 			{
-				bufSouthCars.setCharAt(index, 'c');
+				bufSouthCars.setCharAt(index, carChar);
 			}
 		}
 		
@@ -68,6 +73,11 @@ class Track
 	
 	refers Track[] west opposite east
 	refers Track[] east opposite west
+	
+	op String toString()
+	{
+		return "Track: " + name
+	}
 }
 
 class Signal
@@ -82,6 +92,18 @@ class Car
 	TravelDirection travelDirection
 	
 	refers Track track
+	
+	op String toString()
+	{
+		var String result = "Car: " + travelDirection
+		
+		if (track !== null)
+		{
+			result += " at: " + track
+		}
+		
+		return result;
+	}
 }
 
 enum TravelDirection

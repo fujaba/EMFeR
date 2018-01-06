@@ -6,6 +6,8 @@ import emfer.examples.roadwork.RoadworkPackage;
 import emfer.examples.roadwork.Track;
 import emfer.examples.roadwork.TravelDirection;
 
+import java.lang.reflect.InvocationTargetException;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -200,6 +202,17 @@ public class TrackImpl extends MinimalEObjectImpl.Container implements Track
     * <!-- end-user-doc -->
     * @generated
     */
+   public String toString()
+   {
+      String _name = this.getName();
+      return ("Track: " + _name);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    @SuppressWarnings("unchecked")
    @Override
    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -337,17 +350,14 @@ public class TrackImpl extends MinimalEObjectImpl.Container implements Track
     * @generated
     */
    @Override
-   public String toString()
+   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
    {
-      if (eIsProxy()) return super.toString();
-
-      StringBuffer result = new StringBuffer(super.toString());
-      result.append(" (name: ");
-      result.append(name);
-      result.append(", travelDirection: ");
-      result.append(travelDirection);
-      result.append(')');
-      return result.toString();
+      switch (operationID)
+      {
+         case RoadworkPackage.TRACK___TO_STRING:
+            return toString();
+      }
+      return super.eInvoke(operationID, arguments);
    }
 
 } //TrackImpl

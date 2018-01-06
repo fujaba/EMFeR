@@ -272,6 +272,16 @@ public class RoadworkPackageImpl extends EPackageImpl implements RoadworkPackage
     * <!-- end-user-doc -->
     * @generated
     */
+   public EOperation getTrack__ToString()
+   {
+      return trackEClass.getEOperations().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    public EClass getSignal()
    {
       return signalEClass;
@@ -332,6 +342,16 @@ public class RoadworkPackageImpl extends EPackageImpl implements RoadworkPackage
     * <!-- end-user-doc -->
     * @generated
     */
+   public EOperation getCar__ToString()
+   {
+      return carEClass.getEOperations().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    public EEnum getTravelDirection()
    {
       return travelDirectionEEnum;
@@ -382,6 +402,7 @@ public class RoadworkPackageImpl extends EPackageImpl implements RoadworkPackage
       createEAttribute(trackEClass, TRACK__TRAVEL_DIRECTION);
       createEReference(trackEClass, TRACK__WEST);
       createEReference(trackEClass, TRACK__EAST);
+      createEOperation(trackEClass, TRACK___TO_STRING);
 
       signalEClass = createEClass(SIGNAL);
       createEAttribute(signalEClass, SIGNAL__PASS);
@@ -390,6 +411,7 @@ public class RoadworkPackageImpl extends EPackageImpl implements RoadworkPackage
       carEClass = createEClass(CAR);
       createEAttribute(carEClass, CAR__TRAVEL_DIRECTION);
       createEReference(carEClass, CAR__TRACK);
+      createEOperation(carEClass, CAR___TO_STRING);
 
       // Create enums
       travelDirectionEEnum = createEEnum(TRAVEL_DIRECTION);
@@ -430,10 +452,10 @@ public class RoadworkPackageImpl extends EPackageImpl implements RoadworkPackage
 
       // Initialize classes, features, and operations; add parameters
       initEClass(roadMapEClass, RoadMap.class, "RoadMap", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEReference(getRoadMap_Road(), this.getRoad(), null, "road", null, 0, 1, RoadMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEReference(getRoadMap_Cars(), this.getCar(), null, "cars", null, 0, -1, RoadMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEReference(getRoadMap_WesternSignal(), this.getSignal(), null, "westernSignal", null, 0, 1, RoadMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEReference(getRoadMap_EasternSignal(), this.getSignal(), null, "easternSignal", null, 0, 1, RoadMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEReference(getRoadMap_Road(), this.getRoad(), null, "road", null, 0, 1, RoadMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEReference(getRoadMap_Cars(), this.getCar(), null, "cars", null, 0, -1, RoadMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEReference(getRoadMap_WesternSignal(), this.getSignal(), null, "westernSignal", null, 0, 1, RoadMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEReference(getRoadMap_EasternSignal(), this.getSignal(), null, "easternSignal", null, 0, 1, RoadMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       initEOperation(getRoadMap__ToString(), theEcorePackage.getEString(), "toString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -446,6 +468,8 @@ public class RoadworkPackageImpl extends EPackageImpl implements RoadworkPackage
       initEReference(getTrack_West(), this.getTrack(), this.getTrack_East(), "west", null, 0, -1, Track.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
       initEReference(getTrack_East(), this.getTrack(), this.getTrack_West(), "east", null, 0, -1, Track.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+      initEOperation(getTrack__ToString(), theEcorePackage.getEString(), "toString", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
       initEClass(signalEClass, Signal.class, "Signal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getSignal_Pass(), theEcorePackage.getEBoolean(), "pass", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
       initEReference(getSignal_Track(), this.getTrack(), null, "track", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -453,6 +477,8 @@ public class RoadworkPackageImpl extends EPackageImpl implements RoadworkPackage
       initEClass(carEClass, Car.class, "Car", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getCar_TravelDirection(), this.getTravelDirection(), "travelDirection", null, 0, 1, Car.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
       initEReference(getCar_Track(), this.getTrack(), null, "track", null, 0, 1, Car.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+      initEOperation(getCar__ToString(), theEcorePackage.getEString(), "toString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
       // Initialize enums and add enum literals
       initEEnum(travelDirectionEEnum, TravelDirection.class, "TravelDirection");
