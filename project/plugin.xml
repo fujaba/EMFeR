@@ -30,4 +30,12 @@
             genModel="model/RoadWork.xcore"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated TowerOfHanoiProblem -->
+      <package
+            uri="emfer.examples.tower"
+            class="emfer.examples.tower.TowerPackage"
+            genModel="model/TowerOfHanoiProblem.xcore"/>
+   </extension>
+
 </plugin>

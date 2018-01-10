@@ -1,0 +1,56 @@
+
+package emfer.examples.tower
+
+class Board 
+{
+	refers Stack[] stacks
+	
+	op String toString()
+	{
+		var StringBuilder buf = new StringBuilder()
+		
+		for (Stack s : stacks)
+		{
+			buf.append(s.toString)
+		}
+		
+		return buf.toString()
+	}
+}
+
+class Stack
+{
+	String position
+	
+	refers Disc[] discs opposite at
+	
+	op String toString()
+	{
+		var StringBuilder buf = new StringBuilder()
+		
+		buf.append("stack ").append(position).append(": ")
+		
+		for (Disc d : discs)
+		{
+			buf.append(d.toString)
+		}
+		
+		return buf.toString
+	}
+}
+
+class Disc
+{
+	refers Stack at opposite discs
+	
+	Integer size
+	
+	op String toString()
+	{
+		var StringBuilder buf = new StringBuilder()
+		
+		buf.append("disc ").append(size).append(" ")
+		
+		return buf.toString
+	}
+}
