@@ -22,7 +22,7 @@ class Stack
 {
 	String position
 	
-	refers Disc[] discs opposite at
+	refers Disc[] discs
 	
 	op String toString()
 	{
@@ -41,8 +41,6 @@ class Stack
 
 class Disc
 {
-	refers Stack at opposite discs
-	
 	Integer size
 	
 	op String toString()

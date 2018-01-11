@@ -54,7 +54,6 @@ public interface Stack extends EObject
    /**
     * Returns the value of the '<em><b>Discs</b></em>' reference list.
     * The list contents are of type {@link emfer.examples.tower.Disc}.
-    * It is bidirectional and its opposite is '{@link emfer.examples.tower.Disc#getAt <em>At</em>}'.
     * <!-- begin-user-doc -->
     * <p>
     * If the meaning of the '<em>Discs</em>' reference list isn't clear,
@@ -63,8 +62,7 @@ public interface Stack extends EObject
     * <!-- end-user-doc -->
     * @return the value of the '<em>Discs</em>' reference list.
     * @see emfer.examples.tower.TowerPackage#getStack_Discs()
-    * @see emfer.examples.tower.Disc#getAt
-    * @model opposite="at"
+    * @model
     * @generated
     */
    EList<Disc> getDiscs();

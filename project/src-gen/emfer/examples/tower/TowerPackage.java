@@ -171,22 +171,13 @@ public interface TowerPackage extends EPackage
    int DISC = 2;
 
    /**
-    * The feature id for the '<em><b>At</b></em>' reference.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int DISC__AT = 0;
-
-   /**
     * The feature id for the '<em><b>Size</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int DISC__SIZE = 1;
+   int DISC__SIZE = 0;
 
    /**
     * The number of structural features of the '<em>Disc</em>' class.
@@ -195,7 +186,7 @@ public interface TowerPackage extends EPackage
     * @generated
     * @ordered
     */
-   int DISC_FEATURE_COUNT = 2;
+   int DISC_FEATURE_COUNT = 1;
 
    /**
     * The operation id for the '<em>To String</em>' operation.
@@ -298,17 +289,6 @@ public interface TowerPackage extends EPackage
     * @generated
     */
    EClass getDisc();
-
-   /**
-    * Returns the meta object for the reference '{@link emfer.examples.tower.Disc#getAt <em>At</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the reference '<em>At</em>'.
-    * @see emfer.examples.tower.Disc#getAt()
-    * @see #getDisc()
-    * @generated
-    */
-   EReference getDisc_At();
 
    /**
     * Returns the meta object for the attribute '{@link emfer.examples.tower.Disc#getSize <em>Size</em>}'.
@@ -424,14 +404,6 @@ public interface TowerPackage extends EPackage
        * @generated
        */
       EClass DISC = eINSTANCE.getDisc();
-
-      /**
-       * The meta object literal for the '<em><b>At</b></em>' reference feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EReference DISC__AT = eINSTANCE.getDisc_At();
 
       /**
        * The meta object literal for the '<em><b>Size</b></em>' attribute feature.

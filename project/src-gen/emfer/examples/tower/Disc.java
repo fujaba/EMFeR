@@ -13,7 +13,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link emfer.examples.tower.Disc#getAt <em>At</em>}</li>
  *   <li>{@link emfer.examples.tower.Disc#getSize <em>Size</em>}</li>
  * </ul>
  *
@@ -23,34 +22,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Disc extends EObject
 {
-   /**
-    * Returns the value of the '<em><b>At</b></em>' reference.
-    * It is bidirectional and its opposite is '{@link emfer.examples.tower.Stack#getDiscs <em>Discs</em>}'.
-    * <!-- begin-user-doc -->
-    * <p>
-    * If the meaning of the '<em>At</em>' reference isn't clear,
-    * there really should be more of a description here...
-    * </p>
-    * <!-- end-user-doc -->
-    * @return the value of the '<em>At</em>' reference.
-    * @see #setAt(Stack)
-    * @see emfer.examples.tower.TowerPackage#getDisc_At()
-    * @see emfer.examples.tower.Stack#getDiscs
-    * @model opposite="discs"
-    * @generated
-    */
-   Stack getAt();
-
-   /**
-    * Sets the value of the '{@link emfer.examples.tower.Disc#getAt <em>At</em>}' reference.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @param value the new value of the '<em>At</em>' reference.
-    * @see #getAt()
-    * @generated
-    */
-   void setAt(Stack value);
-
    /**
     * Returns the value of the '<em><b>Size</b></em>' attribute.
     * <!-- begin-user-doc -->

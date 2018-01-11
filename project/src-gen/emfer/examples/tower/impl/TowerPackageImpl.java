@@ -197,19 +197,9 @@ public class TowerPackageImpl extends EPackageImpl implements TowerPackage
     * <!-- end-user-doc -->
     * @generated
     */
-   public EReference getDisc_At()
-   {
-      return (EReference)discEClass.getEStructuralFeatures().get(0);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
    public EAttribute getDisc_Size()
    {
-      return (EAttribute)discEClass.getEStructuralFeatures().get(1);
+      return (EAttribute)discEClass.getEStructuralFeatures().get(0);
    }
 
    /**
@@ -262,7 +252,6 @@ public class TowerPackageImpl extends EPackageImpl implements TowerPackage
       createEOperation(stackEClass, STACK___TO_STRING);
 
       discEClass = createEClass(DISC);
-      createEReference(discEClass, DISC__AT);
       createEAttribute(discEClass, DISC__SIZE);
       createEOperation(discEClass, DISC___TO_STRING);
    }
@@ -308,12 +297,11 @@ public class TowerPackageImpl extends EPackageImpl implements TowerPackage
 
       initEClass(stackEClass, Stack.class, "Stack", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getStack_Position(), theEcorePackage.getEString(), "position", null, 0, 1, Stack.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEReference(getStack_Discs(), this.getDisc(), this.getDisc_At(), "discs", null, 0, -1, Stack.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEReference(getStack_Discs(), this.getDisc(), null, "discs", null, 0, -1, Stack.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       initEOperation(getStack__ToString(), theEcorePackage.getEString(), "toString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
       initEClass(discEClass, Disc.class, "Disc", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEReference(getDisc_At(), this.getStack(), this.getStack_Discs(), "at", null, 0, 1, Disc.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
       initEAttribute(getDisc_Size(), theEcorePackage.getEIntegerObject(), "size", null, 0, 1, Disc.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       initEOperation(getDisc__ToString(), theEcorePackage.getEString(), "toString", 0, 1, !IS_UNIQUE, IS_ORDERED);

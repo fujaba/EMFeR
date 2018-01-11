@@ -9,27 +9,19 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import emfer.EMFeR;
-import emfer.reachability.ReachableState;
-import emfer.reachability.TrafoApplication;
-import emfer.stories.Storyboard;
 
 public class TowerOfHanoiProblem
 {
    @Test
    public void testTowerOfHanoiProblem() throws Exception
    {
-      runWithNumberOfDiscs(3);
-      runWithNumberOfDiscs(4);
-      runWithNumberOfDiscs(5);
-      runWithNumberOfDiscs(6);
-      runWithNumberOfDiscs(7);
+      runWithNumberOfDiscs(7, false);
+      runWithNumberOfDiscs(7, true);
    }
 
 
-   private void runWithNumberOfDiscs(int discs)
+   private void runWithNumberOfDiscs(int discs, boolean staticDiscs)
    {
-      Storyboard story = new Storyboard("TowerOfHanoi");
-
       TowerFactory factory = TowerFactory.eINSTANCE;
 
       Board board = factory.createBoard();
@@ -54,43 +46,31 @@ public class TowerOfHanoiProblem
       board.getStacks().add(middle);
       board.getStacks().add(target);
 
-      Logger.getGlobal().info(board.toString());
-
       EMFeR emfer = new EMFeR()
          .withEPackage(TowerPackage.eINSTANCE)
          .withTrafo("move disc to A", root -> getSmallestDiscs(root), (root, disc) -> moveDisc(root, disc, "A"))
          .withTrafo("move disc to B", root -> getSmallestDiscs(root), (root, disc) -> moveDisc(root, disc, "B"))
          .withTrafo("move disc to C", root -> getSmallestDiscs(root), (root, disc) -> moveDisc(root, disc, "C"))
+         .withMaxNoOfNewStates(10000000)
          .withStart(board);
 
-      int size = emfer.explore();
-
-      Assert.assertEquals("Number of states:", (int) Math.pow(3, discs), size);
-
-      for (ReachableState s : emfer.getReachabilityGraph().getStates())
+      if (staticDiscs)
       {
-         StringBuilder buf = new StringBuilder();
-
-         for (TrafoApplication t : s.getResultOf())
-         {
-            ReachableState src = t.getSrc();
-
-            buf.append(src.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(s.getNumber()).append("\n");
-         }
-
-         buf.append(s.getRoot().toString());
-
-         for (TrafoApplication t : s.getTrafoApplications())
-         {
-            ReachableState tgt = t.getTgt();
-
-            buf.append(s.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(tgt.getNumber()).append("\n");
-         }
-
-         Logger.getGlobal().info(buf.toString());
+         emfer.withStatic(start.getDiscs());
       }
 
-      story.dumpHtml();
+      long time = System.currentTimeMillis();
+      int size = emfer.explore();
+      Logger.getGlobal().info("Exploring scenario with "
+         + discs
+         + " discs took "
+         + (System.currentTimeMillis() - time) / 1000f
+         + " seconds. "
+         + size
+         + " states in reachability graph. Discs are static: "
+         + staticDiscs);
+
+      Assert.assertEquals("Number of states:", (int) Math.pow(3, discs), size);
    }
 
 
@@ -104,34 +84,38 @@ public class TowerOfHanoiProblem
          return;
       }
 
-      Stack stack = null;
+      // disc to be moved
+      Disc disc = (Disc) handle;
+
+      // get the target stack
+      Stack targetStack = null;
+      Stack currentStack = null;
 
       for (Stack s : ((Board) root).getStacks())
       {
          if (s.getPosition().equals(stackName))
          {
-            stack = s;
+            targetStack = s;
+         }
+         if (s.getDiscs().contains(disc))
+         {
+            currentStack = s;
+         }
+         if (targetStack != null && currentStack != null)
+         {
             break;
          }
       }
 
-      Disc disc = (Disc) handle;
-
-      if (stack != disc.getAt())
+      for (Disc d : targetStack.getDiscs())
       {
-         boolean smallerDisc = false;
-         for (Disc d : stack.getDiscs())
+         if (d.getSize() <= disc.getSize())
          {
-            if (d.getSize() < disc.getSize())
-            {
-               smallerDisc = true;
-            }
-         }
-         if (!smallerDisc)
-         {
-            stack.getDiscs().add(disc);
+            return;
          }
       }
+      currentStack.getDiscs().remove(disc);
+      targetStack.getDiscs().add(disc);
       return;
    }
 
