@@ -7,8 +7,12 @@ import emfer.reachability.ReachabilityPackage;
 import emfer.reachability.ReachableState;
 import emfer.reachability.TrafoApplication;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -317,6 +321,24 @@ public class TrafoApplicationImpl extends MinimalEObjectImpl.Container implement
     * <!-- end-user-doc -->
     * @generated
     */
+   public String toString()
+   {
+      long _number = this.getSrc().getNumber();
+      String _plus = ("\n" + Long.valueOf(_number));
+      String _plus_1 = (_plus + " --");
+      String _description = this.getDescription();
+      String _plus_2 = (_plus_1 + _description);
+      String _plus_3 = (_plus_2 + "-> ");
+      long _number_1 = this.getTgt().getNumber();
+      String _plus_4 = (_plus_3 + Long.valueOf(_number_1));
+      return (_plus_4 + "\n");
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    @Override
    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
    {
@@ -479,15 +501,14 @@ public class TrafoApplicationImpl extends MinimalEObjectImpl.Container implement
     * @generated
     */
    @Override
-   public String toString()
+   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
    {
-      if (eIsProxy()) return super.toString();
-
-      StringBuffer result = new StringBuffer(super.toString());
-      result.append(" (description: ");
-      result.append(description);
-      result.append(')');
-      return result.toString();
+      switch (operationID)
+      {
+         case ReachabilityPackage.TRAFO_APPLICATION___TO_STRING:
+            return toString();
+      }
+      return super.eInvoke(operationID, arguments);
    }
 
 } //TrafoApplicationImpl

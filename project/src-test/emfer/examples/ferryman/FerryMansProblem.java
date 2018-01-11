@@ -1,10 +1,12 @@
 package emfer.examples.ferryman;
 
-import static org.junit.Assert.*;
-
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import org.eclipse.emf.ecore.EObject;
 import org.junit.Assert;
@@ -62,13 +64,31 @@ public class FerryMansProblem
             .withStatic(wolf, goat, cabbage)
             ;
       
+      
       int size = emfer.explore();
+
+
+      ArrayList<TrafoApplication> shortestPath = emfer.shortestPath(s -> isFinalState(s));
+
+      StringBuilder buf = new StringBuilder("\nShortest path: \n\n");
+      
+      buf.append(shortestPath.get(0).getSrc());
+      
+      for (TrafoApplication t : shortestPath)
+      {
+         buf.append(t).append("\n").append(t.getTgt());
+      }
+
+      Logger.getGlobal().info(buf.toString());
+      
       
       Assert.assertEquals("Number of states:", 26, size);
       
+      Logger.getGlobal().info("\nFull reachability graph: \n");
+
       for (ReachableState s : emfer.getReachabilityGraph().getStates())
       {
-         StringBuilder buf = new StringBuilder();
+         buf = new StringBuilder("\n");
          
          for (TrafoApplication t : s.getResultOf())
          {
@@ -77,7 +97,7 @@ public class FerryMansProblem
             buf.append(src.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(s.getNumber()).append("\n");
          }
          
-         buf.append(s.getRoot().toString());
+         buf.append(s.toString());
          
          for (TrafoApplication t : s.getTrafoApplications())
          {
@@ -90,7 +110,33 @@ public class FerryMansProblem
       }
       
       
+      // is there a solution state? 
+      FerryManReachabilityQuery xtend = new FerryManReachabilityQuery();
+      
+      ReachableState xtendFinal = xtend.findFinal(emfer.getReachabilityGraph());
+
+      Logger.getGlobal().info("\nxtend: \n" + xtendFinal.toString());
+      
+      Stream<ReachableState> rootStream = emfer.getReachabilityGraph().getStates().stream().filter(s -> isFinalState(s));
+      
+      Optional<ReachableState> finalState = rootStream.findFirst();
+      
+      Logger.getGlobal().info("\njava streams: \n" + finalState.toString());
+      
+      
       story.dumpHtml();
+   }
+
+   private boolean isFinalState(ReachableState s)
+   {
+      EObject root = s.getRoot();
+      
+      River river = (River) root;
+      
+      Optional<Bank> bank = river.getBanks().stream().filter(b -> b.getName().equals("right") && b.getCargos().size() == 3).findFirst();
+      
+      return bank.isPresent();
+      
    }
 
    private void moveBoat(EObject root)

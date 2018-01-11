@@ -135,4 +135,13 @@ public interface TrafoApplication extends EObject
     */
    void setTgt(ReachableState value);
 
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @model unique="false"
+    *        annotation="http://www.eclipse.org/emf/2002/GenModel body='long _number = this.getSrc().getNumber();\n&lt;%java.lang.String%&gt; _plus = (\"\\n\" + &lt;%java.lang.Long%&gt;.valueOf(_number));\n&lt;%java.lang.String%&gt; _plus_1 = (_plus + \" --\");\n&lt;%java.lang.String%&gt; _description = this.getDescription();\n&lt;%java.lang.String%&gt; _plus_2 = (_plus_1 + _description);\n&lt;%java.lang.String%&gt; _plus_3 = (_plus_2 + \"-&gt; \");\nlong _number_1 = this.getTgt().getNumber();\n&lt;%java.lang.String%&gt; _plus_4 = (_plus_3 + &lt;%java.lang.Long%&gt;.valueOf(_number_1));\nreturn (_plus_4 + \"\\n\");'"
+    * @generated
+    */
+   String toString();
+
 } // TrafoApplication

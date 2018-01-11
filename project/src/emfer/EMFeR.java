@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -11,8 +13,11 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+
+import com.google.common.base.Predicate;
 
 import emfer.EMFeR.PathTrafo;
 import emfer.ModelIsomorphismOp.CertInfo;
@@ -422,6 +427,93 @@ public class EMFeR
       {
          o.eAdapters().remove(lazyCloneOp);
       }
+   }
+
+
+
+   public ArrayList<TrafoApplication> shortestPath(Predicate<ReachableState> isTarget)
+   {
+      EList<ReachableState> states = this.getReachabilityGraph().getStates();
+
+      for (ReachableState s : states)
+      {
+         s.setMetricValue(Double.MAX_VALUE);
+      }
+      
+      LinkedList<ReachableState> todo = new LinkedList<ReachableState>();
+      
+      ReachableState targetState = null;
+      ReachableState startState = states.get(0);
+      startState.setMetricValue(0);
+      
+      todo.add(startState);
+      
+      while ( ! todo.isEmpty())
+      {
+         ReachableState current = todo.pollFirst();
+         
+         boolean isTrue = isTarget.apply(current);
+         
+         if (isTrue)
+         {
+            targetState = current;
+            break;
+         }
+         
+         for (TrafoApplication t : current.getTrafoApplications())
+         {
+            ReachableState newState = t.getTgt();
+            
+            if (newState.getMetricValue() == Double.MAX_VALUE)
+            {
+               newState.setMetricValue(current.getMetricValue() + 1);
+               todo.add(newState);
+            }
+         }
+         
+      }
+      
+      if (targetState == null)
+      {
+         return null;
+      }
+      
+      ArrayList<TrafoApplication> shortestPath = new ArrayList<TrafoApplication>();
+      
+      ReachableState current = targetState;
+      while (true)
+      {
+         double minCost = current.getMetricValue();
+         ReachableState prevState = null;
+         TrafoApplication prevTrafo = null;
+         
+         for (TrafoApplication t : current.getResultOf())
+         {
+            ReachableState newState = t.getSrc();
+            
+            if (newState.getMetricValue() < minCost)
+            {
+               prevState = newState;
+               prevTrafo = t;
+            }
+            
+            if (newState == startState)
+            {
+               break;
+            }
+         }
+         
+         shortestPath.add(0, prevTrafo);
+         
+         current = prevTrafo.getSrc();
+         
+         if (prevState == startState)
+         {
+            break;
+         }
+      }
+      
+      return shortestPath;
    }
 
 }

@@ -252,13 +252,22 @@ public interface ReachabilityPackage extends EPackage
    int TRAFO_APPLICATION_FEATURE_COUNT = 4;
 
    /**
+    * The operation id for the '<em>To String</em>' operation.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TRAFO_APPLICATION___TO_STRING = 0;
+
+   /**
     * The number of operations of the '<em>Trafo Application</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int TRAFO_APPLICATION_OPERATION_COUNT = 0;
+   int TRAFO_APPLICATION_OPERATION_COUNT = 1;
 
 
    /**
@@ -434,6 +443,16 @@ public interface ReachabilityPackage extends EPackage
    EReference getTrafoApplication_Tgt();
 
    /**
+    * Returns the meta object for the '{@link emfer.reachability.TrafoApplication#toString() <em>To String</em>}' operation.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the '<em>To String</em>' operation.
+    * @see emfer.reachability.TrafoApplication#toString()
+    * @generated
+    */
+   EOperation getTrafoApplication__ToString();
+
+   /**
     * Returns the factory that creates the instances of the model.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -590,6 +609,14 @@ public interface ReachabilityPackage extends EPackage
        * @generated
        */
       EReference TRAFO_APPLICATION__TGT = eINSTANCE.getTrafoApplication_Tgt();
+
+      /**
+       * The meta object literal for the '<em><b>To String</b></em>' operation.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EOperation TRAFO_APPLICATION___TO_STRING = eINSTANCE.getTrafoApplication__ToString();
 
    }
 

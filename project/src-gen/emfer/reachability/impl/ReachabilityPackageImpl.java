@@ -277,6 +277,16 @@ public class ReachabilityPackageImpl extends EPackageImpl implements Reachabilit
     * <!-- end-user-doc -->
     * @generated
     */
+   public EOperation getTrafoApplication__ToString()
+   {
+      return trafoApplicationEClass.getEOperations().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    public ReachabilityFactory getReachabilityFactory()
    {
       return (ReachabilityFactory)getEFactoryInstance();
@@ -320,6 +330,7 @@ public class ReachabilityPackageImpl extends EPackageImpl implements Reachabilit
       createEReference(trafoApplicationEClass, TRAFO_APPLICATION__PARENT);
       createEReference(trafoApplicationEClass, TRAFO_APPLICATION__SRC);
       createEReference(trafoApplicationEClass, TRAFO_APPLICATION__TGT);
+      createEOperation(trafoApplicationEClass, TRAFO_APPLICATION___TO_STRING);
    }
 
    /**
@@ -375,6 +386,8 @@ public class ReachabilityPackageImpl extends EPackageImpl implements Reachabilit
       initEReference(getTrafoApplication_Parent(), this.getReachabilityGraph(), this.getReachabilityGraph_TrafoApplications(), "parent", null, 0, 1, TrafoApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
       initEReference(getTrafoApplication_Src(), this.getReachableState(), this.getReachableState_TrafoApplications(), "src", null, 0, 1, TrafoApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
       initEReference(getTrafoApplication_Tgt(), this.getReachableState(), this.getReachableState_ResultOf(), "tgt", null, 0, 1, TrafoApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+      initEOperation(getTrafoApplication__ToString(), theEcorePackage.getEString(), "toString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
       // Create resource
       createResource(eNS_URI);

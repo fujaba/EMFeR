@@ -19,9 +19,11 @@ Export-Package: emfer.reachbility,
  emfer.examples.roadwork,
  emfer.examples.roadwork.impl,
  emfer.examples.roadwork.util
-Require-Bundle: org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.ocl.ecore,
+ org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.emf.ecore.xcore.lib,
- org.junit
+ org.junit,
+ org.eclipse.ocl
 Bundle-ActivationPolicy: lazy

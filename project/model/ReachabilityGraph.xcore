@@ -49,4 +49,9 @@ class TrafoApplication
 	
 	refers ReachableState tgt opposite resultOf
 	
+	op String toString()
+	{
+		return "\n" + this.src.number + " --" + description + "-> " + tgt.number + "\n"
+	}
+	
 }
