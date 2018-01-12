@@ -1,5 +1,6 @@
 package emfer.examples.tower;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -9,9 +10,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import emfer.EMFeR;
+import emfer.reachability.ReachableState;
+import emfer.reachability.TrafoApplication;
 
 public class TowerOfHanoiProblem
 {
+   private int discs;
+
+
    @Test
    public void testTowerOfHanoiProblem() throws Exception
    {
@@ -22,6 +28,7 @@ public class TowerOfHanoiProblem
 
    private void runWithNumberOfDiscs(int discs, boolean staticDiscs)
    {
+      this.discs = discs;
       TowerFactory factory = TowerFactory.eINSTANCE;
 
       Board board = factory.createBoard();
@@ -61,16 +68,65 @@ public class TowerOfHanoiProblem
 
       long time = System.currentTimeMillis();
       int size = emfer.explore();
+      float duration = (System.currentTimeMillis() - time) / 1000f;
+
+      emfer.computeDistancesTo(s -> isFinalState(s));
+
+      ArrayList<TrafoApplication> shortestPath = emfer.shortestPath(emfer.getReachabilityGraph().getStates().get(0));
+
       Logger.getGlobal().info("Exploring scenario with "
          + discs
          + " discs took "
-         + (System.currentTimeMillis() - time) / 1000f
+         + duration
          + " seconds. "
          + size
          + " states in reachability graph. Discs are static: "
-         + staticDiscs);
+         + staticDiscs
+         + " shortest path is "
+         + shortestPath.size()
+         + " steps long.");
 
       Assert.assertEquals("Number of states:", (int) Math.pow(3, discs), size);
+   }
+
+
+   private boolean isFinalState(ReachableState s)
+   {
+      EObject root = s.getRoot();
+      Board b = (Board) root;
+      Stack stack = getStackByName("C", b);
+
+      if (stack.getDiscs().size() == discs)
+      {
+         return true;
+      }
+      return false;
+   }
+
+
+   private Stack getStackByName(String stackName, Board b)
+   {
+      for (Stack s : b.getStacks())
+      {
+         if (s.getPosition().equals(stackName))
+         {
+            return s;
+         }
+      }
+      return null;
+   }
+
+
+   private Stack getStackByDisc(Disc disc, Board board)
+   {
+      for (Stack s : board.getStacks())
+      {
+         if (s.getDiscs().contains(disc))
+         {
+            return s;
+         }
+      }
+      return null;
    }
 
 
@@ -86,26 +142,11 @@ public class TowerOfHanoiProblem
 
       // disc to be moved
       Disc disc = (Disc) handle;
+      Board board = (Board) root;
 
       // get the target stack
-      Stack targetStack = null;
-      Stack currentStack = null;
-
-      for (Stack s : ((Board) root).getStacks())
-      {
-         if (s.getPosition().equals(stackName))
-         {
-            targetStack = s;
-         }
-         if (s.getDiscs().contains(disc))
-         {
-            currentStack = s;
-         }
-         if (targetStack != null && currentStack != null)
-         {
-            break;
-         }
-      }
+      Stack targetStack = getStackByName(stackName, board);
+      Stack currentStack = getStackByDisc(disc, board);
 
       for (Disc d : targetStack.getDiscs())
       {
