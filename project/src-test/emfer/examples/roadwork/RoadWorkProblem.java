@@ -171,6 +171,15 @@ public class RoadWorkProblem
       RoadMap roadMap = (RoadMap) root;
       
       Optional<Track> usedUndefTrack = roadMap.getCars().stream().map(c -> c.getTrack()).filter(t -> t.getTravelDirection() == TravelDirection.UNDEFINED).findAny();
+
+      if (usedUndefTrack.isPresent())
+      {
+         return;
+      }
+      
+      roadMap.getEasternSignal().setPass( ! roadMap.getEasternSignal().isPass());
+   
+      roadMap.getWesternSignal().setPass( ! roadMap.getWesternSignal().isPass());
    }
 
    private void moveCar(EObject root, EObject handle)

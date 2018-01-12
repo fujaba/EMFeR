@@ -389,7 +389,12 @@ public class EMFeR
                         TrafoApplication newTrafoApp = ReachabilityFactory.eINSTANCE.createTrafoApplication();
                         newTrafoApp.setSrc(current);
                         newTrafoApp.setTgt(oldState);
-                        newTrafoApp.setDescription(trafoName + " " + h);
+                        String description = trafoName;
+                        if (h != current.getRoot())
+                        {
+                           description = trafoName + " " + h;
+                        }
+                        newTrafoApp.setDescription(description);
                         reachabilityGraph.getTrafoApplications().add(newTrafoApp);
                      }
 
@@ -416,8 +421,12 @@ public class EMFeR
                TrafoApplication newTrafoApp = ReachabilityFactory.eINSTANCE.createTrafoApplication();
                newTrafoApp.setSrc(current);
                newTrafoApp.setTgt(newReachableState);
-               newTrafoApp.setDescription(trafoName + " " + h);
-               reachabilityGraph.getTrafoApplications().add(newTrafoApp);
+               String description = trafoName;
+               if (h != current.getRoot())
+               {
+                  description = trafoName + " " + h;
+               }
+               newTrafoApp.setDescription(description);reachabilityGraph.getTrafoApplications().add(newTrafoApp);
             }
          }
       }
