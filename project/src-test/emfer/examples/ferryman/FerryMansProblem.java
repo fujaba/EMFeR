@@ -67,8 +67,9 @@ public class FerryMansProblem
       
       int size = emfer.explore();
 
-
-      ArrayList<TrafoApplication> shortestPath = emfer.shortestPath(s -> isFinalState(s));
+      emfer.computeDistancesTo(s -> isFinalState(s));
+      
+      ArrayList<TrafoApplication> shortestPath = emfer.shortestPath(emfer.getReachabilityGraph().getStates().get(0));
 
       StringBuilder buf = new StringBuilder("\nShortest path: \n\n");
       

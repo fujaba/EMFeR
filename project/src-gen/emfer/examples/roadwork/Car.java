@@ -82,7 +82,7 @@ public interface Car extends EObject
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @model unique="false"
-    *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%emfer.examples.roadwork.TravelDirection%&gt; _travelDirection = this.getTravelDirection();\n&lt;%java.lang.String%&gt; result = (\"Car: \" + _travelDirection);\n&lt;%emfer.examples.roadwork.Track%&gt; _track = this.getTrack();\nboolean _tripleNotEquals = (_track != null);\nif (_tripleNotEquals)\n{\n\t&lt;%java.lang.String%&gt; _result = result;\n\t&lt;%emfer.examples.roadwork.Track%&gt; _track_1 = this.getTrack();\n\t&lt;%java.lang.String%&gt; _plus = (\" at: \" + _track_1);\n\tresult = (_result + _plus);\n}\nreturn result;'"
+    *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.lang.String%&gt; result = \"\";\n&lt;%emfer.examples.roadwork.Track%&gt; _track = this.getTrack();\nboolean _tripleNotEquals = (_track != null);\nif (_tripleNotEquals)\n{\n\t&lt;%java.lang.String%&gt; _result = result;\n\t&lt;%emfer.examples.roadwork.Track%&gt; _track_1 = this.getTrack();\n\t&lt;%java.lang.String%&gt; _plus = (\"at: \" + _track_1);\n\tresult = (_result + _plus);\n}\n&lt;%java.lang.String%&gt; _result_1 = result;\n&lt;%emfer.examples.roadwork.TravelDirection%&gt; _travelDirection = this.getTravelDirection();\n&lt;%java.lang.String%&gt; _plus_1 = (\" going \" + _travelDirection);\nresult = (_result_1 + _plus_1);\nreturn result;'"
     * @generated
     */
    String toString();

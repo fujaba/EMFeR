@@ -389,7 +389,7 @@ public class EMFeR
                         TrafoApplication newTrafoApp = ReachabilityFactory.eINSTANCE.createTrafoApplication();
                         newTrafoApp.setSrc(current);
                         newTrafoApp.setTgt(oldState);
-                        newTrafoApp.setDescription(trafoName);
+                        newTrafoApp.setDescription(trafoName + " " + h);
                         reachabilityGraph.getTrafoApplications().add(newTrafoApp);
                      }
 
@@ -416,7 +416,7 @@ public class EMFeR
                TrafoApplication newTrafoApp = ReachabilityFactory.eINSTANCE.createTrafoApplication();
                newTrafoApp.setSrc(current);
                newTrafoApp.setTgt(newReachableState);
-               newTrafoApp.setDescription(trafoName);
+               newTrafoApp.setDescription(trafoName + " " + h);
                reachabilityGraph.getTrafoApplications().add(newTrafoApp);
             }
          }
@@ -431,38 +431,32 @@ public class EMFeR
 
 
 
-   public ArrayList<TrafoApplication> shortestPath(Predicate<ReachableState> isTarget)
-   {
+   public void computeDistancesTo(Predicate<ReachableState> isTarget)
+   {  
       EList<ReachableState> states = this.getReachabilityGraph().getStates();
+      
+      LinkedList<ReachableState> todo = new LinkedList<ReachableState>();
 
       for (ReachableState s : states)
       {
-         s.setMetricValue(Double.MAX_VALUE);
+         if (isTarget.apply(s))
+         {
+            s.setMetricValue(0);
+            todo.add(s);
+         }
+         else
+         {
+            s.setMetricValue(Double.MAX_VALUE);
+         }
       }
-      
-      LinkedList<ReachableState> todo = new LinkedList<ReachableState>();
-      
-      ReachableState targetState = null;
-      ReachableState startState = states.get(0);
-      startState.setMetricValue(0);
-      
-      todo.add(startState);
       
       while ( ! todo.isEmpty())
       {
          ReachableState current = todo.pollFirst();
          
-         boolean isTrue = isTarget.apply(current);
-         
-         if (isTrue)
+         for (TrafoApplication t : current.getResultOf())
          {
-            targetState = current;
-            break;
-         }
-         
-         for (TrafoApplication t : current.getTrafoApplications())
-         {
-            ReachableState newState = t.getTgt();
+            ReachableState newState = t.getSrc();
             
             if (newState.getMetricValue() == Double.MAX_VALUE)
             {
@@ -472,42 +466,44 @@ public class EMFeR
          }
          
       }
-      
-      if (targetState == null)
-      {
-         return null;
-      }
-      
+   }
+
+
+
+   public ArrayList<TrafoApplication> shortestPath(ReachableState start)
+   {
       ArrayList<TrafoApplication> shortestPath = new ArrayList<TrafoApplication>();
       
-      ReachableState current = targetState;
+      ReachableState current = start;
+      
       while (true)
       {
          double minCost = current.getMetricValue();
-         ReachableState prevState = null;
-         TrafoApplication prevTrafo = null;
+         ReachableState nextState = null;
+         TrafoApplication nextTrafo = null;
          
-         for (TrafoApplication t : current.getResultOf())
+         for (TrafoApplication t : current.getTrafoApplications())
          {
-            ReachableState newState = t.getSrc();
+            ReachableState newState = t.getTgt();
             
             if (newState.getMetricValue() < minCost)
             {
-               prevState = newState;
-               prevTrafo = t;
-            }
-            
-            if (newState == startState)
-            {
-               break;
+               nextState = newState;
+               nextTrafo = t;
+               minCost = newState.getMetricValue();
             }
          }
          
-         shortestPath.add(0, prevTrafo);
+         if (nextState == null)
+         {
+            break;
+         }
          
-         current = prevTrafo.getSrc();
+         shortestPath.add(nextTrafo);
          
-         if (prevState == startState)
+         current = nextTrafo.getTgt();
+         
+         if (minCost == 0)
          {
             break;
          }

@@ -260,7 +260,7 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
       StringBuilder bufNorthCars = new StringBuilder("-------\n");
       StringBuilder bufSouthCars = new StringBuilder("--/ \\--\n");
       StringBuilder bufSouthSignal = new StringBuilder("       \n");
-      boolean _isPass = this.getWesternSignal().isPass();
+      boolean _isPass = this.getEasternSignal().isPass();
       if (_isPass)
       {
          bufNorthSignal.setCharAt(5, 'T');
@@ -269,7 +269,7 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
       {
          bufNorthSignal.setCharAt(5, 'F');
       }
-      boolean _isPass_1 = this.getEasternSignal().isPass();
+      boolean _isPass_1 = this.getWesternSignal().isPass();
       if (_isPass_1)
       {
          bufSouthSignal.setCharAt(1, 'T');

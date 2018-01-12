@@ -159,17 +159,20 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car
     */
    public String toString()
    {
-      TravelDirection _travelDirection = this.getTravelDirection();
-      String result = ("Car: " + _travelDirection);
+      String result = "";
       Track _track = this.getTrack();
       boolean _tripleNotEquals = (_track != null);
       if (_tripleNotEquals)
       {
          String _result = result;
          Track _track_1 = this.getTrack();
-         String _plus = (" at: " + _track_1);
+         String _plus = ("at: " + _track_1);
          result = (_result + _plus);
       }
+      String _result_1 = result;
+      TravelDirection _travelDirection = this.getTravelDirection();
+      String _plus_1 = (" going " + _travelDirection);
+      result = (_result_1 + _plus_1);
       return result;
    }
 

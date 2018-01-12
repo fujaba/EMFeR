@@ -17,7 +17,7 @@ class RoadMap
 		var bufSouthCars = new StringBuilder("--/ \\--\n")
 		var bufSouthSignal = new StringBuilder("       \n")
 		
-		if (westernSignal.pass)
+		if (easternSignal.pass)
 		{
 			bufNorthSignal.setCharAt(5, 'T')
 		}
@@ -26,7 +26,7 @@ class RoadMap
 			bufNorthSignal.setCharAt(5, 'F')			
 		}
 		
-		if (easternSignal.pass)
+		if (westernSignal.pass)
 		{
 			bufSouthSignal.setCharAt(1, 'T')
 		}
@@ -95,12 +95,14 @@ class Car
 	
 	op String toString()
 	{
-		var String result = "Car: " + travelDirection
+		var String result = "" 
 		
 		if (track !== null)
 		{
-			result += " at: " + track
+			result += "at: " + track
 		}
+		
+		result += " going " + travelDirection
 		
 		return result;
 	}

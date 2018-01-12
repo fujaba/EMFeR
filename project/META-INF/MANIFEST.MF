@@ -9,7 +9,7 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: emfer.examples.tower,
  emfer.examples.tower.impl,
- emfer.examples.tower.util, 
+ emfer.examples.tower.util,
  emfer.examples.roadwork,
  emfer.examples.roadwork.impl,
  emfer.examples.roadwork.util,
