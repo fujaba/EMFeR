@@ -2,6 +2,7 @@ package emfer.examples.roadwork;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -11,7 +12,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.junit.Assert;
 import org.junit.Test;
 
+import emfer.AlwaysFinally;
+import emfer.AlwaysGlobally;
 import emfer.EMFeR;
+import emfer.ExistsFinally;
+import emfer.ExistsGlobally;
 import emfer.examples.ferryman.FerrymanPackage;
 import emfer.reachability.ReachableState;
 import emfer.reachability.TrafoApplication;
@@ -51,6 +56,7 @@ public class RoadWorkProblem
       north4.getWest().add(north5);
       north5.getWest().add(north6);
       north6.getWest().add(north7);
+      north7.getWest().add(north1);
       
       north1.setTravelDirection(TravelDirection.WEST);
       north2.setTravelDirection(TravelDirection.WEST);
@@ -73,6 +79,7 @@ public class RoadWorkProblem
       south2.getEast().add(north5);
       north3.getEast().add(south6);
       south6.getEast().add(south7);
+      south7.getEast().add(south1);
 
       south1.setTravelDirection(TravelDirection.EAST);
       south2.setTravelDirection(TravelDirection.EAST);
@@ -88,7 +95,7 @@ public class RoadWorkProblem
       Signal easternSignal = factory.createSignal();
 
       westernSignal.setTrack(south2);
-      easternSignal.setTrack(north6);
+      easternSignal.setTrack(north2);
 
       westernSignal.setPass(false);
       easternSignal.setPass(true); 
@@ -161,8 +168,76 @@ public class RoadWorkProblem
          Logger.getGlobal().info(buf.toString());
       }
       
-   
+      // let's do some computational tree logic 
+      ReachableState startState = emfer.getReachabilityGraph().getStates().get(0);
+      
+      boolean noDeadLock = new AlwaysGlobally().test(startState, s -> ! isCarDeadLock(s));
+      assertTrue("noDeadLock", noDeadLock);
+
+      AlwaysFinally alwaysFinally = new AlwaysFinally();
+      boolean finallyClear = alwaysFinally.test(startState, s -> isRoadWorkClear(s));
+      assertTrue("finallyClear", finallyClear);
+
+      boolean finallyEastPasses = alwaysFinally.test(startState, s -> isEastCarPasses(s));
+      assertFalse("finallyEastPasses", finallyEastPasses);
+      
+      ExistsFinally existsFinally = new ExistsFinally();
+      finallyEastPasses = existsFinally.test(startState, s -> isEastCarPasses(s));
+      assertTrue("finallyEastPasses", finallyEastPasses);
+
+      boolean deadLock = existsFinally.test(startState, s -> isCarDeadLock(s));
+      assertFalse("finallyEastPasses", deadLock);
+      
+      ExistsGlobally existsGlobally = new ExistsGlobally();
+      boolean existGloballyEastPassing = existsGlobally.test(startState, s -> isEasternSignalPassing(s));
+      assertTrue("existGloballyEastPassing", existGloballyEastPassing);
+      
+      boolean existGloballyRoadWorkClear = existsGlobally.test(startState, s -> isRoadWorkClear(s) && isEasternSignalPassing(s));
+      assertFalse("existGloballyRoadWorkClear", existGloballyRoadWorkClear);
+
       story.dumpHtml();
+   }
+
+   private boolean isEasternSignalPassing(ReachableState s)
+   {
+      RoadMap roadMap = (RoadMap) s.getRoot();
+      
+      return roadMap.getEasternSignal().isPass();
+   }
+
+   private boolean isEastCarPasses(ReachableState s)
+   {
+      RoadMap roadMap = (RoadMap) s.getRoot();
+
+      Optional<Car> eastCar = roadMap.getCars().stream()
+            .filter(c -> c.getTravelDirection() == TravelDirection.EAST).findAny();
+
+      Car car = eastCar.get();
+      
+      return car.getTrack().getTravelDirection() == TravelDirection.UNDEFINED;
+   }
+
+   private boolean isRoadWorkClear(ReachableState s)
+   {
+      RoadMap roadMap = (RoadMap) s.getRoot();
+
+      long count = roadMap.getCars().stream()
+            .filter(c -> c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED)
+            .count();
+
+      return count == 0;
+   }
+
+   private boolean isCarDeadLock(ReachableState s)
+   {
+      RoadMap roadMap = (RoadMap) s.getRoot();
+      
+      long count = roadMap.getCars().stream()
+            .filter(c -> c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED)
+            .map(c -> c.getTravelDirection())
+            .count();
+      
+      return count >= 2;
    }
 
    private void swapSignals(EObject root)
