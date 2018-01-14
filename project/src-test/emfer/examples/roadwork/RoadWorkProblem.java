@@ -14,9 +14,11 @@ import org.junit.Test;
 
 import emfer.AlwaysFinally;
 import emfer.AlwaysGlobally;
+import emfer.AlwaysNext;
 import emfer.EMFeR;
 import emfer.ExistsFinally;
 import emfer.ExistsGlobally;
+import emfer.ExistsNext;
 import emfer.examples.ferryman.FerrymanPackage;
 import emfer.reachability.ReachableState;
 import emfer.reachability.TrafoApplication;
@@ -194,6 +196,16 @@ public class RoadWorkProblem
       
       boolean existGloballyRoadWorkClear = existsGlobally.test(startState, s -> isRoadWorkClear(s) && isEasternSignalPassing(s));
       assertFalse("existGloballyRoadWorkClear", existGloballyRoadWorkClear);
+      
+      ExistsNext existsNext = new ExistsNext();
+      boolean westGetsGreen = existsNext.test(emfer.getReachabilityGraph().getStates().get(1), 
+         s -> ! isEasternSignalPassing(s));
+      assertTrue("existGloballyEastPassing", existGloballyEastPassing);
+
+      AlwaysNext alwaysNext = new AlwaysNext();
+      boolean noSignalChangeWhileCarInRoadWork = alwaysNext.test(emfer.getReachabilityGraph().getStates().get(6), 
+         s -> isEasternSignalPassing(s));
+      assertTrue("noSignalChangeWhileCarInRoadWork", noSignalChangeWhileCarInRoadWork);
 
       story.dumpHtml();
    }
