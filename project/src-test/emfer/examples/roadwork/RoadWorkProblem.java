@@ -15,10 +15,12 @@ import org.junit.Test;
 import emfer.AlwaysFinally;
 import emfer.AlwaysGlobally;
 import emfer.AlwaysNext;
+import emfer.AlwaysUntil;
 import emfer.EMFeR;
 import emfer.ExistsFinally;
 import emfer.ExistsGlobally;
 import emfer.ExistsNext;
+import emfer.ExistsUntil;
 import emfer.examples.ferryman.FerrymanPackage;
 import emfer.reachability.ReachableState;
 import emfer.reachability.TrafoApplication;
@@ -207,6 +209,23 @@ public class RoadWorkProblem
          s -> isEasternSignalPassing(s));
       assertTrue("noSignalChangeWhileCarInRoadWork", noSignalChangeWhileCarInRoadWork);
 
+      AlwaysUntil alwaysUntil = new AlwaysUntil();
+      boolean carWillLeaveRoadWork = alwaysUntil.test(emfer.getReachabilityGraph().getStates().get(6), 
+         s-> ! isRoadWorkClear(s), 
+         s-> isRoadWorkClear(s));
+      assertTrue("carWillLeaveRoadWork", carWillLeaveRoadWork);
+
+      boolean alwaysRoadWorkIsEntered = alwaysUntil.test(startState, 
+         s-> isRoadWorkClear(s), 
+         s-> ! isRoadWorkClear(s));
+      assertFalse("alwaysRoadWorkIsEntered", alwaysRoadWorkIsEntered);
+
+      ExistsUntil existsUntil = new ExistsUntil();
+      boolean itsPossibleToEnterTheRoadWork = existsUntil.test(startState, 
+         s-> isRoadWorkClear(s), 
+         s-> ! isRoadWorkClear(s));
+      assertTrue("itsPossibleToEnterTheRoadWork", itsPossibleToEnterTheRoadWork);
+      
       story.dumpHtml();
    }
 
