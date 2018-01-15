@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8">
-<link rel="stylesheet" href="includes/alchemy.css">
-<link rel="stylesheet" type="text/css" href="includes/vendor.css">
-<script type="text/javascript" src="includes/vendor.js"></script>
-<script type="text/javascript" src="includes/alchemy.js"></script>
 </head>
 <body>
 <h2>RoadWorkProblem</h2>
@@ -20,1028 +16,714 @@ E-/ \--
 <p>
 <pre>
 
-4 --swap Signals-> 1
-24 --move car at: Track: n7 going WEST-> 1
-36 --move car at: Track: s7 going EAST-> 1
+22 --move car at: Track: n7 going WEST-> 1
+56 --move car at: Track: s7 going EAST-> 1
      T 
 ------W
 E-/ \--
  F     
 1 --move car at: Track: s1 going EAST-> 2
 1 --move car at: Track: n1 going WEST-> 3
-1 --swap Signals-> 4
 </pre>
 </p>
 <p>
 <pre>
 
 1 --move car at: Track: s1 going EAST-> 2
-6 --swap Signals-> 2
-26 --move car at: Track: n7 going WEST-> 2
+23 --move car at: Track: n7 going WEST-> 2
      T 
 ------W
 -E/ \--
  F     
-2 --move car at: Track: n1 going WEST-> 5
-2 --swap Signals-> 6
+2 --move car at: Track: n1 going WEST-> 4
+2 --swap Signals-> 5
 </pre>
 </p>
 <p>
 <pre>
 
 1 --move car at: Track: n1 going WEST-> 3
-8 --swap Signals-> 3
-39 --move car at: Track: s7 going EAST-> 3
+34 --swap Signals-> 3
+35 --move car at: Track: s7 going EAST-> 3
      T 
 -----W-
 E-/ \--
  F     
-3 --move car at: Track: s1 going EAST-> 5
-3 --move car at: Track: n2 going WEST-> 7
-3 --swap Signals-> 8
+3 --move car at: Track: s1 going EAST-> 4
+3 --move car at: Track: n2 going WEST-> 6
 </pre>
 </p>
 <p>
 <pre>
 
-1 --swap Signals-> 4
-29 --move car at: Track: s7 going EAST-> 4
-31 --move car at: Track: n7 going WEST-> 4
-     F 
-------W
-E-/ \--
- T     
-4 --move car at: Track: s1 going EAST-> 6
-4 --move car at: Track: n1 going WEST-> 8
-4 --swap Signals-> 1
-</pre>
-</p>
-<p>
-<pre>
-
-2 --move car at: Track: n1 going WEST-> 5
-3 --move car at: Track: s1 going EAST-> 5
-10 --swap Signals-> 5
+2 --move car at: Track: n1 going WEST-> 4
+3 --move car at: Track: s1 going EAST-> 4
      T 
 -----W-
 -E/ \--
  F     
-5 --move car at: Track: n2 going WEST-> 9
-5 --swap Signals-> 10
+4 --move car at: Track: n2 going WEST-> 7
 </pre>
 </p>
 <p>
 <pre>
 
-2 --swap Signals-> 6
-4 --move car at: Track: s1 going EAST-> 6
-32 --move car at: Track: n7 going WEST-> 6
+2 --swap Signals-> 5
+27 --move car at: Track: n7 going WEST-> 5
+31 --move car at: Track: s1 going EAST-> 5
      F 
 ------W
 -E/ \--
  T     
-6 --move car at: Track: n1 going WEST-> 10
-6 --move car at: Track: s2 going EAST-> 11
-6 --swap Signals-> 2
+5 --move car at: Track: n1 going WEST-> 8
+5 --move car at: Track: s2 going EAST-> 9
 </pre>
 </p>
 <p>
 <pre>
 
-3 --move car at: Track: n2 going WEST-> 7
-43 --move car at: Track: s7 going EAST-> 7
+3 --move car at: Track: n2 going WEST-> 6
+39 --move car at: Track: s7 going EAST-> 6
      T 
 ----W--
 E-/ \--
  F     
-7 --move car at: Track: s1 going EAST-> 9
-7 --move car at: Track: n3 going WEST-> 12
+6 --move car at: Track: s1 going EAST-> 7
+6 --move car at: Track: n3 going WEST-> 10
 </pre>
 </p>
 <p>
 <pre>
 
-3 --swap Signals-> 8
-4 --move car at: Track: n1 going WEST-> 8
-34 --move car at: Track: s7 going EAST-> 8
-     F 
------W-
-E-/ \--
- T     
-8 --move car at: Track: s1 going EAST-> 10
-8 --swap Signals-> 3
-</pre>
-</p>
-<p>
-<pre>
-
-5 --move car at: Track: n2 going WEST-> 9
-7 --move car at: Track: s1 going EAST-> 9
+4 --move car at: Track: n2 going WEST-> 7
+6 --move car at: Track: s1 going EAST-> 7
      T 
 ----W--
 -E/ \--
  F     
-9 --move car at: Track: n3 going WEST-> 13
+7 --move car at: Track: n3 going WEST-> 11
 </pre>
 </p>
 <p>
 <pre>
 
-5 --swap Signals-> 10
-6 --move car at: Track: n1 going WEST-> 10
-8 --move car at: Track: s1 going EAST-> 10
+5 --move car at: Track: n1 going WEST-> 8
+34 --move car at: Track: s1 going EAST-> 8
      F 
 -----W-
 -E/ \--
  T     
-10 --move car at: Track: s2 going EAST-> 14
-10 --swap Signals-> 5
+8 --move car at: Track: s2 going EAST-> 12
 </pre>
 </p>
 <p>
 <pre>
 
-6 --move car at: Track: s2 going EAST-> 11
-37 --move car at: Track: n7 going WEST-> 11
+5 --move car at: Track: s2 going EAST-> 9
+32 --move car at: Track: n7 going WEST-> 9
      F 
 --E---W
 --/ \--
  T     
-11 --move car at: Track: n1 going WEST-> 14
-11 --move car at: Track: n5 going EAST-> 15
+9 --move car at: Track: n1 going WEST-> 12
+9 --move car at: Track: n5 going EAST-> 13
 </pre>
 </p>
 <p>
 <pre>
 
-7 --move car at: Track: n3 going WEST-> 12
-47 --move car at: Track: s7 going EAST-> 12
+6 --move car at: Track: n3 going WEST-> 10
+43 --move car at: Track: s7 going EAST-> 10
      T 
 ---W---
 E-/ \--
  F     
-12 --move car at: Track: s1 going EAST-> 13
-12 --move car at: Track: n4 going WEST-> 16
+10 --move car at: Track: s1 going EAST-> 11
+10 --move car at: Track: n4 going WEST-> 14
 </pre>
 </p>
 <p>
 <pre>
 
-9 --move car at: Track: n3 going WEST-> 13
-12 --move car at: Track: s1 going EAST-> 13
+7 --move car at: Track: n3 going WEST-> 11
+10 --move car at: Track: s1 going EAST-> 11
      T 
 ---W---
 -E/ \--
  F     
-13 --move car at: Track: n4 going WEST-> 17
+11 --move car at: Track: n4 going WEST-> 15
 </pre>
 </p>
 <p>
 <pre>
 
-10 --move car at: Track: s2 going EAST-> 14
-11 --move car at: Track: n1 going WEST-> 14
+8 --move car at: Track: s2 going EAST-> 12
+9 --move car at: Track: n1 going WEST-> 12
      F 
 --E--W-
 --/ \--
  T     
-14 --move car at: Track: n5 going EAST-> 18
+12 --move car at: Track: n5 going EAST-> 16
 </pre>
 </p>
 <p>
 <pre>
 
-11 --move car at: Track: n5 going EAST-> 15
-41 --move car at: Track: n7 going WEST-> 15
+9 --move car at: Track: n5 going EAST-> 13
+37 --move car at: Track: n7 going WEST-> 13
      F 
 ---E--W
 --/ \--
  T     
-15 --move car at: Track: n1 going WEST-> 18
-15 --move car at: Track: n4 going EAST-> 19
+13 --move car at: Track: n1 going WEST-> 16
+13 --move car at: Track: n4 going EAST-> 17
 </pre>
 </p>
 <p>
 <pre>
 
-12 --move car at: Track: n4 going WEST-> 16
-52 --move car at: Track: s7 going EAST-> 16
+10 --move car at: Track: n4 going WEST-> 14
+47 --move car at: Track: s7 going EAST-> 14
      T 
 --W----
 E-/ \--
  F     
-16 --move car at: Track: s1 going EAST-> 17
-16 --move car at: Track: n5 going WEST-> 20
+14 --move car at: Track: s1 going EAST-> 15
+14 --move car at: Track: n5 going WEST-> 18
 </pre>
 </p>
 <p>
 <pre>
 
-13 --move car at: Track: n4 going WEST-> 17
-16 --move car at: Track: s1 going EAST-> 17
+11 --move car at: Track: n4 going WEST-> 15
+14 --move car at: Track: s1 going EAST-> 15
      T 
 --W----
 -E/ \--
  F     
-17 --move car at: Track: n5 going WEST-> 21
+15 --move car at: Track: n5 going WEST-> 19
 </pre>
 </p>
 <p>
 <pre>
 
-14 --move car at: Track: n5 going EAST-> 18
-15 --move car at: Track: n1 going WEST-> 18
+12 --move car at: Track: n5 going EAST-> 16
+13 --move car at: Track: n1 going WEST-> 16
      F 
 ---E-W-
 --/ \--
  T     
-18 --move car at: Track: n4 going EAST-> 22
+16 --move car at: Track: n4 going EAST-> 20
 </pre>
 </p>
 <p>
 <pre>
 
-15 --move car at: Track: n4 going EAST-> 19
-45 --move car at: Track: n7 going WEST-> 19
+13 --move car at: Track: n4 going EAST-> 17
+41 --move car at: Track: n7 going WEST-> 17
      F 
 ----E-W
 --/ \--
  T     
-19 --move car at: Track: n1 going WEST-> 22
-19 --move car at: Track: n3 going EAST-> 23
+17 --move car at: Track: n1 going WEST-> 20
+17 --move car at: Track: n3 going EAST-> 21
 </pre>
 </p>
 <p>
 <pre>
 
-16 --move car at: Track: n5 going WEST-> 20
-25 --swap Signals-> 20
-55 --move car at: Track: s7 going EAST-> 20
+14 --move car at: Track: n5 going WEST-> 18
+51 --move car at: Track: s7 going EAST-> 18
      T 
 -W-----
 E-/ \--
  F     
-20 --move car at: Track: s1 going EAST-> 21
-20 --move car at: Track: n6 going WEST-> 24
-20 --swap Signals-> 25
+18 --move car at: Track: s1 going EAST-> 19
+18 --move car at: Track: n6 going WEST-> 22
 </pre>
 </p>
 <p>
 <pre>
 
-17 --move car at: Track: n5 going WEST-> 21
-20 --move car at: Track: s1 going EAST-> 21
-27 --swap Signals-> 21
+15 --move car at: Track: n5 going WEST-> 19
+18 --move car at: Track: s1 going EAST-> 19
      T 
 -W-----
 -E/ \--
  F     
-21 --move car at: Track: n6 going WEST-> 26
-21 --swap Signals-> 27
+19 --move car at: Track: n6 going WEST-> 23
+19 --swap Signals-> 24
 </pre>
 </p>
 <p>
 <pre>
 
-18 --move car at: Track: n4 going EAST-> 22
-19 --move car at: Track: n1 going WEST-> 22
+16 --move car at: Track: n4 going EAST-> 20
+17 --move car at: Track: n1 going WEST-> 20
      F 
 ----EW-
 --/ \--
  T     
-22 --move car at: Track: n3 going EAST-> 28
+20 --move car at: Track: n3 going EAST-> 25
 </pre>
 </p>
 <p>
 <pre>
 
-19 --move car at: Track: n3 going EAST-> 23
-30 --swap Signals-> 23
-49 --move car at: Track: n7 going WEST-> 23
+17 --move car at: Track: n3 going EAST-> 21
+45 --move car at: Track: n7 going WEST-> 21
      F 
 ------W
 --/ \E-
  T     
-23 --move car at: Track: n1 going WEST-> 28
-23 --move car at: Track: s6 going EAST-> 29
-23 --swap Signals-> 30
+21 --move car at: Track: n1 going WEST-> 25
+21 --move car at: Track: s6 going EAST-> 26
 </pre>
 </p>
 <p>
 <pre>
 
-20 --move car at: Track: n6 going WEST-> 24
-31 --swap Signals-> 24
-56 --move car at: Track: s7 going EAST-> 24
+18 --move car at: Track: n6 going WEST-> 22
+54 --move car at: Track: s7 going EAST-> 22
      T 
 W------
 E-/ \--
  F     
-24 --move car at: Track: s1 going EAST-> 26
-24 --move car at: Track: n7 going WEST-> 1
-24 --swap Signals-> 31
+22 --move car at: Track: s1 going EAST-> 23
+22 --move car at: Track: n7 going WEST-> 1
 </pre>
 </p>
 <p>
 <pre>
 
-20 --swap Signals-> 25
-50 --move car at: Track: s7 going EAST-> 25
-     F 
--W-----
-E-/ \--
- T     
-25 --move car at: Track: s1 going EAST-> 27
-25 --move car at: Track: n6 going WEST-> 31
-25 --swap Signals-> 20
-</pre>
-</p>
-<p>
-<pre>
-
-21 --move car at: Track: n6 going WEST-> 26
-24 --move car at: Track: s1 going EAST-> 26
-32 --swap Signals-> 26
+19 --move car at: Track: n6 going WEST-> 23
+22 --move car at: Track: s1 going EAST-> 23
      T 
 W------
 -E/ \--
  F     
-26 --move car at: Track: n7 going WEST-> 2
-26 --swap Signals-> 32
+23 --move car at: Track: n7 going WEST-> 2
+23 --swap Signals-> 27
 </pre>
 </p>
 <p>
 <pre>
 
-21 --swap Signals-> 27
-25 --move car at: Track: s1 going EAST-> 27
+19 --swap Signals-> 24
+50 --move car at: Track: s1 going EAST-> 24
      F 
 -W-----
 -E/ \--
  T     
-27 --move car at: Track: s2 going EAST-> 33
-27 --move car at: Track: n6 going WEST-> 32
-27 --swap Signals-> 21
+24 --move car at: Track: s2 going EAST-> 28
+24 --move car at: Track: n6 going WEST-> 27
 </pre>
 </p>
 <p>
 <pre>
 
-22 --move car at: Track: n3 going EAST-> 28
-23 --move car at: Track: n1 going WEST-> 28
-35 --swap Signals-> 28
+20 --move car at: Track: n3 going EAST-> 25
+21 --move car at: Track: n1 going WEST-> 25
      F 
 -----W-
 --/ \E-
  T     
-28 --move car at: Track: s6 going EAST-> 34
-28 --swap Signals-> 35
+25 --move car at: Track: s6 going EAST-> 29
+25 --swap Signals-> 30
 </pre>
 </p>
 <p>
 <pre>
 
-23 --move car at: Track: s6 going EAST-> 29
-36 --swap Signals-> 29
-53 --move car at: Track: n7 going WEST-> 29
+21 --move car at: Track: s6 going EAST-> 26
+49 --move car at: Track: n7 going WEST-> 26
      F 
 ------W
 --/ \-E
  T     
-29 --move car at: Track: n1 going WEST-> 34
-29 --move car at: Track: s7 going EAST-> 4
-29 --swap Signals-> 36
+26 --move car at: Track: n1 going WEST-> 29
+26 --move car at: Track: s7 going EAST-> 31
 </pre>
 </p>
 <p>
 <pre>
 
-23 --swap Signals-> 30
-54 --move car at: Track: n7 going WEST-> 30
-     T 
-------W
---/ \E-
- F     
-30 --move car at: Track: n1 going WEST-> 35
-30 --move car at: Track: s6 going EAST-> 36
-30 --swap Signals-> 23
-</pre>
-</p>
-<p>
-<pre>
-
-24 --swap Signals-> 31
-25 --move car at: Track: n6 going WEST-> 31
-53 --move car at: Track: s7 going EAST-> 31
-     F 
-W------
-E-/ \--
- T     
-31 --move car at: Track: s1 going EAST-> 32
-31 --move car at: Track: n7 going WEST-> 4
-31 --swap Signals-> 24
-</pre>
-</p>
-<p>
-<pre>
-
-26 --swap Signals-> 32
-27 --move car at: Track: n6 going WEST-> 32
-31 --move car at: Track: s1 going EAST-> 32
+23 --swap Signals-> 27
+24 --move car at: Track: n6 going WEST-> 27
+53 --move car at: Track: s1 going EAST-> 27
      F 
 W------
 -E/ \--
  T     
-32 --move car at: Track: s2 going EAST-> 37
-32 --move car at: Track: n7 going WEST-> 6
-32 --swap Signals-> 26
+27 --move car at: Track: s2 going EAST-> 32
+27 --move car at: Track: n7 going WEST-> 5
 </pre>
 </p>
 <p>
 <pre>
 
-27 --move car at: Track: s2 going EAST-> 33
+24 --move car at: Track: s2 going EAST-> 28
      F 
 -WE----
 --/ \--
  T     
-33 --move car at: Track: n6 going WEST-> 37
-33 --move car at: Track: n5 going EAST-> 38
+28 --move car at: Track: n6 going WEST-> 32
+28 --move car at: Track: n5 going EAST-> 33
 </pre>
 </p>
 <p>
 <pre>
 
-28 --move car at: Track: s6 going EAST-> 34
-29 --move car at: Track: n1 going WEST-> 34
-39 --swap Signals-> 34
+25 --move car at: Track: s6 going EAST-> 29
+26 --move car at: Track: n1 going WEST-> 29
      F 
 -----W-
 --/ \-E
  T     
-34 --move car at: Track: s7 going EAST-> 8
-34 --swap Signals-> 39
+29 --move car at: Track: s7 going EAST-> 34
+29 --swap Signals-> 35
 </pre>
 </p>
 <p>
 <pre>
 
-28 --swap Signals-> 35
-30 --move car at: Track: n1 going WEST-> 35
+25 --swap Signals-> 30
+55 --move car at: Track: n1 going WEST-> 30
      T 
 -----W-
 --/ \E-
  F     
-35 --move car at: Track: n2 going WEST-> 40
-35 --move car at: Track: s6 going EAST-> 39
-35 --swap Signals-> 28
+30 --move car at: Track: n2 going WEST-> 36
+30 --move car at: Track: s6 going EAST-> 35
 </pre>
 </p>
 <p>
 <pre>
 
-29 --swap Signals-> 36
-30 --move car at: Track: s6 going EAST-> 36
-56 --move car at: Track: n7 going WEST-> 36
-     T 
+26 --move car at: Track: s7 going EAST-> 31
+53 --move car at: Track: n7 going WEST-> 31
+     F 
 ------W
---/ \-E
- F     
-36 --move car at: Track: n1 going WEST-> 39
-36 --move car at: Track: s7 going EAST-> 1
-36 --swap Signals-> 29
+E-/ \--
+ T     
+31 --move car at: Track: n1 going WEST-> 34
+31 --move car at: Track: s1 going EAST-> 5
 </pre>
 </p>
 <p>
 <pre>
 
-32 --move car at: Track: s2 going EAST-> 37
-33 --move car at: Track: n6 going WEST-> 37
+27 --move car at: Track: s2 going EAST-> 32
+28 --move car at: Track: n6 going WEST-> 32
      F 
 W-E----
 --/ \--
  T     
-37 --move car at: Track: n7 going WEST-> 11
-37 --move car at: Track: n5 going EAST-> 41
+32 --move car at: Track: n7 going WEST-> 9
+32 --move car at: Track: n5 going EAST-> 37
 </pre>
 </p>
 <p>
 <pre>
 
-33 --move car at: Track: n5 going EAST-> 38
+28 --move car at: Track: n5 going EAST-> 33
      F 
 -W-E---
 --/ \--
  T     
-38 --move car at: Track: n6 going WEST-> 41
-38 --move car at: Track: n4 going EAST-> 42
+33 --move car at: Track: n6 going WEST-> 37
+33 --move car at: Track: n4 going EAST-> 38
 </pre>
 </p>
 <p>
 <pre>
 
-34 --swap Signals-> 39
-35 --move car at: Track: s6 going EAST-> 39
-36 --move car at: Track: n1 going WEST-> 39
+29 --move car at: Track: s7 going EAST-> 34
+31 --move car at: Track: n1 going WEST-> 34
+     F 
+-----W-
+E-/ \--
+ T     
+34 --move car at: Track: s1 going EAST-> 8
+34 --swap Signals-> 3
+</pre>
+</p>
+<p>
+<pre>
+
+29 --swap Signals-> 35
+30 --move car at: Track: s6 going EAST-> 35
+56 --move car at: Track: n1 going WEST-> 35
      T 
 -----W-
 --/ \-E
  F     
-39 --move car at: Track: n2 going WEST-> 43
-39 --move car at: Track: s7 going EAST-> 3
-39 --swap Signals-> 34
+35 --move car at: Track: n2 going WEST-> 39
+35 --move car at: Track: s7 going EAST-> 3
 </pre>
 </p>
 <p>
 <pre>
 
-35 --move car at: Track: n2 going WEST-> 40
+30 --move car at: Track: n2 going WEST-> 36
      T 
 ----W--
 --/ \E-
  F     
-40 --move car at: Track: s6 going EAST-> 43
-40 --move car at: Track: n3 going WEST-> 44
+36 --move car at: Track: s6 going EAST-> 39
+36 --move car at: Track: n3 going WEST-> 40
 </pre>
 </p>
 <p>
 <pre>
 
-37 --move car at: Track: n5 going EAST-> 41
-38 --move car at: Track: n6 going WEST-> 41
+32 --move car at: Track: n5 going EAST-> 37
+33 --move car at: Track: n6 going WEST-> 37
      F 
 W--E---
 --/ \--
  T     
-41 --move car at: Track: n7 going WEST-> 15
-41 --move car at: Track: n4 going EAST-> 45
+37 --move car at: Track: n7 going WEST-> 13
+37 --move car at: Track: n4 going EAST-> 41
 </pre>
 </p>
 <p>
 <pre>
 
-38 --move car at: Track: n4 going EAST-> 42
+33 --move car at: Track: n4 going EAST-> 38
      F 
 -W--E--
 --/ \--
  T     
-42 --move car at: Track: n6 going WEST-> 45
-42 --move car at: Track: n3 going EAST-> 46
+38 --move car at: Track: n6 going WEST-> 41
+38 --move car at: Track: n3 going EAST-> 42
 </pre>
 </p>
 <p>
 <pre>
 
-39 --move car at: Track: n2 going WEST-> 43
-40 --move car at: Track: s6 going EAST-> 43
+35 --move car at: Track: n2 going WEST-> 39
+36 --move car at: Track: s6 going EAST-> 39
      T 
 ----W--
 --/ \-E
  F     
-43 --move car at: Track: s7 going EAST-> 7
-43 --move car at: Track: n3 going WEST-> 47
+39 --move car at: Track: s7 going EAST-> 6
+39 --move car at: Track: n3 going WEST-> 43
 </pre>
 </p>
 <p>
 <pre>
 
-40 --move car at: Track: n3 going WEST-> 44
+36 --move car at: Track: n3 going WEST-> 40
      T 
 ---W---
 --/ \E-
  F     
-44 --move car at: Track: s6 going EAST-> 47
-44 --move car at: Track: n4 going WEST-> 48
+40 --move car at: Track: s6 going EAST-> 43
+40 --move car at: Track: n4 going WEST-> 44
 </pre>
 </p>
 <p>
 <pre>
 
-41 --move car at: Track: n4 going EAST-> 45
-42 --move car at: Track: n6 going WEST-> 45
+37 --move car at: Track: n4 going EAST-> 41
+38 --move car at: Track: n6 going WEST-> 41
      F 
 W---E--
 --/ \--
  T     
-45 --move car at: Track: n7 going WEST-> 19
-45 --move car at: Track: n3 going EAST-> 49
+41 --move car at: Track: n7 going WEST-> 17
+41 --move car at: Track: n3 going EAST-> 45
 </pre>
 </p>
 <p>
 <pre>
 
-42 --move car at: Track: n3 going EAST-> 46
-51 --swap Signals-> 46
+38 --move car at: Track: n3 going EAST-> 42
      F 
 -W-----
 --/ \E-
  T     
-46 --move car at: Track: n6 going WEST-> 49
-46 --move car at: Track: s6 going EAST-> 50
-46 --swap Signals-> 51
+42 --move car at: Track: n6 going WEST-> 45
+42 --move car at: Track: s6 going EAST-> 46
 </pre>
 </p>
 <p>
 <pre>
 
-43 --move car at: Track: n3 going WEST-> 47
-44 --move car at: Track: s6 going EAST-> 47
+39 --move car at: Track: n3 going WEST-> 43
+40 --move car at: Track: s6 going EAST-> 43
      T 
 ---W---
 --/ \-E
  F     
-47 --move car at: Track: s7 going EAST-> 12
-47 --move car at: Track: n4 going WEST-> 52
+43 --move car at: Track: s7 going EAST-> 10
+43 --move car at: Track: n4 going WEST-> 47
 </pre>
 </p>
 <p>
 <pre>
 
-44 --move car at: Track: n4 going WEST-> 48
+40 --move car at: Track: n4 going WEST-> 44
      T 
 --W----
 --/ \E-
  F     
-48 --move car at: Track: s6 going EAST-> 52
-48 --move car at: Track: n5 going WEST-> 51
+44 --move car at: Track: s6 going EAST-> 47
+44 --move car at: Track: n5 going WEST-> 48
 </pre>
 </p>
 <p>
 <pre>
 
-45 --move car at: Track: n3 going EAST-> 49
+41 --move car at: Track: n3 going EAST-> 45
+42 --move car at: Track: n6 going WEST-> 45
+     F 
+W------
+--/ \E-
+ T     
+45 --move car at: Track: n7 going WEST-> 21
+45 --move car at: Track: s6 going EAST-> 49
+</pre>
+</p>
+<p>
+<pre>
+
+42 --move car at: Track: s6 going EAST-> 46
+     F 
+-W-----
+--/ \-E
+ T     
 46 --move car at: Track: n6 going WEST-> 49
-54 --swap Signals-> 49
-     F 
-W------
---/ \E-
- T     
-49 --move car at: Track: n7 going WEST-> 23
-49 --move car at: Track: s6 going EAST-> 53
-49 --swap Signals-> 54
+46 --move car at: Track: s7 going EAST-> 50
 </pre>
 </p>
 <p>
 <pre>
 
-46 --move car at: Track: s6 going EAST-> 50
-55 --swap Signals-> 50
-     F 
--W-----
---/ \-E
- T     
-50 --move car at: Track: n6 going WEST-> 53
-50 --move car at: Track: s7 going EAST-> 25
-50 --swap Signals-> 55
-</pre>
-</p>
-<p>
-<pre>
-
-46 --swap Signals-> 51
-48 --move car at: Track: n5 going WEST-> 51
-     T 
--W-----
---/ \E-
- F     
-51 --move car at: Track: n6 going WEST-> 54
-51 --move car at: Track: s6 going EAST-> 55
-51 --swap Signals-> 46
-</pre>
-</p>
-<p>
-<pre>
-
-47 --move car at: Track: n4 going WEST-> 52
-48 --move car at: Track: s6 going EAST-> 52
+43 --move car at: Track: n4 going WEST-> 47
+44 --move car at: Track: s6 going EAST-> 47
      T 
 --W----
 --/ \-E
  F     
-52 --move car at: Track: s7 going EAST-> 16
-52 --move car at: Track: n5 going WEST-> 55
+47 --move car at: Track: s7 going EAST-> 14
+47 --move car at: Track: n5 going WEST-> 51
 </pre>
 </p>
 <p>
 <pre>
 
-49 --move car at: Track: s6 going EAST-> 53
-50 --move car at: Track: n6 going WEST-> 53
-56 --swap Signals-> 53
+44 --move car at: Track: n5 going WEST-> 48
+     T 
+-W-----
+--/ \E-
+ F     
+48 --move car at: Track: s6 going EAST-> 51
+48 --move car at: Track: n6 going WEST-> 52
+</pre>
+</p>
+<p>
+<pre>
+
+45 --move car at: Track: s6 going EAST-> 49
+46 --move car at: Track: n6 going WEST-> 49
      F 
 W------
 --/ \-E
  T     
-53 --move car at: Track: n7 going WEST-> 29
-53 --move car at: Track: s7 going EAST-> 31
-53 --swap Signals-> 56
+49 --move car at: Track: n7 going WEST-> 26
+49 --move car at: Track: s7 going EAST-> 53
 </pre>
 </p>
 <p>
 <pre>
 
-49 --swap Signals-> 54
-51 --move car at: Track: n6 going WEST-> 54
-     T 
-W------
---/ \E-
- F     
-54 --move car at: Track: n7 going WEST-> 30
-54 --move car at: Track: s6 going EAST-> 56
-54 --swap Signals-> 49
+46 --move car at: Track: s7 going EAST-> 50
+     F 
+-W-----
+E-/ \--
+ T     
+50 --move car at: Track: n6 going WEST-> 53
+50 --move car at: Track: s1 going EAST-> 24
 </pre>
 </p>
 <p>
 <pre>
 
-50 --swap Signals-> 55
-51 --move car at: Track: s6 going EAST-> 55
-52 --move car at: Track: n5 going WEST-> 55
+47 --move car at: Track: n5 going WEST-> 51
+48 --move car at: Track: s6 going EAST-> 51
      T 
 -W-----
 --/ \-E
  F     
-55 --move car at: Track: n6 going WEST-> 56
-55 --move car at: Track: s7 going EAST-> 20
-55 --swap Signals-> 50
+51 --move car at: Track: s7 going EAST-> 18
+51 --move car at: Track: n6 going WEST-> 54
 </pre>
 </p>
 <p>
 <pre>
 
-53 --swap Signals-> 56
-54 --move car at: Track: s6 going EAST-> 56
-55 --move car at: Track: n6 going WEST-> 56
+48 --move car at: Track: n6 going WEST-> 52
+     T 
+W------
+--/ \E-
+ F     
+52 --move car at: Track: s6 going EAST-> 54
+52 --move car at: Track: n7 going WEST-> 55
+</pre>
+</p>
+<p>
+<pre>
+
+49 --move car at: Track: s7 going EAST-> 53
+50 --move car at: Track: n6 going WEST-> 53
+     F 
+W------
+E-/ \--
+ T     
+53 --move car at: Track: n7 going WEST-> 31
+53 --move car at: Track: s1 going EAST-> 27
+</pre>
+</p>
+<p>
+<pre>
+
+51 --move car at: Track: n6 going WEST-> 54
+52 --move car at: Track: s6 going EAST-> 54
      T 
 W------
 --/ \-E
  F     
-56 --move car at: Track: n7 going WEST-> 36
-56 --move car at: Track: s7 going EAST-> 24
-56 --swap Signals-> 53
+54 --move car at: Track: s7 going EAST-> 22
+54 --move car at: Track: n7 going WEST-> 56
 </pre>
 </p>
 <p>
 <pre>
+
+52 --move car at: Track: n7 going WEST-> 55
+     T 
+------W
+--/ \E-
+ F     
+55 --move car at: Track: s6 going EAST-> 56
+55 --move car at: Track: n1 going WEST-> 30
 </pre>
 </p>
+<p>
+<pre>
 
-<div class="alchemy" id="alchemy"></div>
-<script type="text/javascript">
-
-var data= {
-"nodes": [
-{type:"state",id:1,caption:"ReachableState: number: 1 metricValue: 0.0, ,      T , ------W, E-/ \--,  F     , "},
-{type:"state",id:2,caption:"ReachableState: number: 2 metricValue: 0.0, ,      T , ------W, -E/ \--,  F     , "},
-{type:"state",id:3,caption:"ReachableState: number: 3 metricValue: 0.0, ,      T , -----W-, E-/ \--,  F     , "},
-{type:"state",id:4,caption:"ReachableState: number: 4 metricValue: 0.0, ,      F , ------W, E-/ \--,  T     , "},
-{type:"state",id:5,caption:"ReachableState: number: 5 metricValue: 0.0, ,      T , -----W-, -E/ \--,  F     , "},
-{type:"state",id:6,caption:"ReachableState: number: 6 metricValue: 0.0, ,      F , ------W, -E/ \--,  T     , "},
-{type:"state",id:7,caption:"ReachableState: number: 7 metricValue: 0.0, ,      T , ----W--, E-/ \--,  F     , "},
-{type:"state",id:8,caption:"ReachableState: number: 8 metricValue: 0.0, ,      F , -----W-, E-/ \--,  T     , "},
-{type:"state",id:9,caption:"ReachableState: number: 9 metricValue: 0.0, ,      T , ----W--, -E/ \--,  F     , "},
-{type:"state",id:10,caption:"ReachableState: number: 10 metricValue: 0.0, ,      F , -----W-, -E/ \--,  T     , "},
-{type:"state",id:11,caption:"ReachableState: number: 11 metricValue: 0.0, ,      F , --E---W, --/ \--,  T     , "},
-{type:"state",id:12,caption:"ReachableState: number: 12 metricValue: 0.0, ,      T , ---W---, E-/ \--,  F     , "},
-{type:"state",id:13,caption:"ReachableState: number: 13 metricValue: 0.0, ,      T , ---W---, -E/ \--,  F     , "},
-{type:"state",id:14,caption:"ReachableState: number: 14 metricValue: 0.0, ,      F , --E--W-, --/ \--,  T     , "},
-{type:"state",id:15,caption:"ReachableState: number: 15 metricValue: 0.0, ,      F , ---E--W, --/ \--,  T     , "},
-{type:"state",id:16,caption:"ReachableState: number: 16 metricValue: 0.0, ,      T , --W----, E-/ \--,  F     , "},
-{type:"state",id:17,caption:"ReachableState: number: 17 metricValue: 0.0, ,      T , --W----, -E/ \--,  F     , "},
-{type:"state",id:18,caption:"ReachableState: number: 18 metricValue: 0.0, ,      F , ---E-W-, --/ \--,  T     , "},
-{type:"state",id:19,caption:"ReachableState: number: 19 metricValue: 0.0, ,      F , ----E-W, --/ \--,  T     , "},
-{type:"state",id:20,caption:"ReachableState: number: 20 metricValue: 0.0, ,      T , -W-----, E-/ \--,  F     , "},
-{type:"state",id:21,caption:"ReachableState: number: 21 metricValue: 0.0, ,      T , -W-----, -E/ \--,  F     , "},
-{type:"state",id:22,caption:"ReachableState: number: 22 metricValue: 0.0, ,      F , ----EW-, --/ \--,  T     , "},
-{type:"state",id:23,caption:"ReachableState: number: 23 metricValue: 0.0, ,      F , ------W, --/ \E-,  T     , "},
-{type:"state",id:24,caption:"ReachableState: number: 24 metricValue: 0.0, ,      T , W------, E-/ \--,  F     , "},
-{type:"state",id:25,caption:"ReachableState: number: 25 metricValue: 0.0, ,      F , -W-----, E-/ \--,  T     , "},
-{type:"state",id:26,caption:"ReachableState: number: 26 metricValue: 0.0, ,      T , W------, -E/ \--,  F     , "},
-{type:"state",id:27,caption:"ReachableState: number: 27 metricValue: 0.0, ,      F , -W-----, -E/ \--,  T     , "},
-{type:"state",id:28,caption:"ReachableState: number: 28 metricValue: 0.0, ,      F , -----W-, --/ \E-,  T     , "},
-{type:"state",id:29,caption:"ReachableState: number: 29 metricValue: 0.0, ,      F , ------W, --/ \-E,  T     , "},
-{type:"state",id:30,caption:"ReachableState: number: 30 metricValue: 0.0, ,      T , ------W, --/ \E-,  F     , "},
-{type:"state",id:31,caption:"ReachableState: number: 31 metricValue: 0.0, ,      F , W------, E-/ \--,  T     , "},
-{type:"state",id:32,caption:"ReachableState: number: 32 metricValue: 0.0, ,      F , W------, -E/ \--,  T     , "},
-{type:"state",id:33,caption:"ReachableState: number: 33 metricValue: 0.0, ,      F , -WE----, --/ \--,  T     , "},
-{type:"state",id:34,caption:"ReachableState: number: 34 metricValue: 0.0, ,      F , -----W-, --/ \-E,  T     , "},
-{type:"state",id:35,caption:"ReachableState: number: 35 metricValue: 0.0, ,      T , -----W-, --/ \E-,  F     , "},
-{type:"state",id:36,caption:"ReachableState: number: 36 metricValue: 0.0, ,      T , ------W, --/ \-E,  F     , "},
-{type:"state",id:37,caption:"ReachableState: number: 37 metricValue: 0.0, ,      F , W-E----, --/ \--,  T     , "},
-{type:"state",id:38,caption:"ReachableState: number: 38 metricValue: 0.0, ,      F , -W-E---, --/ \--,  T     , "},
-{type:"state",id:39,caption:"ReachableState: number: 39 metricValue: 0.0, ,      T , -----W-, --/ \-E,  F     , "},
-{type:"state",id:40,caption:"ReachableState: number: 40 metricValue: 0.0, ,      T , ----W--, --/ \E-,  F     , "},
-{type:"state",id:41,caption:"ReachableState: number: 41 metricValue: 0.0, ,      F , W--E---, --/ \--,  T     , "},
-{type:"state",id:42,caption:"ReachableState: number: 42 metricValue: 0.0, ,      F , -W--E--, --/ \--,  T     , "},
-{type:"state",id:43,caption:"ReachableState: number: 43 metricValue: 0.0, ,      T , ----W--, --/ \-E,  F     , "},
-{type:"state",id:44,caption:"ReachableState: number: 44 metricValue: 0.0, ,      T , ---W---, --/ \E-,  F     , "},
-{type:"state",id:45,caption:"ReachableState: number: 45 metricValue: 0.0, ,      F , W---E--, --/ \--,  T     , "},
-{type:"state",id:46,caption:"ReachableState: number: 46 metricValue: 0.0, ,      F , -W-----, --/ \E-,  T     , "},
-{type:"state",id:47,caption:"ReachableState: number: 47 metricValue: 0.0, ,      T , ---W---, --/ \-E,  F     , "},
-{type:"state",id:48,caption:"ReachableState: number: 48 metricValue: 0.0, ,      T , --W----, --/ \E-,  F     , "},
-{type:"state",id:49,caption:"ReachableState: number: 49 metricValue: 0.0, ,      F , W------, --/ \E-,  T     , "},
-{type:"state",id:50,caption:"ReachableState: number: 50 metricValue: 0.0, ,      F , -W-----, --/ \-E,  T     , "},
-{type:"state",id:51,caption:"ReachableState: number: 51 metricValue: 0.0, ,      T , -W-----, --/ \E-,  F     , "},
-{type:"state",id:52,caption:"ReachableState: number: 52 metricValue: 0.0, ,      T , --W----, --/ \-E,  F     , "},
-{type:"state",id:53,caption:"ReachableState: number: 53 metricValue: 0.0, ,      F , W------, --/ \-E,  T     , "},
-{type:"state",id:54,caption:"ReachableState: number: 54 metricValue: 0.0, ,      T , W------, --/ \E-,  F     , "},
-{type:"state",id:55,caption:"ReachableState: number: 55 metricValue: 0.0, ,      T , -W-----, --/ \-E,  F     , "},
-{type:"state",id:56,caption:"ReachableState: number: 56 metricValue: 0.0, ,      T , W------, --/ \-E,  F     , "}
-],
-"edges": [
-{source:1,target:2,nr:0,caption:"move car at: Track: s1 going EAST",type:"normal"},
-{source:1,target:3,nr:1,caption:"move car at: Track: n1 going WEST",type:"normal"},
-{source:1,target:4,nr:2,caption:"swap Signals",type:"normal"},
-{source:2,target:5,nr:3,caption:"move car at: Track: n1 going WEST",type:"normal"},
-{source:2,target:6,nr:4,caption:"swap Signals",type:"normal"},
-{source:3,target:5,nr:5,caption:"move car at: Track: s1 going EAST",type:"normal"},
-{source:3,target:7,nr:6,caption:"move car at: Track: n2 going WEST",type:"normal"},
-{source:3,target:8,nr:7,caption:"swap Signals",type:"normal"},
-{source:4,target:6,nr:8,caption:"move car at: Track: s1 going EAST",type:"normal"},
-{source:4,target:8,nr:9,caption:"move car at: Track: n1 going WEST",type:"normal"},
-{source:4,target:1,nr:10,caption:"swap Signals",type:"normal"},
-{source:5,target:9,nr:11,caption:"move car at: Track: n2 going WEST",type:"normal"},
-{source:5,target:10,nr:12,caption:"swap Signals",type:"normal"},
-{source:6,target:10,nr:13,caption:"move car at: Track: n1 going WEST",type:"normal"},
-{source:6,target:11,nr:14,caption:"move car at: Track: s2 going EAST",type:"normal"},
-{source:6,target:2,nr:15,caption:"swap Signals",type:"normal"},
-{source:7,target:9,nr:16,caption:"move car at: Track: s1 going EAST",type:"normal"},
-{source:7,target:12,nr:17,caption:"move car at: Track: n3 going WEST",type:"normal"},
-{source:8,target:10,nr:18,caption:"move car at: Track: s1 going EAST",type:"normal"},
-{source:8,target:3,nr:19,caption:"swap Signals",type:"normal"},
-{source:9,target:13,nr:20,caption:"move car at: Track: n3 going WEST",type:"normal"},
-{source:10,target:14,nr:21,caption:"move car at: Track: s2 going EAST",type:"normal"},
-{source:10,target:5,nr:22,caption:"swap Signals",type:"normal"},
-{source:11,target:14,nr:23,caption:"move car at: Track: n1 going WEST",type:"normal"},
-{source:11,target:15,nr:24,caption:"move car at: Track: n5 going EAST",type:"normal"},
-{source:12,target:13,nr:25,caption:"move car at: Track: s1 going EAST",type:"normal"},
-{source:12,target:16,nr:26,caption:"move car at: Track: n4 going WEST",type:"normal"},
-{source:13,target:17,nr:27,caption:"move car at: Track: n4 going WEST",type:"normal"},
-{source:14,target:18,nr:28,caption:"move car at: Track: n5 going EAST",type:"normal"},
-{source:15,target:18,nr:29,caption:"move car at: Track: n1 going WEST",type:"normal"},
-{source:15,target:19,nr:30,caption:"move car at: Track: n4 going EAST",type:"normal"},
-{source:16,target:17,nr:31,caption:"move car at: Track: s1 going EAST",type:"normal"},
-{source:16,target:20,nr:32,caption:"move car at: Track: n5 going WEST",type:"normal"},
-{source:17,target:21,nr:33,caption:"move car at: Track: n5 going WEST",type:"normal"},
-{source:18,target:22,nr:34,caption:"move car at: Track: n4 going EAST",type:"normal"},
-{source:19,target:22,nr:35,caption:"move car at: Track: n1 going WEST",type:"normal"},
-{source:19,target:23,nr:36,caption:"move car at: Track: n3 going EAST",type:"normal"},
-{source:20,target:21,nr:37,caption:"move car at: Track: s1 going EAST",type:"normal"},
-{source:20,target:24,nr:38,caption:"move car at: Track: n6 going WEST",type:"normal"},
-{source:20,target:25,nr:39,caption:"swap Signals",type:"normal"},
-{source:21,target:26,nr:40,caption:"move car at: Track: n6 going WEST",type:"normal"},
-{source:21,target:27,nr:41,caption:"swap Signals",type:"normal"},
-{source:22,target:28,nr:42,caption:"move car at: Track: n3 going EAST",type:"normal"},
-{source:23,target:28,nr:43,caption:"move car at: Track: n1 going WEST",type:"normal"},
-{source:23,target:29,nr:44,caption:"move car at: Track: s6 going EAST",type:"normal"},
-{source:23,target:30,nr:45,caption:"swap Signals",type:"normal"},
-{source:24,target:26,nr:46,caption:"move car at: Track: s1 going EAST",type:"normal"},
-{source:24,target:1,nr:47,caption:"move car at: Track: n7 going WEST",type:"normal"},
-{source:24,target:31,nr:48,caption:"swap Signals",type:"normal"},
-{source:25,target:27,nr:49,caption:"move car at: Track: s1 going EAST",type:"normal"},
-{source:25,target:31,nr:50,caption:"move car at: Track: n6 going WEST",type:"normal"},
-{source:25,target:20,nr:51,caption:"swap Signals",type:"normal"},
-{source:26,target:2,nr:52,caption:"move car at: Track: n7 going WEST",type:"normal"},
-{source:26,target:32,nr:53,caption:"swap Signals",type:"normal"},
-{source:27,target:33,nr:54,caption:"move car at: Track: s2 going EAST",type:"normal"},
-{source:27,target:32,nr:55,caption:"move car at: Track: n6 going WEST",type:"normal"},
-{source:27,target:21,nr:56,caption:"swap Signals",type:"normal"},
-{source:28,target:34,nr:57,caption:"move car at: Track: s6 going EAST",type:"normal"},
-{source:28,target:35,nr:58,caption:"swap Signals",type:"normal"},
-{source:29,target:34,nr:59,caption:"move car at: Track: n1 going WEST",type:"normal"},
-{source:29,target:4,nr:60,caption:"move car at: Track: s7 going EAST",type:"normal"},
-{source:29,target:36,nr:61,caption:"swap Signals",type:"normal"},
-{source:30,target:35,nr:62,caption:"move car at: Track: n1 going WEST",type:"normal"},
-{source:30,target:36,nr:63,caption:"move car at: Track: s6 going EAST",type:"normal"},
-{source:30,target:23,nr:64,caption:"swap Signals",type:"normal"},
-{source:31,target:32,nr:65,caption:"move car at: Track: s1 going EAST",type:"normal"},
-{source:31,target:4,nr:66,caption:"move car at: Track: n7 going WEST",type:"normal"},
-{source:31,target:24,nr:67,caption:"swap Signals",type:"normal"},
-{source:32,target:37,nr:68,caption:"move car at: Track: s2 going EAST",type:"normal"},
-{source:32,target:6,nr:69,caption:"move car at: Track: n7 going WEST",type:"normal"},
-{source:32,target:26,nr:70,caption:"swap Signals",type:"normal"},
-{source:33,target:37,nr:71,caption:"move car at: Track: n6 going WEST",type:"normal"},
-{source:33,target:38,nr:72,caption:"move car at: Track: n5 going EAST",type:"normal"},
-{source:34,target:8,nr:73,caption:"move car at: Track: s7 going EAST",type:"normal"},
-{source:34,target:39,nr:74,caption:"swap Signals",type:"normal"},
-{source:35,target:40,nr:75,caption:"move car at: Track: n2 going WEST",type:"normal"},
-{source:35,target:39,nr:76,caption:"move car at: Track: s6 going EAST",type:"normal"},
-{source:35,target:28,nr:77,caption:"swap Signals",type:"normal"},
-{source:36,target:39,nr:78,caption:"move car at: Track: n1 going WEST",type:"normal"},
-{source:36,target:1,nr:79,caption:"move car at: Track: s7 going EAST",type:"normal"},
-{source:36,target:29,nr:80,caption:"swap Signals",type:"normal"},
-{source:37,target:11,nr:81,caption:"move car at: Track: n7 going WEST",type:"normal"},
-{source:37,target:41,nr:82,caption:"move car at: Track: n5 going EAST",type:"normal"},
-{source:38,target:41,nr:83,caption:"move car at: Track: n6 going WEST",type:"normal"},
-{source:38,target:42,nr:84,caption:"move car at: Track: n4 going EAST",type:"normal"},
-{source:39,target:43,nr:85,caption:"move car at: Track: n2 going WEST",type:"normal"},
-{source:39,target:3,nr:86,caption:"move car at: Track: s7 going EAST",type:"normal"},
-{source:39,target:34,nr:87,caption:"swap Signals",type:"normal"},
-{source:40,target:43,nr:88,caption:"move car at: Track: s6 going EAST",type:"normal"},
-{source:40,target:44,nr:89,caption:"move car at: Track: n3 going WEST",type:"normal"},
-{source:41,target:15,nr:90,caption:"move car at: Track: n7 going WEST",type:"normal"},
-{source:41,target:45,nr:91,caption:"move car at: Track: n4 going EAST",type:"normal"},
-{source:42,target:45,nr:92,caption:"move car at: Track: n6 going WEST",type:"normal"},
-{source:42,target:46,nr:93,caption:"move car at: Track: n3 going EAST",type:"normal"},
-{source:43,target:7,nr:94,caption:"move car at: Track: s7 going EAST",type:"normal"},
-{source:43,target:47,nr:95,caption:"move car at: Track: n3 going WEST",type:"normal"},
-{source:44,target:47,nr:96,caption:"move car at: Track: s6 going EAST",type:"normal"},
-{source:44,target:48,nr:97,caption:"move car at: Track: n4 going WEST",type:"normal"},
-{source:45,target:19,nr:98,caption:"move car at: Track: n7 going WEST",type:"normal"},
-{source:45,target:49,nr:99,caption:"move car at: Track: n3 going EAST",type:"normal"},
-{source:46,target:49,nr:100,caption:"move car at: Track: n6 going WEST",type:"normal"},
-{source:46,target:50,nr:101,caption:"move car at: Track: s6 going EAST",type:"normal"},
-{source:46,target:51,nr:102,caption:"swap Signals",type:"normal"},
-{source:47,target:12,nr:103,caption:"move car at: Track: s7 going EAST",type:"normal"},
-{source:47,target:52,nr:104,caption:"move car at: Track: n4 going WEST",type:"normal"},
-{source:48,target:52,nr:105,caption:"move car at: Track: s6 going EAST",type:"normal"},
-{source:48,target:51,nr:106,caption:"move car at: Track: n5 going WEST",type:"normal"},
-{source:49,target:23,nr:107,caption:"move car at: Track: n7 going WEST",type:"normal"},
-{source:49,target:53,nr:108,caption:"move car at: Track: s6 going EAST",type:"normal"},
-{source:49,target:54,nr:109,caption:"swap Signals",type:"normal"},
-{source:50,target:53,nr:110,caption:"move car at: Track: n6 going WEST",type:"normal"},
-{source:50,target:25,nr:111,caption:"move car at: Track: s7 going EAST",type:"normal"},
-{source:50,target:55,nr:112,caption:"swap Signals",type:"normal"},
-{source:51,target:54,nr:113,caption:"move car at: Track: n6 going WEST",type:"normal"},
-{source:51,target:55,nr:114,caption:"move car at: Track: s6 going EAST",type:"normal"},
-{source:51,target:46,nr:115,caption:"swap Signals",type:"normal"},
-{source:52,target:16,nr:116,caption:"move car at: Track: s7 going EAST",type:"normal"},
-{source:52,target:55,nr:117,caption:"move car at: Track: n5 going WEST",type:"normal"},
-{source:53,target:29,nr:118,caption:"move car at: Track: n7 going WEST",type:"normal"},
-{source:53,target:31,nr:119,caption:"move car at: Track: s7 going EAST",type:"normal"},
-{source:53,target:56,nr:120,caption:"swap Signals",type:"normal"},
-{source:54,target:30,nr:121,caption:"move car at: Track: n7 going WEST",type:"normal"},
-{source:54,target:56,nr:122,caption:"move car at: Track: s6 going EAST",type:"normal"},
-{source:54,target:49,nr:123,caption:"swap Signals",type:"normal"},
-{source:55,target:56,nr:124,caption:"move car at: Track: n6 going WEST",type:"normal"},
-{source:55,target:20,nr:125,caption:"move car at: Track: s7 going EAST",type:"normal"},
-{source:55,target:50,nr:126,caption:"swap Signals",type:"normal"},
-{source:56,target:36,nr:127,caption:"move car at: Track: n7 going WEST",type:"normal"},
-{source:56,target:24,nr:128,caption:"move car at: Track: s7 going EAST",type:"normal"},
-{source:56,target:53,nr:129,caption:"swap Signals",type:"normal"}
-]}
-var config = {
-		        dataSource: data,
-		        directedEdges:true,
-		        graphWidth: function() {return screen.availWidth  * 0.7},
-		        graphHeight: function() {return screen.availHeight * 0.7},
-		        initialScale: 0.5, 
-		        initialTranslate: [250,250],
-		        curvedEdges:true,
-		        edgeCaptionsOnByDefault: true,
-		        nodeTypes: {"type":["failure","state","startstate","finalstate"]},
-		         "nodeStyle": {
-		         "failure": {
-		               color: "#FE3E3E",
-		            },
-		         "finalstate": {
-		               color: "#0000FF",
-		               radius: 15, 
-		            borderColor: "#127DC1"            },
-		         "startstate": {
-		               color: "#FFFFFF",
-		               radius: 15, 
-		            borderColor: "#127DC1"            },
-		         "state":{
-		               color: "#00ff0e",
-		               borderColor: "#00ffda"
-		         }
-		      },
-		          "edgeTypes": {"type": ["failure","normal"]},
-		      "edgeStyle": {
-		            "failure": {
-		               color: "#ff794d",
-		            width: 7,
-		               opacity: 1
-		         },
-		            "greenpath": {
-		               color: "#00FF00",
-		            width: 7,
-		               opacity: 1
-		         },
-		         "normal": {
-		            opacity: .9
-		         }
-		      },     
-		       nodeClick: function OpenInNewTab(node) {
-		               var win = window.open('objectgraphs/graph'+node.id+'.html', '_blank');
-		               if (win) {
-		                     win.focus();
-		               } else {
-		                     alert('Please allow popups for this website');
-		               }
-		            }     
-		,     
-		       edgeClick: function OpenInNewTab(edge) {
-		               var win = window.open('rulegraphs/graph'+edge._properties.nr+'.html', '_blank');
-		               if (win) {
-		                     win.focus();
-		               } else {
-		                     alert('Please allow popups for this website');
-		               }
-		            }     
-		    };
-alchemy = new Alchemy(config)
-</script>
+54 --move car at: Track: n7 going WEST-> 56
+55 --move car at: Track: s6 going EAST-> 56
+     T 
+------W
+--/ \-E
+ F     
+56 --move car at: Track: s7 going EAST-> 1
+56 --move car at: Track: n1 going WEST-> 35
+</pre>
+</p>
 </body>
 </html>
