@@ -2,14 +2,11 @@ package emfer.examples.roadwork;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.junit.Assert;
 import org.junit.Test;
 
 import emfer.AlwaysFinally;
@@ -226,6 +223,7 @@ public class RoadWorkProblem
          s-> ! isRoadWorkClear(s));
       assertTrue("itsPossibleToEnterTheRoadWork", itsPossibleToEnterTheRoadWork);
       
+      story.addReachabilityGraph(emfer.getReachabilityGraph());
       story.dumpHtml();
    }
 

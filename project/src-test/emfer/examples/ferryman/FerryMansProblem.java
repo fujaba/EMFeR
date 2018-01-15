@@ -1,7 +1,6 @@
 package emfer.examples.ferryman;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -124,6 +123,7 @@ public class FerryMansProblem
       
       Logger.getGlobal().info("\njava streams: \n" + finalState.toString());
       
+      story.addReachabilityGraph(emfer.getReachabilityGraph());
       
       story.dumpHtml();
    }

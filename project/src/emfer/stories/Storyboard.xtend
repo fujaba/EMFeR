@@ -10,6 +10,7 @@ import java.util.Set
 import java.util.ArrayList
 import java.nio.file.OpenOption
 import java.nio.file.StandardOpenOption
+import emfer.reachability.ReachabilityGraph
 
 class Storyboard 
 {
@@ -59,11 +60,24 @@ class Storyboard
 		steps.add(newStep)
 	}
 	
+	
+	def addReachabilityGraph(ReachabilityGraph reachabilityGraph){
+		
+		var StoryStep newStep = new StoryStep()
+		
+		newStep.graph =  reachabilityGraph
+		
+		steps.add(newStep)
+	}
+	
+	
+	
+	
 	def dumpHtml()
 	{
 		var htmlText = getHtmlText()
 		
-		Files.write(Paths.get("doc/" + storyName + ".html"), htmlText.bytes, StandardOpenOption.CREATE)
+		Files.write(Paths.get("doc/" + storyName + ".html"), htmlText.bytes, StandardOpenOption.TRUNCATE_EXISTING)
 	}
 	
 	def String getHtmlText() {
@@ -71,6 +85,10 @@ class Storyboard
 			<!DOCTYPE html>
 			<html>
 			<head><meta charset="utf-8">
+			<link rel="stylesheet" href="includes/alchemy.css">
+			<link rel="stylesheet" type="text/css" href="includes/vendor.css">
+			<script type="text/javascript" src="includes/vendor.js"></script>
+			<script type="text/javascript" src="includes/alchemy.js"></script>
 			</head>
 			<body>
 			<h2>«storyName»</h2>
