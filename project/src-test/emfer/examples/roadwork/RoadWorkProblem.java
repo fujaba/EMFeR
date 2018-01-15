@@ -218,7 +218,7 @@ public class RoadWorkProblem
       boolean alwaysRoadWorkIsEntered = alwaysUntil.test(startState, 
          s-> isRoadWorkClear(s), 
          s-> ! isRoadWorkClear(s));
-      assertFalse("alwaysRoadWorkIsEntered", alwaysRoadWorkIsEntered);
+      assertTrue("alwaysRoadWorkIsEntered", alwaysRoadWorkIsEntered);
 
       ExistsUntil existsUntil = new ExistsUntil();
       boolean itsPossibleToEnterTheRoadWork = existsUntil.test(startState, 
@@ -283,9 +283,44 @@ public class RoadWorkProblem
          return;
       }
       
-      roadMap.getEasternSignal().setPass( ! roadMap.getEasternSignal().isPass());
-   
-      roadMap.getWesternSignal().setPass( ! roadMap.getWesternSignal().isPass());
+      boolean carIsWaiting = false;
+      
+      // no car about to enter and one car waiting at red light
+      if (roadMap.getWesternSignal().isPass())
+      {
+         Track enterTrack = roadMap.getWesternSignal().getTrack();
+         boolean carIsEntering = roadMap.getCars().stream().map(c -> c.getTrack()).anyMatch(t -> t == enterTrack);
+         
+         if (carIsEntering)
+         {
+            // do not swap signals
+            return;
+         }
+
+         Track waitTrack = roadMap.getEasternSignal().getTrack();
+         carIsWaiting = roadMap.getCars().stream().map(c -> c.getTrack()).anyMatch(t -> t == waitTrack);
+      }
+      else
+      {
+         Track enterTrack = roadMap.getEasternSignal().getTrack();
+         boolean carIsEntering = roadMap.getCars().stream().map(c -> c.getTrack()).anyMatch(t -> t == enterTrack);
+         
+         if (carIsEntering)
+         {
+            // do not swap signals
+            return;
+         }
+
+         Track waitTrack = roadMap.getWesternSignal().getTrack();
+         carIsWaiting = roadMap.getCars().stream().map(c -> c.getTrack()).anyMatch(t -> t == waitTrack);
+      }
+      
+      if (carIsWaiting)
+      {
+         roadMap.getEasternSignal().setPass( ! roadMap.getEasternSignal().isPass());
+         
+         roadMap.getWesternSignal().setPass( ! roadMap.getWesternSignal().isPass());
+      }
    }
 
    private void moveCar(EObject root, EObject handle)
