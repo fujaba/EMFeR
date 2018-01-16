@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8">
+<link rel="stylesheet" href="includes/alchemy.css">
+<link rel="stylesheet" type="text/css" href="includes/vendor.css">
+<script type="text/javascript" src="includes/vendor.js"></script>
+<script type="text/javascript" src="includes/alchemy.js"></script>
 </head>
 <body>
 <h2>FerryMansProblem</h2>
@@ -21,7 +25,7 @@ left: wolf cabbage goat
 boat at: left cargo: 
 right: 
 
-1 --load cargo-> 2
+1 --load cargo Cargo: goat-> 2
 
 ReachableState: number: 2 metricValue: 11.0
 left: wolf cabbage 
@@ -42,7 +46,7 @@ left: wolf cabbage
 boat at: left cargo: 
 right: goat 
 
-5 --load cargo-> 6
+5 --load cargo Cargo: wolf-> 6
 
 ReachableState: number: 6 metricValue: 8.0
 left: cabbage 
@@ -56,7 +60,7 @@ left: cabbage
 boat at: right cargo: 
 right: goat wolf 
 
-8 --load cargo-> 10
+8 --load cargo Cargo: goat-> 10
 
 ReachableState: number: 10 metricValue: 6.0
 left: cabbage 
@@ -70,7 +74,7 @@ left: cabbage goat
 boat at: left cargo: 
 right: wolf 
 
-14 --load cargo-> 16
+14 --load cargo Cargo: cabbage-> 16
 
 ReachableState: number: 16 metricValue: 4.0
 left: goat 
@@ -91,7 +95,7 @@ left: goat
 boat at: left cargo: 
 right: wolf cabbage 
 
-23 --load cargo-> 24
+23 --load cargo Cargo: goat-> 24
 
 ReachableState: number: 24 metricValue: 1.0
 left: 
@@ -120,13 +124,13 @@ ReachableState: number: 1 metricValue: 12.0
 left: wolf cabbage goat 
 boat at: left cargo: 
 right: 
-1 --load cargo-> 2
+1 --load cargo Cargo: goat-> 2
 </pre>
 </p>
 <p>
 <pre>
 
-1 --load cargo-> 2
+1 --load cargo Cargo: goat-> 2
 ReachableState: number: 2 metricValue: 11.0
 left: wolf cabbage 
 boat at: left cargo: goat
@@ -143,14 +147,14 @@ ReachableState: number: 3 metricValue: 10.0
 left: wolf cabbage 
 boat at: right cargo: 
 right: goat 
-3 --load cargo-> 4
+3 --load cargo Cargo: goat-> 4
 3 --move boat-> 5
 </pre>
 </p>
 <p>
 <pre>
 
-3 --load cargo-> 4
+3 --load cargo Cargo: goat-> 4
 ReachableState: number: 4 metricValue: 13.0
 left: wolf cabbage 
 boat at: right cargo: goat
@@ -168,15 +172,15 @@ ReachableState: number: 5 metricValue: 9.0
 left: wolf cabbage 
 boat at: left cargo: 
 right: goat 
-5 --load cargo-> 6
-5 --load cargo-> 7
+5 --load cargo Cargo: wolf-> 6
+5 --load cargo Cargo: cabbage-> 7
 5 --move boat-> 3
 </pre>
 </p>
 <p>
 <pre>
 
-5 --load cargo-> 6
+5 --load cargo Cargo: wolf-> 6
 ReachableState: number: 6 metricValue: 8.0
 left: cabbage 
 boat at: left cargo: wolf
@@ -187,7 +191,7 @@ right: goat
 <p>
 <pre>
 
-5 --load cargo-> 7
+5 --load cargo Cargo: cabbage-> 7
 ReachableState: number: 7 metricValue: 8.0
 left: wolf 
 boat at: left cargo: cabbage
@@ -204,8 +208,8 @@ ReachableState: number: 8 metricValue: 7.0
 left: cabbage 
 boat at: right cargo: 
 right: goat wolf 
-8 --load cargo-> 10
-8 --load cargo-> 11
+8 --load cargo Cargo: goat-> 10
+8 --load cargo Cargo: wolf-> 11
 </pre>
 </p>
 <p>
@@ -217,14 +221,14 @@ ReachableState: number: 9 metricValue: 7.0
 left: wolf 
 boat at: right cargo: 
 right: goat cabbage 
-9 --load cargo-> 12
-9 --load cargo-> 13
+9 --load cargo Cargo: goat-> 12
+9 --load cargo Cargo: cabbage-> 13
 </pre>
 </p>
 <p>
 <pre>
 
-8 --load cargo-> 10
+8 --load cargo Cargo: goat-> 10
 ReachableState: number: 10 metricValue: 6.0
 left: cabbage 
 boat at: right cargo: goat
@@ -235,7 +239,7 @@ right: wolf
 <p>
 <pre>
 
-8 --load cargo-> 11
+8 --load cargo Cargo: wolf-> 11
 ReachableState: number: 11 metricValue: 10.0
 left: cabbage 
 boat at: right cargo: wolf
@@ -246,7 +250,7 @@ right: goat
 <p>
 <pre>
 
-9 --load cargo-> 12
+9 --load cargo Cargo: goat-> 12
 ReachableState: number: 12 metricValue: 6.0
 left: wolf 
 boat at: right cargo: goat
@@ -257,7 +261,7 @@ right: cabbage
 <p>
 <pre>
 
-9 --load cargo-> 13
+9 --load cargo Cargo: cabbage-> 13
 ReachableState: number: 13 metricValue: 10.0
 left: wolf 
 boat at: right cargo: cabbage
@@ -274,8 +278,8 @@ ReachableState: number: 14 metricValue: 5.0
 left: cabbage goat 
 boat at: left cargo: 
 right: wolf 
-14 --load cargo-> 16
-14 --load cargo-> 17
+14 --load cargo Cargo: cabbage-> 16
+14 --load cargo Cargo: goat-> 17
 </pre>
 </p>
 <p>
@@ -287,14 +291,14 @@ ReachableState: number: 15 metricValue: 5.0
 left: wolf goat 
 boat at: left cargo: 
 right: cabbage 
-15 --load cargo-> 18
-15 --load cargo-> 19
+15 --load cargo Cargo: wolf-> 18
+15 --load cargo Cargo: goat-> 19
 </pre>
 </p>
 <p>
 <pre>
 
-14 --load cargo-> 16
+14 --load cargo Cargo: cabbage-> 16
 ReachableState: number: 16 metricValue: 4.0
 left: goat 
 boat at: left cargo: cabbage
@@ -305,7 +309,7 @@ right: wolf
 <p>
 <pre>
 
-14 --load cargo-> 17
+14 --load cargo Cargo: goat-> 17
 ReachableState: number: 17 metricValue: 8.0
 left: cabbage 
 boat at: left cargo: goat
@@ -316,7 +320,7 @@ right: wolf
 <p>
 <pre>
 
-15 --load cargo-> 18
+15 --load cargo Cargo: wolf-> 18
 ReachableState: number: 18 metricValue: 4.0
 left: goat 
 boat at: left cargo: wolf
@@ -327,7 +331,7 @@ right: cabbage
 <p>
 <pre>
 
-15 --load cargo-> 19
+15 --load cargo Cargo: goat-> 19
 ReachableState: number: 19 metricValue: 8.0
 left: wolf 
 boat at: left cargo: goat
@@ -345,15 +349,15 @@ ReachableState: number: 20 metricValue: 3.0
 left: goat 
 boat at: right cargo: 
 right: wolf cabbage 
-20 --load cargo-> 21
-20 --load cargo-> 22
+20 --load cargo Cargo: wolf-> 21
+20 --load cargo Cargo: cabbage-> 22
 20 --move boat-> 23
 </pre>
 </p>
 <p>
 <pre>
 
-20 --load cargo-> 21
+20 --load cargo Cargo: wolf-> 21
 ReachableState: number: 21 metricValue: 6.0
 left: goat 
 boat at: right cargo: wolf
@@ -364,7 +368,7 @@ right: cabbage
 <p>
 <pre>
 
-20 --load cargo-> 22
+20 --load cargo Cargo: cabbage-> 22
 ReachableState: number: 22 metricValue: 6.0
 left: goat 
 boat at: right cargo: cabbage
@@ -381,14 +385,14 @@ ReachableState: number: 23 metricValue: 2.0
 left: goat 
 boat at: left cargo: 
 right: wolf cabbage 
-23 --load cargo-> 24
+23 --load cargo Cargo: goat-> 24
 23 --move boat-> 20
 </pre>
 </p>
 <p>
 <pre>
 
-23 --load cargo-> 24
+23 --load cargo Cargo: goat-> 24
 ReachableState: number: 24 metricValue: 1.0
 left: 
 boat at: left cargo: goat
@@ -404,13 +408,13 @@ ReachableState: number: 25 metricValue: 0.0
 left: 
 boat at: right cargo: 
 right: wolf cabbage goat 
-25 --load cargo-> 26
+25 --load cargo Cargo: goat-> 26
 </pre>
 </p>
 <p>
 <pre>
 
-25 --load cargo-> 26
+25 --load cargo Cargo: goat-> 26
 ReachableState: number: 26 metricValue: 3.0
 left: 
 boat at: right cargo: goat
@@ -439,8 +443,143 @@ right: wolf cabbage goat
 ]
 </pre>
 </p>
-</body>
-</html>
+<p>
+<pre>
+</pre>
+</p>
 
+<div class="alchemy" id="alchemy"></div>
+<script type="text/javascript">
+
+var data= {
+"nodes": [
+{type:"state",id:1,caption:"ReachableState: number: 1 metricValue: 12.0<b>left: wolf cabbage goat <b>boat at: left cargo: <b>right: <b>"},
+{type:"state",id:2,caption:"ReachableState: number: 2 metricValue: 11.0<b>left: wolf cabbage <b>boat at: left cargo: goat<b>right: <b>"},
+{type:"state",id:3,caption:"ReachableState: number: 3 metricValue: 10.0<b>left: wolf cabbage <b>boat at: right cargo: <b>right: goat <b>"},
+{type:"state",id:4,caption:"ReachableState: number: 4 metricValue: 13.0<b>left: wolf cabbage <b>boat at: right cargo: goat<b>right: <b>"},
+{type:"state",id:5,caption:"ReachableState: number: 5 metricValue: 9.0<b>left: wolf cabbage <b>boat at: left cargo: <b>right: goat <b>"},
+{type:"state",id:6,caption:"ReachableState: number: 6 metricValue: 8.0<b>left: cabbage <b>boat at: left cargo: wolf<b>right: goat <b>"},
+{type:"state",id:7,caption:"ReachableState: number: 7 metricValue: 8.0<b>left: wolf <b>boat at: left cargo: cabbage<b>right: goat <b>"},
+{type:"state",id:8,caption:"ReachableState: number: 8 metricValue: 7.0<b>left: cabbage <b>boat at: right cargo: <b>right: goat wolf <b>"},
+{type:"state",id:9,caption:"ReachableState: number: 9 metricValue: 7.0<b>left: wolf <b>boat at: right cargo: <b>right: goat cabbage <b>"},
+{type:"state",id:10,caption:"ReachableState: number: 10 metricValue: 6.0<b>left: cabbage <b>boat at: right cargo: goat<b>right: wolf <b>"},
+{type:"state",id:11,caption:"ReachableState: number: 11 metricValue: 10.0<b>left: cabbage <b>boat at: right cargo: wolf<b>right: goat <b>"},
+{type:"state",id:12,caption:"ReachableState: number: 12 metricValue: 6.0<b>left: wolf <b>boat at: right cargo: goat<b>right: cabbage <b>"},
+{type:"state",id:13,caption:"ReachableState: number: 13 metricValue: 10.0<b>left: wolf <b>boat at: right cargo: cabbage<b>right: goat <b>"},
+{type:"state",id:14,caption:"ReachableState: number: 14 metricValue: 5.0<b>left: cabbage goat <b>boat at: left cargo: <b>right: wolf <b>"},
+{type:"state",id:15,caption:"ReachableState: number: 15 metricValue: 5.0<b>left: wolf goat <b>boat at: left cargo: <b>right: cabbage <b>"},
+{type:"state",id:16,caption:"ReachableState: number: 16 metricValue: 4.0<b>left: goat <b>boat at: left cargo: cabbage<b>right: wolf <b>"},
+{type:"state",id:17,caption:"ReachableState: number: 17 metricValue: 8.0<b>left: cabbage <b>boat at: left cargo: goat<b>right: wolf <b>"},
+{type:"state",id:18,caption:"ReachableState: number: 18 metricValue: 4.0<b>left: goat <b>boat at: left cargo: wolf<b>right: cabbage <b>"},
+{type:"state",id:19,caption:"ReachableState: number: 19 metricValue: 8.0<b>left: wolf <b>boat at: left cargo: goat<b>right: cabbage <b>"},
+{type:"state",id:20,caption:"ReachableState: number: 20 metricValue: 3.0<b>left: goat <b>boat at: right cargo: <b>right: wolf cabbage <b>"},
+{type:"state",id:21,caption:"ReachableState: number: 21 metricValue: 6.0<b>left: goat <b>boat at: right cargo: wolf<b>right: cabbage <b>"},
+{type:"state",id:22,caption:"ReachableState: number: 22 metricValue: 6.0<b>left: goat <b>boat at: right cargo: cabbage<b>right: wolf <b>"},
+{type:"state",id:23,caption:"ReachableState: number: 23 metricValue: 2.0<b>left: goat <b>boat at: left cargo: <b>right: wolf cabbage <b>"},
+{type:"state",id:24,caption:"ReachableState: number: 24 metricValue: 1.0<b>left: <b>boat at: left cargo: goat<b>right: wolf cabbage <b>"},
+{type:"finalstate",id:25,caption:"ReachableState: number: 25 metricValue: 0.0<b>left: <b>boat at: right cargo: <b>right: wolf cabbage goat <b>"},
+{type:"state",id:26,caption:"ReachableState: number: 26 metricValue: 3.0<b>left: <b>boat at: right cargo: goat<b>right: wolf cabbage <b>"}
+],
+"edges": [
+{source:1,target:2,nr:0,caption:"load cargo Cargo: goat",type:"normal"},
+{source:2,target:3,nr:1,caption:"move boat",type:"normal"},
+{source:3,target:4,nr:2,caption:"load cargo Cargo: goat",type:"normal"},
+{source:3,target:5,nr:3,caption:"move boat",type:"normal"},
+{source:4,target:1,nr:4,caption:"move boat",type:"normal"},
+{source:5,target:6,nr:5,caption:"load cargo Cargo: wolf",type:"normal"},
+{source:5,target:7,nr:6,caption:"load cargo Cargo: cabbage",type:"normal"},
+{source:5,target:3,nr:7,caption:"move boat",type:"normal"},
+{source:6,target:8,nr:8,caption:"move boat",type:"normal"},
+{source:7,target:9,nr:9,caption:"move boat",type:"normal"},
+{source:8,target:10,nr:10,caption:"load cargo Cargo: goat",type:"normal"},
+{source:8,target:11,nr:11,caption:"load cargo Cargo: wolf",type:"normal"},
+{source:9,target:12,nr:12,caption:"load cargo Cargo: goat",type:"normal"},
+{source:9,target:13,nr:13,caption:"load cargo Cargo: cabbage",type:"normal"},
+{source:10,target:14,nr:14,caption:"move boat",type:"normal"},
+{source:11,target:5,nr:15,caption:"move boat",type:"normal"},
+{source:12,target:15,nr:16,caption:"move boat",type:"normal"},
+{source:13,target:5,nr:17,caption:"move boat",type:"normal"},
+{source:14,target:16,nr:18,caption:"load cargo Cargo: cabbage",type:"normal"},
+{source:14,target:17,nr:19,caption:"load cargo Cargo: goat",type:"normal"},
+{source:15,target:18,nr:20,caption:"load cargo Cargo: wolf",type:"normal"},
+{source:15,target:19,nr:21,caption:"load cargo Cargo: goat",type:"normal"},
+{source:16,target:20,nr:22,caption:"move boat",type:"normal"},
+{source:17,target:8,nr:23,caption:"move boat",type:"normal"},
+{source:18,target:20,nr:24,caption:"move boat",type:"normal"},
+{source:19,target:9,nr:25,caption:"move boat",type:"normal"},
+{source:20,target:21,nr:26,caption:"load cargo Cargo: wolf",type:"normal"},
+{source:20,target:22,nr:27,caption:"load cargo Cargo: cabbage",type:"normal"},
+{source:20,target:23,nr:28,caption:"move boat",type:"normal"},
+{source:21,target:15,nr:29,caption:"move boat",type:"normal"},
+{source:22,target:14,nr:30,caption:"move boat",type:"normal"},
+{source:23,target:24,nr:31,caption:"load cargo Cargo: goat",type:"normal"},
+{source:23,target:20,nr:32,caption:"move boat",type:"normal"},
+{source:24,target:25,nr:33,caption:"move boat",type:"normal"},
+{source:25,target:26,nr:34,caption:"load cargo Cargo: goat",type:"normal"},
+{source:26,target:23,nr:35,caption:"move boat",type:"normal"}
+]}
+var config = {
+dataSource: data,
+  directedEdges:true,
+  graphWidth: function() {return screen.availWidth  * 0.7},
+  graphHeight: function() {return screen.availHeight * 0.7},
+  initialScale: 0.5, 
+  initialTranslate: [250,250],
+  curvedEdges:true,
+  edgeCaptionsOnByDefault: true,
+  nodeTypes: {"type":["failure","state","startstate","finalstate"]},
+   "nodeStyle": {
+   "failure": {
+         color: "#FE3E3E",
+      },
+   "finalstate": {
+         color: "#0000FF",
+         radius: 15, 
+      borderColor: "#127DC1"            },
+   "startstate": {
+         color: "#FFFFFF",
+         radius: 15, 
+      borderColor: "#127DC1"            },
+   "state":{
+         color: "#00ff0e",
+         borderColor: "#00ffda"
+   }
+  },
+  "edgeTypes": {"type": ["failure","normal"]},
+  "edgeStyle": {
+      "failure": {
+         color: "#ff794d",
+      width: 7,
+         opacity: 1
+   },
+      "greenpath": {
+         color: "#00FF00",
+      width: 7,
+         opacity: 1
+   },
+   "normal": {
+      opacity: .9
+   }
+  },     
+   nodeClick: function OpenInNewTab(node) {
+         var win = window.open('objectgraphs/graph'+node.id+'.html', '_blank');
+         if (win) {
+               win.focus();
+         } else {
+               alert('Please allow popups for this website');
+         }
+      }     
+	,     
+	edgeClick: function OpenInNewTab(edge) {
+	    var win = window.open('rulegraphs/graph'+edge._properties.nr+'.html', '_blank');
+	    if (win) {
+	          win.focus();
+	    } else {
+	          alert('Please allow popups for this website');
+	    }
+	 }     
+	    };
+alchemy = new Alchemy(config)
+</script>
 </body>
 </html>
