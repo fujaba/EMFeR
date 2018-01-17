@@ -17,10 +17,30 @@ public class TowerOfHanoiProblem
 
 
    @Test
-   public void testTowerOfHanoiProblem() throws Exception
+   public void testTowerOfHanoiProblem3StaticDiscs() throws Exception
    {
-      // runWithNumberOfDiscs(7, false);
       runWithNumberOfDiscs(3, true);
+   }
+
+
+   @Test
+   public void testTowerOfHanoiProblem3NonStaticDiscs() throws Exception
+   {
+      runWithNumberOfDiscs(3, false);
+   }
+
+
+   @Test
+   public void testTowerOfHanoiProblem5StaticDiscs() throws Exception
+   {
+      runWithNumberOfDiscs(5, true);
+   }
+
+
+   @Test
+   public void testTowerOfHanoiProblem7StaticDiscs() throws Exception
+   {
+      runWithNumberOfDiscs(7, true);
    }
 
 
@@ -72,12 +92,12 @@ public class TowerOfHanoiProblem
 
       Logger.getGlobal().info("\nExploring scenario with "
          + discs
+         + (staticDiscs ? "" : " static")
          + " discs took "
          + duration
          + " seconds.\n"
          + size
-         + " states in reachability graph.\nDiscs are static: "
-         + staticDiscs
+         + " states in reachability graph."
          + "\nShortest path is "
          + emfer.shortestPath(emfer.getReachabilityGraph().getStates().get(0)).size()
          + " steps long.");
