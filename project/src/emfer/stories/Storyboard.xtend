@@ -11,75 +11,76 @@ import java.util.ArrayList
 import java.nio.file.OpenOption
 import java.nio.file.StandardOpenOption
 import emfer.reachability.ReachabilityGraph
+import emfer.reachability.ReachableState
 
-class Storyboard 
-{
-	static class StoryLogHandler extends Handler
-	{
-			Storyboard storyboard
-			
-			new (Storyboard story)
+class Storyboard {
+	static class StoryLogHandler extends Handler {
+		Storyboard storyboard
+
+		new(Storyboard story) {
+			storyboard = story
+		}
+
+		override close() throws SecurityException 
 			{
-				storyboard = story	
-			}
-			
-			override close() throws SecurityException 
-			{
-				// ???
-			}
-			
-			override flush() 
-			{
-			}
-			
-			override publish(LogRecord record) 
-			{
-				storyboard.add(record.message)	
-			}
+			// ???
+		}
+
+		override flush() {
+		}
+
+		override publish(LogRecord record) {
+			storyboard.add(record.message)
+		}
 	}
-	
-	new(String name)
-	{
+
+	new(String name) {
 		storyName = name
-		
+
 		var Logger myLogger = Logger.getGlobal()
-		
+
 		myLogger.addHandler(new StoryLogHandler(this))
 	}
 
 	String storyName
-	
+
 	ArrayList<StoryStep> steps = new ArrayList<StoryStep>();
-	
-	def add(String text)
-	{
+
+	def add(String text) {
 		var StoryStep newStep = new StoryStep()
-		
+
 		newStep.content = text
-		
+
 		steps.add(newStep)
 	}
-	
-	
-	def addReachabilityGraph(ReachabilityGraph reachabilityGraph){
-		
+
+	def addReachableState(ReachableState reachableState) {
+		addReachableState(reachableState,"ReachableState")
+	}
+
+	def addReachableState(ReachableState reachableState, String content) {
 		var StoryStep newStep = new StoryStep()
-		
-		newStep.graph =  reachabilityGraph
-		
+		newStep.content = content
+		newStep.reachableState = reachableState
+
 		steps.add(newStep)
 	}
-	
-	
-	
-	
-	def dumpHtml()
-	{
+
+	def addReachabilityGraph(ReachabilityGraph reachabilityGraph) {
+
+		var StoryStep newStep = new StoryStep()
+		newStep.content = "ReachabilityGraph"
+		newStep.graph = reachabilityGraph
+
+		steps.add(newStep)
+	}
+
+	def dumpHtml() {
 		var htmlText = getHtmlText()
-		
+
 		Files.write(Paths.get("doc/" + storyName + ".html"), htmlText.bytes, StandardOpenOption.TRUNCATE_EXISTING)
 	}
-	
+
 	def String getHtmlText() {
 		'''
 			<!DOCTYPE html>
@@ -99,5 +100,5 @@ class Storyboard
 			</html>
 		'''
 	}
-	
+
 }
