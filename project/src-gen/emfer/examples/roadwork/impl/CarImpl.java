@@ -10,6 +10,7 @@ import emfer.examples.roadwork.TravelDirection;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -144,12 +145,37 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car
     * <!-- end-user-doc -->
     * @generated
     */
-   public void setTrack(Track newTrack)
+   public NotificationChain basicSetTrack(Track newTrack, NotificationChain msgs)
    {
       Track oldTrack = track;
       track = newTrack;
       if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, RoadworkPackage.CAR__TRACK, oldTrack, track));
+      {
+         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RoadworkPackage.CAR__TRACK, oldTrack, newTrack);
+         if (msgs == null) msgs = notification; else msgs.add(notification);
+      }
+      return msgs;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public void setTrack(Track newTrack)
+   {
+      if (newTrack != track)
+      {
+         NotificationChain msgs = null;
+         if (track != null)
+            msgs = ((InternalEObject)track).eInverseRemove(this, RoadworkPackage.TRACK__CAR, Track.class, msgs);
+         if (newTrack != null)
+            msgs = ((InternalEObject)newTrack).eInverseAdd(this, RoadworkPackage.TRACK__CAR, Track.class, msgs);
+         msgs = basicSetTrack(newTrack, msgs);
+         if (msgs != null) msgs.dispatch();
+      }
+      else if (eNotificationRequired())
+         eNotify(new ENotificationImpl(this, Notification.SET, RoadworkPackage.CAR__TRACK, newTrack, newTrack));
    }
 
    /**
@@ -174,6 +200,40 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car
       String _plus_1 = (" going " + _travelDirection);
       result = (_result_1 + _plus_1);
       return result;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+   {
+      switch (featureID)
+      {
+         case RoadworkPackage.CAR__TRACK:
+            if (track != null)
+               msgs = ((InternalEObject)track).eInverseRemove(this, RoadworkPackage.TRACK__CAR, Track.class, msgs);
+            return basicSetTrack((Track)otherEnd, msgs);
+      }
+      return super.eInverseAdd(otherEnd, featureID, msgs);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+   {
+      switch (featureID)
+      {
+         case RoadworkPackage.CAR__TRACK:
+            return basicSetTrack(null, msgs);
+      }
+      return super.eInverseRemove(otherEnd, featureID, msgs);
    }
 
    /**

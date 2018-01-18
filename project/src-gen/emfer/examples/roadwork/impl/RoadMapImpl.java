@@ -16,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -25,7 +26,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,7 +48,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
 {
    /**
-    * The cached value of the '{@link #getRoad() <em>Road</em>}' reference.
+    * The cached value of the '{@link #getRoad() <em>Road</em>}' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @see #getRoad()
@@ -56,7 +58,7 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
    protected Road road;
 
    /**
-    * The cached value of the '{@link #getCars() <em>Cars</em>}' reference list.
+    * The cached value of the '{@link #getCars() <em>Cars</em>}' containment reference list.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @see #getCars()
@@ -66,7 +68,7 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
    protected EList<Car> cars;
 
    /**
-    * The cached value of the '{@link #getWesternSignal() <em>Western Signal</em>}' reference.
+    * The cached value of the '{@link #getWesternSignal() <em>Western Signal</em>}' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @see #getWesternSignal()
@@ -76,7 +78,7 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
    protected Signal westernSignal;
 
    /**
-    * The cached value of the '{@link #getEasternSignal() <em>Eastern Signal</em>}' reference.
+    * The cached value of the '{@link #getEasternSignal() <em>Eastern Signal</em>}' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @see #getEasternSignal()
@@ -113,16 +115,6 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
     */
    public Road getRoad()
    {
-      if (road != null && road.eIsProxy())
-      {
-         InternalEObject oldRoad = (InternalEObject)road;
-         road = (Road)eResolveProxy(oldRoad);
-         if (road != oldRoad)
-         {
-            if (eNotificationRequired())
-               eNotify(new ENotificationImpl(this, Notification.RESOLVE, RoadworkPackage.ROAD_MAP__ROAD, oldRoad, road));
-         }
-      }
       return road;
    }
 
@@ -131,9 +123,16 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
     * <!-- end-user-doc -->
     * @generated
     */
-   public Road basicGetRoad()
+   public NotificationChain basicSetRoad(Road newRoad, NotificationChain msgs)
    {
-      return road;
+      Road oldRoad = road;
+      road = newRoad;
+      if (eNotificationRequired())
+      {
+         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RoadworkPackage.ROAD_MAP__ROAD, oldRoad, newRoad);
+         if (msgs == null) msgs = notification; else msgs.add(notification);
+      }
+      return msgs;
    }
 
    /**
@@ -143,10 +142,18 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
     */
    public void setRoad(Road newRoad)
    {
-      Road oldRoad = road;
-      road = newRoad;
-      if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, RoadworkPackage.ROAD_MAP__ROAD, oldRoad, road));
+      if (newRoad != road)
+      {
+         NotificationChain msgs = null;
+         if (road != null)
+            msgs = ((InternalEObject)road).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RoadworkPackage.ROAD_MAP__ROAD, null, msgs);
+         if (newRoad != null)
+            msgs = ((InternalEObject)newRoad).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RoadworkPackage.ROAD_MAP__ROAD, null, msgs);
+         msgs = basicSetRoad(newRoad, msgs);
+         if (msgs != null) msgs.dispatch();
+      }
+      else if (eNotificationRequired())
+         eNotify(new ENotificationImpl(this, Notification.SET, RoadworkPackage.ROAD_MAP__ROAD, newRoad, newRoad));
    }
 
    /**
@@ -158,7 +165,7 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
    {
       if (cars == null)
       {
-         cars = new EObjectResolvingEList<Car>(Car.class, this, RoadworkPackage.ROAD_MAP__CARS);
+         cars = new EObjectContainmentEList<Car>(Car.class, this, RoadworkPackage.ROAD_MAP__CARS);
       }
       return cars;
    }
@@ -170,16 +177,6 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
     */
    public Signal getWesternSignal()
    {
-      if (westernSignal != null && westernSignal.eIsProxy())
-      {
-         InternalEObject oldWesternSignal = (InternalEObject)westernSignal;
-         westernSignal = (Signal)eResolveProxy(oldWesternSignal);
-         if (westernSignal != oldWesternSignal)
-         {
-            if (eNotificationRequired())
-               eNotify(new ENotificationImpl(this, Notification.RESOLVE, RoadworkPackage.ROAD_MAP__WESTERN_SIGNAL, oldWesternSignal, westernSignal));
-         }
-      }
       return westernSignal;
    }
 
@@ -188,9 +185,16 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
     * <!-- end-user-doc -->
     * @generated
     */
-   public Signal basicGetWesternSignal()
+   public NotificationChain basicSetWesternSignal(Signal newWesternSignal, NotificationChain msgs)
    {
-      return westernSignal;
+      Signal oldWesternSignal = westernSignal;
+      westernSignal = newWesternSignal;
+      if (eNotificationRequired())
+      {
+         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RoadworkPackage.ROAD_MAP__WESTERN_SIGNAL, oldWesternSignal, newWesternSignal);
+         if (msgs == null) msgs = notification; else msgs.add(notification);
+      }
+      return msgs;
    }
 
    /**
@@ -200,10 +204,18 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
     */
    public void setWesternSignal(Signal newWesternSignal)
    {
-      Signal oldWesternSignal = westernSignal;
-      westernSignal = newWesternSignal;
-      if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, RoadworkPackage.ROAD_MAP__WESTERN_SIGNAL, oldWesternSignal, westernSignal));
+      if (newWesternSignal != westernSignal)
+      {
+         NotificationChain msgs = null;
+         if (westernSignal != null)
+            msgs = ((InternalEObject)westernSignal).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RoadworkPackage.ROAD_MAP__WESTERN_SIGNAL, null, msgs);
+         if (newWesternSignal != null)
+            msgs = ((InternalEObject)newWesternSignal).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RoadworkPackage.ROAD_MAP__WESTERN_SIGNAL, null, msgs);
+         msgs = basicSetWesternSignal(newWesternSignal, msgs);
+         if (msgs != null) msgs.dispatch();
+      }
+      else if (eNotificationRequired())
+         eNotify(new ENotificationImpl(this, Notification.SET, RoadworkPackage.ROAD_MAP__WESTERN_SIGNAL, newWesternSignal, newWesternSignal));
    }
 
    /**
@@ -213,16 +225,6 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
     */
    public Signal getEasternSignal()
    {
-      if (easternSignal != null && easternSignal.eIsProxy())
-      {
-         InternalEObject oldEasternSignal = (InternalEObject)easternSignal;
-         easternSignal = (Signal)eResolveProxy(oldEasternSignal);
-         if (easternSignal != oldEasternSignal)
-         {
-            if (eNotificationRequired())
-               eNotify(new ENotificationImpl(this, Notification.RESOLVE, RoadworkPackage.ROAD_MAP__EASTERN_SIGNAL, oldEasternSignal, easternSignal));
-         }
-      }
       return easternSignal;
    }
 
@@ -231,9 +233,16 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
     * <!-- end-user-doc -->
     * @generated
     */
-   public Signal basicGetEasternSignal()
+   public NotificationChain basicSetEasternSignal(Signal newEasternSignal, NotificationChain msgs)
    {
-      return easternSignal;
+      Signal oldEasternSignal = easternSignal;
+      easternSignal = newEasternSignal;
+      if (eNotificationRequired())
+      {
+         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RoadworkPackage.ROAD_MAP__EASTERN_SIGNAL, oldEasternSignal, newEasternSignal);
+         if (msgs == null) msgs = notification; else msgs.add(notification);
+      }
+      return msgs;
    }
 
    /**
@@ -243,10 +252,18 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
     */
    public void setEasternSignal(Signal newEasternSignal)
    {
-      Signal oldEasternSignal = easternSignal;
-      easternSignal = newEasternSignal;
-      if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, RoadworkPackage.ROAD_MAP__EASTERN_SIGNAL, oldEasternSignal, easternSignal));
+      if (newEasternSignal != easternSignal)
+      {
+         NotificationChain msgs = null;
+         if (easternSignal != null)
+            msgs = ((InternalEObject)easternSignal).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RoadworkPackage.ROAD_MAP__EASTERN_SIGNAL, null, msgs);
+         if (newEasternSignal != null)
+            msgs = ((InternalEObject)newEasternSignal).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RoadworkPackage.ROAD_MAP__EASTERN_SIGNAL, null, msgs);
+         msgs = basicSetEasternSignal(newEasternSignal, msgs);
+         if (msgs != null) msgs.dispatch();
+      }
+      else if (eNotificationRequired())
+         eNotify(new ENotificationImpl(this, Notification.SET, RoadworkPackage.ROAD_MAP__EASTERN_SIGNAL, newEasternSignal, newEasternSignal));
    }
 
    /**
@@ -313,21 +330,40 @@ public class RoadMapImpl extends MinimalEObjectImpl.Container implements RoadMap
     * @generated
     */
    @Override
+   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+   {
+      switch (featureID)
+      {
+         case RoadworkPackage.ROAD_MAP__ROAD:
+            return basicSetRoad(null, msgs);
+         case RoadworkPackage.ROAD_MAP__CARS:
+            return ((InternalEList<?>)getCars()).basicRemove(otherEnd, msgs);
+         case RoadworkPackage.ROAD_MAP__WESTERN_SIGNAL:
+            return basicSetWesternSignal(null, msgs);
+         case RoadworkPackage.ROAD_MAP__EASTERN_SIGNAL:
+            return basicSetEasternSignal(null, msgs);
+      }
+      return super.eInverseRemove(otherEnd, featureID, msgs);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
    public Object eGet(int featureID, boolean resolve, boolean coreType)
    {
       switch (featureID)
       {
          case RoadworkPackage.ROAD_MAP__ROAD:
-            if (resolve) return getRoad();
-            return basicGetRoad();
+            return getRoad();
          case RoadworkPackage.ROAD_MAP__CARS:
             return getCars();
          case RoadworkPackage.ROAD_MAP__WESTERN_SIGNAL:
-            if (resolve) return getWesternSignal();
-            return basicGetWesternSignal();
+            return getWesternSignal();
          case RoadworkPackage.ROAD_MAP__EASTERN_SIGNAL:
-            if (resolve) return getEasternSignal();
-            return basicGetEasternSignal();
+            return getEasternSignal();
       }
       return super.eGet(featureID, resolve, coreType);
    }

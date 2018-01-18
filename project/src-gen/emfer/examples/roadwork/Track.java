@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link emfer.examples.roadwork.Track#getTravelDirection <em>Travel Direction</em>}</li>
  *   <li>{@link emfer.examples.roadwork.Track#getWest <em>West</em>}</li>
  *   <li>{@link emfer.examples.roadwork.Track#getEast <em>East</em>}</li>
+ *   <li>{@link emfer.examples.roadwork.Track#getSignal <em>Signal</em>}</li>
+ *   <li>{@link emfer.examples.roadwork.Track#getCar <em>Car</em>}</li>
  * </ul>
  *
  * @see emfer.examples.roadwork.RoadworkPackage#getTrack()
@@ -117,6 +119,62 @@ public interface Track extends EObject
     * @generated
     */
    EList<Track> getEast();
+
+   /**
+    * Returns the value of the '<em><b>Signal</b></em>' reference.
+    * It is bidirectional and its opposite is '{@link emfer.examples.roadwork.Signal#getTrack <em>Track</em>}'.
+    * <!-- begin-user-doc -->
+    * <p>
+    * If the meaning of the '<em>Signal</em>' reference isn't clear,
+    * there really should be more of a description here...
+    * </p>
+    * <!-- end-user-doc -->
+    * @return the value of the '<em>Signal</em>' reference.
+    * @see #setSignal(Signal)
+    * @see emfer.examples.roadwork.RoadworkPackage#getTrack_Signal()
+    * @see emfer.examples.roadwork.Signal#getTrack
+    * @model opposite="track"
+    * @generated
+    */
+   Signal getSignal();
+
+   /**
+    * Sets the value of the '{@link emfer.examples.roadwork.Track#getSignal <em>Signal</em>}' reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @param value the new value of the '<em>Signal</em>' reference.
+    * @see #getSignal()
+    * @generated
+    */
+   void setSignal(Signal value);
+
+   /**
+    * Returns the value of the '<em><b>Car</b></em>' reference.
+    * It is bidirectional and its opposite is '{@link emfer.examples.roadwork.Car#getTrack <em>Track</em>}'.
+    * <!-- begin-user-doc -->
+    * <p>
+    * If the meaning of the '<em>Car</em>' reference isn't clear,
+    * there really should be more of a description here...
+    * </p>
+    * <!-- end-user-doc -->
+    * @return the value of the '<em>Car</em>' reference.
+    * @see #setCar(Car)
+    * @see emfer.examples.roadwork.RoadworkPackage#getTrack_Car()
+    * @see emfer.examples.roadwork.Car#getTrack
+    * @model opposite="track"
+    * @generated
+    */
+   Car getCar();
+
+   /**
+    * Sets the value of the '{@link emfer.examples.roadwork.Track#getCar <em>Car</em>}' reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @param value the new value of the '<em>Car</em>' reference.
+    * @see #getCar()
+    * @generated
+    */
+   void setCar(Car value);
 
    /**
     * <!-- begin-user-doc -->

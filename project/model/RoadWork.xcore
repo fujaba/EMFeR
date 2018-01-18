@@ -3,18 +3,18 @@ package emfer.examples.roadwork
 
 class RoadMap
 {
-	refers Road road
+	contains Road road
 	
-	refers Car[] cars
+	contains Car[] cars
 	
-	refers Signal westernSignal
-	refers Signal easternSignal
+	contains Signal westernSignal
+	contains Signal easternSignal
 	
 	op String toString()
 	{
 		var bufNorthSignal = new StringBuilder("       \n")
-		var bufNorthCars = new StringBuilder("-------\n")
-		var bufSouthCars = new StringBuilder("--/ \\--\n")
+		var bufNorthCars =   new StringBuilder("-------\n")
+		var bufSouthCars =   new StringBuilder("--/ \\--\n")
 		var bufSouthSignal = new StringBuilder("       \n")
 		
 		if (easternSignal.pass)
@@ -74,6 +74,10 @@ class Track
 	refers Track[] west opposite east
 	refers Track[] east opposite west
 	
+	refers Signal signal opposite track
+	
+	refers Car car opposite track
+	
 	op String toString()
 	{
 		return "Track: " + name
@@ -84,14 +88,14 @@ class Signal
 {
 	boolean pass
 	
-	refers Track track
+	refers Track track opposite signal
 }
 
 class Car
 {
 	TravelDirection travelDirection
 	
-	refers Track track
+	refers Track track opposite car
 	
 	op String toString()
 	{

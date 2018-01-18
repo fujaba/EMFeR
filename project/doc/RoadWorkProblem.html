@@ -45,8 +45,8 @@ E-/ \--
 <pre>
 
 1 --move car at: Track: n1 going WEST-> 3
+32 --swap Signals-> 3
 33 --move car at: Track: s7 going EAST-> 3
-34 --swap Signals-> 3
      T 
 -----W-
 E-/ \--
@@ -59,14 +59,14 @@ E-/ \--
 <pre>
 
 2 --swap Signals-> 4
-29 --move car at: Track: s1 going EAST-> 4
+27 --move car at: Track: s1 going EAST-> 4
 31 --move car at: Track: n7 going WEST-> 4
      F 
 ------W
 -E/ \--
  T     
-4 --move car at: Track: n1 going WEST-> 7
-4 --move car at: Track: s2 going EAST-> 8
+4 --move car at: Track: s2 going EAST-> 7
+4 --move car at: Track: n1 going WEST-> 8
 </pre>
 </p>
 <p>
@@ -96,25 +96,25 @@ E-/ \--
 <p>
 <pre>
 
-4 --move car at: Track: n1 going WEST-> 7
+4 --move car at: Track: s2 going EAST-> 7
+36 --move car at: Track: n7 going WEST-> 7
      F 
------W-
--E/ \--
+--E---W
+--/ \--
  T     
-7 --move car at: Track: s2 going EAST-> 11
+7 --move car at: Track: n5 going EAST-> 11
+7 --move car at: Track: n1 going WEST-> 12
 </pre>
 </p>
 <p>
 <pre>
 
-4 --move car at: Track: s2 going EAST-> 8
-35 --move car at: Track: n7 going WEST-> 8
+4 --move car at: Track: n1 going WEST-> 8
      F 
---E---W
---/ \--
+-----W-
+-E/ \--
  T     
-8 --move car at: Track: n1 going WEST-> 11
-8 --move car at: Track: n5 going EAST-> 12
+8 --move car at: Track: s2 going EAST-> 12
 </pre>
 </p>
 <p>
@@ -145,26 +145,26 @@ E-/ \--
 <p>
 <pre>
 
-7 --move car at: Track: s2 going EAST-> 11
-8 --move car at: Track: n1 going WEST-> 11
+7 --move car at: Track: n5 going EAST-> 11
+40 --move car at: Track: n7 going WEST-> 11
      F 
---E--W-
+---E--W
 --/ \--
  T     
-11 --move car at: Track: n5 going EAST-> 15
+11 --move car at: Track: n4 going EAST-> 15
+11 --move car at: Track: n1 going WEST-> 16
 </pre>
 </p>
 <p>
 <pre>
 
-8 --move car at: Track: n5 going EAST-> 12
-39 --move car at: Track: n7 going WEST-> 12
+7 --move car at: Track: n1 going WEST-> 12
+8 --move car at: Track: s2 going EAST-> 12
      F 
----E--W
+--E--W-
 --/ \--
  T     
-12 --move car at: Track: n1 going WEST-> 15
-12 --move car at: Track: n4 going EAST-> 16
+12 --move car at: Track: n5 going EAST-> 16
 </pre>
 </p>
 <p>
@@ -195,26 +195,26 @@ E-/ \--
 <p>
 <pre>
 
-11 --move car at: Track: n5 going EAST-> 15
-12 --move car at: Track: n1 going WEST-> 15
+11 --move car at: Track: n4 going EAST-> 15
+44 --move car at: Track: n7 going WEST-> 15
      F 
----E-W-
+----E-W
 --/ \--
  T     
-15 --move car at: Track: n4 going EAST-> 19
+15 --move car at: Track: n3 going EAST-> 19
+15 --move car at: Track: n1 going WEST-> 20
 </pre>
 </p>
 <p>
 <pre>
 
-12 --move car at: Track: n4 going EAST-> 16
-43 --move car at: Track: n7 going WEST-> 16
+11 --move car at: Track: n1 going WEST-> 16
+12 --move car at: Track: n5 going EAST-> 16
      F 
-----E-W
+---E-W-
 --/ \--
  T     
-16 --move car at: Track: n1 going WEST-> 19
-16 --move car at: Track: n3 going EAST-> 20
+16 --move car at: Track: n4 going EAST-> 20
 </pre>
 </p>
 <p>
@@ -245,26 +245,26 @@ E-/ \--
 <p>
 <pre>
 
-15 --move car at: Track: n4 going EAST-> 19
-16 --move car at: Track: n1 going WEST-> 19
+15 --move car at: Track: n3 going EAST-> 19
+48 --move car at: Track: n7 going WEST-> 19
      F 
-----EW-
---/ \--
+------W
+--/ \E-
  T     
-19 --move car at: Track: n3 going EAST-> 23
+19 --move car at: Track: s6 going EAST-> 23
+19 --move car at: Track: n1 going WEST-> 24
 </pre>
 </p>
 <p>
 <pre>
 
-16 --move car at: Track: n3 going EAST-> 20
-47 --move car at: Track: n7 going WEST-> 20
+15 --move car at: Track: n1 going WEST-> 20
+16 --move car at: Track: n4 going EAST-> 20
      F 
-------W
---/ \E-
+----EW-
+--/ \--
  T     
-20 --move car at: Track: n1 going WEST-> 23
-20 --move car at: Track: s6 going EAST-> 24
+20 --move car at: Track: n3 going EAST-> 24
 </pre>
 </p>
 <p>
@@ -295,33 +295,33 @@ E-/ \--
 <p>
 <pre>
 
-19 --move car at: Track: n3 going EAST-> 23
-20 --move car at: Track: n1 going WEST-> 23
+19 --move car at: Track: s6 going EAST-> 23
+52 --move car at: Track: n7 going WEST-> 23
      F 
------W-
---/ \E-
+------W
+--/ \-E
  T     
-23 --swap Signals-> 27
+23 --move car at: Track: s7 going EAST-> 27
+23 --move car at: Track: n1 going WEST-> 28
 </pre>
 </p>
 <p>
 <pre>
 
-20 --move car at: Track: s6 going EAST-> 24
-51 --move car at: Track: n7 going WEST-> 24
+19 --move car at: Track: n1 going WEST-> 24
+20 --move car at: Track: n3 going EAST-> 24
      F 
-------W
---/ \-E
+-----W-
+--/ \E-
  T     
-24 --move car at: Track: n1 going WEST-> 28
-24 --move car at: Track: s7 going EAST-> 29
+24 --swap Signals-> 29
 </pre>
 </p>
 <p>
 <pre>
 
 21 --swap Signals-> 25
-52 --move car at: Track: s1 going EAST-> 25
+51 --move car at: Track: s1 going EAST-> 25
      F 
 -W-----
 -E/ \--
@@ -344,20 +344,20 @@ W------
 <p>
 <pre>
 
-23 --swap Signals-> 27
-54 --move car at: Track: n1 going WEST-> 27
-     T 
------W-
---/ \E-
- F     
-27 --move car at: Track: n2 going WEST-> 32
-27 --move car at: Track: s6 going EAST-> 33
+23 --move car at: Track: s7 going EAST-> 27
+55 --move car at: Track: n7 going WEST-> 27
+     F 
+------W
+E-/ \--
+ T     
+27 --move car at: Track: s1 going EAST-> 4
+27 --move car at: Track: n1 going WEST-> 32
 </pre>
 </p>
 <p>
 <pre>
 
-24 --move car at: Track: n1 going WEST-> 28
+23 --move car at: Track: n1 going WEST-> 28
      F 
 -----W-
 --/ \-E
@@ -368,14 +368,14 @@ W------
 <p>
 <pre>
 
-24 --move car at: Track: s7 going EAST-> 29
-55 --move car at: Track: n7 going WEST-> 29
-     F 
-------W
-E-/ \--
- T     
-29 --move car at: Track: n1 going WEST-> 34
-29 --move car at: Track: s1 going EAST-> 4
+24 --swap Signals-> 29
+54 --move car at: Track: n1 going WEST-> 29
+     T 
+-----W-
+--/ \E-
+ F     
+29 --move car at: Track: s6 going EAST-> 33
+29 --move car at: Track: n2 going WEST-> 34
 </pre>
 </p>
 <p>
@@ -386,8 +386,8 @@ E-/ \--
 -WE----
 --/ \--
  T     
-30 --move car at: Track: n6 going WEST-> 35
-30 --move car at: Track: n5 going EAST-> 36
+30 --move car at: Track: n5 going EAST-> 35
+30 --move car at: Track: n6 going WEST-> 36
 </pre>
 </p>
 <p>
@@ -400,89 +400,89 @@ E-/ \--
 W------
 -E/ \--
  T     
-31 --move car at: Track: s2 going EAST-> 35
+31 --move car at: Track: s2 going EAST-> 36
 31 --move car at: Track: n7 going WEST-> 4
 </pre>
 </p>
 <p>
 <pre>
 
-27 --move car at: Track: n2 going WEST-> 32
-     T 
-----W--
---/ \E-
- F     
-32 --move car at: Track: s6 going EAST-> 37
-32 --move car at: Track: n3 going WEST-> 38
+27 --move car at: Track: n1 going WEST-> 32
+     F 
+-----W-
+E-/ \--
+ T     
+32 --swap Signals-> 3
 </pre>
 </p>
 <p>
 <pre>
 
-27 --move car at: Track: s6 going EAST-> 33
 28 --swap Signals-> 33
+29 --move car at: Track: s6 going EAST-> 33
 56 --move car at: Track: n1 going WEST-> 33
      T 
 -----W-
 --/ \-E
  F     
-33 --move car at: Track: n2 going WEST-> 37
 33 --move car at: Track: s7 going EAST-> 3
+33 --move car at: Track: n2 going WEST-> 37
 </pre>
 </p>
 <p>
 <pre>
 
-29 --move car at: Track: n1 going WEST-> 34
-     F 
------W-
-E-/ \--
- T     
-34 --swap Signals-> 3
+29 --move car at: Track: n2 going WEST-> 34
+     T 
+----W--
+--/ \E-
+ F     
+34 --move car at: Track: s6 going EAST-> 37
+34 --move car at: Track: n3 going WEST-> 38
 </pre>
 </p>
 <p>
 <pre>
 
-30 --move car at: Track: n6 going WEST-> 35
-31 --move car at: Track: s2 going EAST-> 35
-     F 
-W-E----
---/ \--
- T     
-35 --move car at: Track: n5 going EAST-> 39
-35 --move car at: Track: n7 going WEST-> 8
-</pre>
-</p>
-<p>
-<pre>
-
-30 --move car at: Track: n5 going EAST-> 36
+30 --move car at: Track: n5 going EAST-> 35
      F 
 -W-E---
 --/ \--
  T     
-36 --move car at: Track: n6 going WEST-> 39
-36 --move car at: Track: n4 going EAST-> 40
+35 --move car at: Track: n4 going EAST-> 39
+35 --move car at: Track: n6 going WEST-> 40
 </pre>
 </p>
 <p>
 <pre>
 
-32 --move car at: Track: s6 going EAST-> 37
+30 --move car at: Track: n6 going WEST-> 36
+31 --move car at: Track: s2 going EAST-> 36
+     F 
+W-E----
+--/ \--
+ T     
+36 --move car at: Track: n5 going EAST-> 40
+36 --move car at: Track: n7 going WEST-> 7
+</pre>
+</p>
+<p>
+<pre>
+
 33 --move car at: Track: n2 going WEST-> 37
+34 --move car at: Track: s6 going EAST-> 37
      T 
 ----W--
 --/ \-E
  F     
-37 --move car at: Track: n3 going WEST-> 41
 37 --move car at: Track: s7 going EAST-> 6
+37 --move car at: Track: n3 going WEST-> 41
 </pre>
 </p>
 <p>
 <pre>
 
-32 --move car at: Track: n3 going WEST-> 38
+34 --move car at: Track: n3 going WEST-> 38
      T 
 ---W---
 --/ \E-
@@ -494,26 +494,26 @@ W-E----
 <p>
 <pre>
 
-35 --move car at: Track: n5 going EAST-> 39
-36 --move car at: Track: n6 going WEST-> 39
+35 --move car at: Track: n4 going EAST-> 39
      F 
-W--E---
+-W--E--
 --/ \--
  T     
-39 --move car at: Track: n7 going WEST-> 12
-39 --move car at: Track: n4 going EAST-> 43
+39 --move car at: Track: n3 going EAST-> 43
+39 --move car at: Track: n6 going WEST-> 44
 </pre>
 </p>
 <p>
 <pre>
 
-36 --move car at: Track: n4 going EAST-> 40
+35 --move car at: Track: n6 going WEST-> 40
+36 --move car at: Track: n5 going EAST-> 40
      F 
--W--E--
+W--E---
 --/ \--
  T     
-40 --move car at: Track: n6 going WEST-> 43
-40 --move car at: Track: n3 going EAST-> 44
+40 --move car at: Track: n4 going EAST-> 44
+40 --move car at: Track: n7 going WEST-> 11
 </pre>
 </p>
 <p>
@@ -544,26 +544,26 @@ W--E---
 <p>
 <pre>
 
-39 --move car at: Track: n4 going EAST-> 43
-40 --move car at: Track: n6 going WEST-> 43
+39 --move car at: Track: n3 going EAST-> 43
      F 
-W---E--
---/ \--
+-W-----
+--/ \E-
  T     
-43 --move car at: Track: n7 going WEST-> 16
-43 --move car at: Track: n3 going EAST-> 47
+43 --move car at: Track: s6 going EAST-> 47
+43 --move car at: Track: n6 going WEST-> 48
 </pre>
 </p>
 <p>
 <pre>
 
-40 --move car at: Track: n3 going EAST-> 44
+39 --move car at: Track: n6 going WEST-> 44
+40 --move car at: Track: n4 going EAST-> 44
      F 
--W-----
---/ \E-
+W---E--
+--/ \--
  T     
-44 --move car at: Track: n6 going WEST-> 47
-44 --move car at: Track: s6 going EAST-> 48
+44 --move car at: Track: n3 going EAST-> 48
+44 --move car at: Track: n7 going WEST-> 15
 </pre>
 </p>
 <p>
@@ -594,26 +594,26 @@ W---E--
 <p>
 <pre>
 
-43 --move car at: Track: n3 going EAST-> 47
-44 --move car at: Track: n6 going WEST-> 47
+43 --move car at: Track: s6 going EAST-> 47
      F 
-W------
---/ \E-
+-W-----
+--/ \-E
  T     
-47 --move car at: Track: n7 going WEST-> 20
-47 --move car at: Track: s6 going EAST-> 51
+47 --move car at: Track: s7 going EAST-> 51
+47 --move car at: Track: n6 going WEST-> 52
 </pre>
 </p>
 <p>
 <pre>
 
-44 --move car at: Track: s6 going EAST-> 48
+43 --move car at: Track: n6 going WEST-> 48
+44 --move car at: Track: n3 going EAST-> 48
      F 
--W-----
---/ \-E
+W------
+--/ \E-
  T     
-48 --move car at: Track: n6 going WEST-> 51
-48 --move car at: Track: s7 going EAST-> 52
+48 --move car at: Track: s6 going EAST-> 52
+48 --move car at: Track: n7 going WEST-> 19
 </pre>
 </p>
 <p>
@@ -644,26 +644,26 @@ W------
 <p>
 <pre>
 
-47 --move car at: Track: s6 going EAST-> 51
-48 --move car at: Track: n6 going WEST-> 51
+47 --move car at: Track: s7 going EAST-> 51
      F 
-W------
---/ \-E
+-W-----
+E-/ \--
  T     
-51 --move car at: Track: n7 going WEST-> 24
-51 --move car at: Track: s7 going EAST-> 55
+51 --move car at: Track: s1 going EAST-> 25
+51 --move car at: Track: n6 going WEST-> 55
 </pre>
 </p>
 <p>
 <pre>
 
-48 --move car at: Track: s7 going EAST-> 52
+47 --move car at: Track: n6 going WEST-> 52
+48 --move car at: Track: s6 going EAST-> 52
      F 
--W-----
-E-/ \--
+W------
+--/ \-E
  T     
-52 --move car at: Track: n6 going WEST-> 55
-52 --move car at: Track: s1 going EAST-> 25
+52 --move car at: Track: s7 going EAST-> 55
+52 --move car at: Track: n7 going WEST-> 23
 </pre>
 </p>
 <p>
@@ -688,20 +688,20 @@ W------
 --/ \E-
  F     
 54 --move car at: Track: s6 going EAST-> 56
-54 --move car at: Track: n1 going WEST-> 27
+54 --move car at: Track: n1 going WEST-> 29
 </pre>
 </p>
 <p>
 <pre>
 
-51 --move car at: Track: s7 going EAST-> 55
-52 --move car at: Track: n6 going WEST-> 55
+51 --move car at: Track: n6 going WEST-> 55
+52 --move car at: Track: s7 going EAST-> 55
      F 
 W------
 E-/ \--
  T     
-55 --move car at: Track: n7 going WEST-> 29
 55 --move car at: Track: s1 going EAST-> 31
+55 --move car at: Track: n7 going WEST-> 27
 </pre>
 </p>
 <p>

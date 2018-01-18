@@ -39,7 +39,8 @@ public class AlwaysUntil
    {
       if (psi.test(startState))
       {
-         // this path reaches phi
+         // this path reaches psi
+         successStates.add(startState);
          return null;
       }
       
@@ -62,7 +63,7 @@ public class AlwaysUntil
          
          if (successStates.contains(t.getTgt()))
          {
-            return null;
+            continue;
          }
 
          if (done.contains(t.getTgt()))

@@ -71,7 +71,7 @@ public interface RoadworkPackage extends EPackage
    int ROAD_MAP = 0;
 
    /**
-    * The feature id for the '<em><b>Road</b></em>' reference.
+    * The feature id for the '<em><b>Road</b></em>' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -80,7 +80,7 @@ public interface RoadworkPackage extends EPackage
    int ROAD_MAP__ROAD = 0;
 
    /**
-    * The feature id for the '<em><b>Cars</b></em>' reference list.
+    * The feature id for the '<em><b>Cars</b></em>' containment reference list.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -89,7 +89,7 @@ public interface RoadworkPackage extends EPackage
    int ROAD_MAP__CARS = 1;
 
    /**
-    * The feature id for the '<em><b>Western Signal</b></em>' reference.
+    * The feature id for the '<em><b>Western Signal</b></em>' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -98,7 +98,7 @@ public interface RoadworkPackage extends EPackage
    int ROAD_MAP__WESTERN_SIGNAL = 2;
 
    /**
-    * The feature id for the '<em><b>Eastern Signal</b></em>' reference.
+    * The feature id for the '<em><b>Eastern Signal</b></em>' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -217,13 +217,31 @@ public interface RoadworkPackage extends EPackage
    int TRACK__EAST = 3;
 
    /**
+    * The feature id for the '<em><b>Signal</b></em>' reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TRACK__SIGNAL = 4;
+
+   /**
+    * The feature id for the '<em><b>Car</b></em>' reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TRACK__CAR = 5;
+
+   /**
     * The number of structural features of the '<em>Track</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int TRACK_FEATURE_COUNT = 4;
+   int TRACK_FEATURE_COUNT = 6;
 
    /**
     * The operation id for the '<em>To String</em>' operation.
@@ -366,10 +384,10 @@ public interface RoadworkPackage extends EPackage
    EClass getRoadMap();
 
    /**
-    * Returns the meta object for the reference '{@link emfer.examples.roadwork.RoadMap#getRoad <em>Road</em>}'.
+    * Returns the meta object for the containment reference '{@link emfer.examples.roadwork.RoadMap#getRoad <em>Road</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the reference '<em>Road</em>'.
+    * @return the meta object for the containment reference '<em>Road</em>'.
     * @see emfer.examples.roadwork.RoadMap#getRoad()
     * @see #getRoadMap()
     * @generated
@@ -377,10 +395,10 @@ public interface RoadworkPackage extends EPackage
    EReference getRoadMap_Road();
 
    /**
-    * Returns the meta object for the reference list '{@link emfer.examples.roadwork.RoadMap#getCars <em>Cars</em>}'.
+    * Returns the meta object for the containment reference list '{@link emfer.examples.roadwork.RoadMap#getCars <em>Cars</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the reference list '<em>Cars</em>'.
+    * @return the meta object for the containment reference list '<em>Cars</em>'.
     * @see emfer.examples.roadwork.RoadMap#getCars()
     * @see #getRoadMap()
     * @generated
@@ -388,10 +406,10 @@ public interface RoadworkPackage extends EPackage
    EReference getRoadMap_Cars();
 
    /**
-    * Returns the meta object for the reference '{@link emfer.examples.roadwork.RoadMap#getWesternSignal <em>Western Signal</em>}'.
+    * Returns the meta object for the containment reference '{@link emfer.examples.roadwork.RoadMap#getWesternSignal <em>Western Signal</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the reference '<em>Western Signal</em>'.
+    * @return the meta object for the containment reference '<em>Western Signal</em>'.
     * @see emfer.examples.roadwork.RoadMap#getWesternSignal()
     * @see #getRoadMap()
     * @generated
@@ -399,10 +417,10 @@ public interface RoadworkPackage extends EPackage
    EReference getRoadMap_WesternSignal();
 
    /**
-    * Returns the meta object for the reference '{@link emfer.examples.roadwork.RoadMap#getEasternSignal <em>Eastern Signal</em>}'.
+    * Returns the meta object for the containment reference '{@link emfer.examples.roadwork.RoadMap#getEasternSignal <em>Eastern Signal</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the reference '<em>Eastern Signal</em>'.
+    * @return the meta object for the containment reference '<em>Eastern Signal</em>'.
     * @see emfer.examples.roadwork.RoadMap#getEasternSignal()
     * @see #getRoadMap()
     * @generated
@@ -493,6 +511,28 @@ public interface RoadworkPackage extends EPackage
     * @generated
     */
    EReference getTrack_East();
+
+   /**
+    * Returns the meta object for the reference '{@link emfer.examples.roadwork.Track#getSignal <em>Signal</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the reference '<em>Signal</em>'.
+    * @see emfer.examples.roadwork.Track#getSignal()
+    * @see #getTrack()
+    * @generated
+    */
+   EReference getTrack_Signal();
+
+   /**
+    * Returns the meta object for the reference '{@link emfer.examples.roadwork.Track#getCar <em>Car</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the reference '<em>Car</em>'.
+    * @see emfer.examples.roadwork.Track#getCar()
+    * @see #getTrack()
+    * @generated
+    */
+   EReference getTrack_Car();
 
    /**
     * Returns the meta object for the '{@link emfer.examples.roadwork.Track#toString() <em>To String</em>}' operation.
@@ -623,7 +663,7 @@ public interface RoadworkPackage extends EPackage
       EClass ROAD_MAP = eINSTANCE.getRoadMap();
 
       /**
-       * The meta object literal for the '<em><b>Road</b></em>' reference feature.
+       * The meta object literal for the '<em><b>Road</b></em>' containment reference feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
@@ -631,7 +671,7 @@ public interface RoadworkPackage extends EPackage
       EReference ROAD_MAP__ROAD = eINSTANCE.getRoadMap_Road();
 
       /**
-       * The meta object literal for the '<em><b>Cars</b></em>' reference list feature.
+       * The meta object literal for the '<em><b>Cars</b></em>' containment reference list feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
@@ -639,7 +679,7 @@ public interface RoadworkPackage extends EPackage
       EReference ROAD_MAP__CARS = eINSTANCE.getRoadMap_Cars();
 
       /**
-       * The meta object literal for the '<em><b>Western Signal</b></em>' reference feature.
+       * The meta object literal for the '<em><b>Western Signal</b></em>' containment reference feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
@@ -647,7 +687,7 @@ public interface RoadworkPackage extends EPackage
       EReference ROAD_MAP__WESTERN_SIGNAL = eINSTANCE.getRoadMap_WesternSignal();
 
       /**
-       * The meta object literal for the '<em><b>Eastern Signal</b></em>' reference feature.
+       * The meta object literal for the '<em><b>Eastern Signal</b></em>' containment reference feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
@@ -721,6 +761,22 @@ public interface RoadworkPackage extends EPackage
        * @generated
        */
       EReference TRACK__EAST = eINSTANCE.getTrack_East();
+
+      /**
+       * The meta object literal for the '<em><b>Signal</b></em>' reference feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EReference TRACK__SIGNAL = eINSTANCE.getTrack_Signal();
+
+      /**
+       * The meta object literal for the '<em><b>Car</b></em>' reference feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EReference TRACK__CAR = eINSTANCE.getTrack_Car();
 
       /**
        * The meta object literal for the '<em><b>To String</b></em>' operation.
