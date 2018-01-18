@@ -221,6 +221,8 @@ public class RoadWorkProblem
          s -> !isRoadWorkClear(s));
       assertTrue("itsPossibleToEnterTheRoadWork", itsPossibleToEnterTheRoadWork);
 
+      story.addReachabilityGraph(emfer.getReachabilityGraph());
+
       story.dumpHtml();
    }
 

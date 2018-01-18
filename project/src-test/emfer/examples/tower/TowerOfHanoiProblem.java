@@ -1,6 +1,5 @@
 package emfer.examples.tower;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -11,7 +10,6 @@ import org.junit.Test;
 
 import emfer.EMFeR;
 import emfer.reachability.ReachableState;
-import emfer.reachability.TrafoApplication;
 
 public class TowerOfHanoiProblem
 {
@@ -19,9 +17,29 @@ public class TowerOfHanoiProblem
 
 
    @Test
-   public void testTowerOfHanoiProblem() throws Exception
+   public void testTowerOfHanoiProblem3StaticDiscs() throws Exception
    {
-      runWithNumberOfDiscs(7, false);
+      runWithNumberOfDiscs(3, true);
+   }
+
+
+   @Test
+   public void testTowerOfHanoiProblem3NonStaticDiscs() throws Exception
+   {
+      runWithNumberOfDiscs(3, false);
+   }
+
+
+   @Test
+   public void testTowerOfHanoiProblem5StaticDiscs() throws Exception
+   {
+      runWithNumberOfDiscs(5, true);
+   }
+
+
+   @Test
+   public void testTowerOfHanoiProblem7StaticDiscs() throws Exception
+   {
       runWithNumberOfDiscs(7, true);
    }
 
@@ -72,21 +90,41 @@ public class TowerOfHanoiProblem
 
       emfer.computeDistancesTo(s -> isFinalState(s));
 
-      ArrayList<TrafoApplication> shortestPath = emfer.shortestPath(emfer.getReachabilityGraph().getStates().get(0));
-
-      Logger.getGlobal().info("Exploring scenario with "
+      Logger.getGlobal().info("\nExploring scenario with "
          + discs
+         + (staticDiscs ? "" : " static")
          + " discs took "
          + duration
-         + " seconds. "
+         + " seconds.\n"
          + size
-         + " states in reachability graph. Discs are static: "
-         + staticDiscs
-         + " shortest path is "
-         + shortestPath.size()
+         + " states in reachability graph."
+         + "\nShortest path is "
+         + emfer.shortestPath(emfer.getReachabilityGraph().getStates().get(0)).size()
          + " steps long.");
 
-      Assert.assertEquals("Number of states:", (int) Math.pow(3, discs), size);
+      float shortestPathSum = 0;
+
+      for (ReachableState targetState : emfer.getReachabilityGraph().getStates())
+      {
+         emfer.computeDistancesTo(targetState);
+         for (ReachableState s : emfer.getReachabilityGraph().getStates())
+         {
+            int currentShortestPath = emfer.shortestPath(s).size();
+            shortestPathSum += currentShortestPath;
+         }
+         shortestPathSum = shortestPathSum / size;
+      }
+
+      float mathShortestPathSum = (float) (((466f / 885f) * Math.pow(2, discs))
+         - (1f / 3f)
+         - ((3f / 5f) * Math.pow((1f / 3f), discs))
+         + ((12f / 59f) + (18f / 1003f) * Math.sqrt(17))
+            * Math.pow(((5f + Math.sqrt(17)) / 18f), discs)
+         + ((12f / 59f) - (18f / 1003f) * Math.sqrt(17))
+            * Math.pow(((5 - Math.sqrt(17)) / 18f), discs));
+
+      Assert.assertEquals("Number of states computed does not match calculated number", (int) Math.pow(3, discs), size);
+      Assert.assertEquals("Number of average transitions between two states computed does not match calculated number", mathShortestPathSum, shortestPathSum, 0.1f);
    }
 
 

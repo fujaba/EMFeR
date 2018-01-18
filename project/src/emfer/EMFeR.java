@@ -514,23 +514,22 @@ public class EMFeR
    }
 
 
-   public void computeDistancesTo(Predicate<ReachableState> isTarget)
+   public void computeDistancesTo(ReachableState... targets)
    {
       EList<ReachableState> states = this.getReachabilityGraph().getStates();
-
       LinkedList<ReachableState> todo = new LinkedList<ReachableState>();
 
       for (ReachableState s : states)
       {
-         if (isTarget.apply(s))
-         {
-            s.setMetricValue(0);
-            todo.add(s);
-         }
-         else
          {
             s.setMetricValue(Double.MAX_VALUE);
          }
+      }
+
+      for (ReachableState s : targets)
+      {
+         s.setMetricValue(0);
+         todo.add(s);
       }
 
       while (!todo.isEmpty())
@@ -549,6 +548,23 @@ public class EMFeR
          }
 
       }
+   }
+
+
+   public void computeDistancesTo(Predicate<ReachableState> isTarget)
+   {
+      EList<ReachableState> states = this.getReachabilityGraph().getStates();
+      ArrayList<ReachableState> targetStates = new ArrayList<ReachableState>();
+
+      for (ReachableState s : states)
+      {
+         if (isTarget.apply(s))
+         {
+            targetStates.add(s);
+         }
+      }
+
+      computeDistancesTo(targetStates.toArray(new ReachableState[targetStates.size()]));
    }
 
 
