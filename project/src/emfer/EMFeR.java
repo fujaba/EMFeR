@@ -401,8 +401,11 @@ public class EMFeR
             break;
          }
 
-         Collection<EObject> handles = pathTrafo.path.run(current.getRoot());
+         Collection<EObject> tmpHandles = pathTrafo.path.run(current.getRoot());
 
+         ArrayList<EObject> handles = new ArrayList<EObject>();
+         handles.addAll(tmpHandles);
+         
          String trafoName = pathTrafo.name;
 
          Trafo2 trafo = pathTrafo.trafo;

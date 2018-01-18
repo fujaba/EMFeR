@@ -1,5 +1,6 @@
 package emfer.stories;
 
+import emfer.reachability.ReachabilityGraph;
 import emfer.stories.StoryStep;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -56,12 +57,22 @@ public class Storyboard {
     return _xblockexpression;
   }
   
+  public boolean addReachabilityGraph(final ReachabilityGraph reachabilityGraph) {
+    boolean _xblockexpression = false;
+    {
+      StoryStep newStep = new StoryStep();
+      newStep.setGraph(reachabilityGraph);
+      _xblockexpression = this.steps.add(newStep);
+    }
+    return _xblockexpression;
+  }
+  
   public Path dumpHtml() {
     try {
       Path _xblockexpression = null;
       {
         String htmlText = this.getHtmlText();
-        _xblockexpression = Files.write(Paths.get((("doc/" + this.storyName) + ".html")), htmlText.getBytes(), StandardOpenOption.CREATE);
+        _xblockexpression = Files.write(Paths.get((("doc/" + this.storyName) + ".html")), htmlText.getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
       }
       return _xblockexpression;
     } catch (Throwable _e) {
@@ -76,6 +87,14 @@ public class Storyboard {
     _builder.append("<html>");
     _builder.newLine();
     _builder.append("<head><meta charset=\"utf-8\">");
+    _builder.newLine();
+    _builder.append("<link rel=\"stylesheet\" href=\"includes/alchemy.css\">");
+    _builder.newLine();
+    _builder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"includes/vendor.css\">");
+    _builder.newLine();
+    _builder.append("<script type=\"text/javascript\" src=\"includes/vendor.js\"></script>");
+    _builder.newLine();
+    _builder.append("<script type=\"text/javascript\" src=\"includes/alchemy.js\"></script>");
     _builder.newLine();
     _builder.append("</head>");
     _builder.newLine();

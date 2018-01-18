@@ -54,6 +54,7 @@ public interface Car extends EObject
 
    /**
     * Returns the value of the '<em><b>Track</b></em>' reference.
+    * It is bidirectional and its opposite is '{@link emfer.examples.roadwork.Track#getCar <em>Car</em>}'.
     * <!-- begin-user-doc -->
     * <p>
     * If the meaning of the '<em>Track</em>' reference isn't clear,
@@ -63,7 +64,8 @@ public interface Car extends EObject
     * @return the value of the '<em>Track</em>' reference.
     * @see #setTrack(Track)
     * @see emfer.examples.roadwork.RoadworkPackage#getCar_Track()
-    * @model
+    * @see emfer.examples.roadwork.Track#getCar
+    * @model opposite="car"
     * @generated
     */
    Track getTrack();

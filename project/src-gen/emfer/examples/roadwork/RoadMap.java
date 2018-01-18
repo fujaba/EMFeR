@@ -28,94 +28,94 @@ import org.eclipse.emf.ecore.EObject;
 public interface RoadMap extends EObject
 {
    /**
-    * Returns the value of the '<em><b>Road</b></em>' reference.
+    * Returns the value of the '<em><b>Road</b></em>' containment reference.
     * <!-- begin-user-doc -->
     * <p>
-    * If the meaning of the '<em>Road</em>' reference isn't clear,
+    * If the meaning of the '<em>Road</em>' containment reference isn't clear,
     * there really should be more of a description here...
     * </p>
     * <!-- end-user-doc -->
-    * @return the value of the '<em>Road</em>' reference.
+    * @return the value of the '<em>Road</em>' containment reference.
     * @see #setRoad(Road)
     * @see emfer.examples.roadwork.RoadworkPackage#getRoadMap_Road()
-    * @model
+    * @model containment="true"
     * @generated
     */
    Road getRoad();
 
    /**
-    * Sets the value of the '{@link emfer.examples.roadwork.RoadMap#getRoad <em>Road</em>}' reference.
+    * Sets the value of the '{@link emfer.examples.roadwork.RoadMap#getRoad <em>Road</em>}' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @param value the new value of the '<em>Road</em>' reference.
+    * @param value the new value of the '<em>Road</em>' containment reference.
     * @see #getRoad()
     * @generated
     */
    void setRoad(Road value);
 
    /**
-    * Returns the value of the '<em><b>Cars</b></em>' reference list.
+    * Returns the value of the '<em><b>Cars</b></em>' containment reference list.
     * The list contents are of type {@link emfer.examples.roadwork.Car}.
     * <!-- begin-user-doc -->
     * <p>
-    * If the meaning of the '<em>Cars</em>' reference list isn't clear,
+    * If the meaning of the '<em>Cars</em>' containment reference list isn't clear,
     * there really should be more of a description here...
     * </p>
     * <!-- end-user-doc -->
-    * @return the value of the '<em>Cars</em>' reference list.
+    * @return the value of the '<em>Cars</em>' containment reference list.
     * @see emfer.examples.roadwork.RoadworkPackage#getRoadMap_Cars()
-    * @model
+    * @model containment="true"
     * @generated
     */
    EList<Car> getCars();
 
    /**
-    * Returns the value of the '<em><b>Western Signal</b></em>' reference.
+    * Returns the value of the '<em><b>Western Signal</b></em>' containment reference.
     * <!-- begin-user-doc -->
     * <p>
-    * If the meaning of the '<em>Western Signal</em>' reference isn't clear,
+    * If the meaning of the '<em>Western Signal</em>' containment reference isn't clear,
     * there really should be more of a description here...
     * </p>
     * <!-- end-user-doc -->
-    * @return the value of the '<em>Western Signal</em>' reference.
+    * @return the value of the '<em>Western Signal</em>' containment reference.
     * @see #setWesternSignal(Signal)
     * @see emfer.examples.roadwork.RoadworkPackage#getRoadMap_WesternSignal()
-    * @model
+    * @model containment="true"
     * @generated
     */
    Signal getWesternSignal();
 
    /**
-    * Sets the value of the '{@link emfer.examples.roadwork.RoadMap#getWesternSignal <em>Western Signal</em>}' reference.
+    * Sets the value of the '{@link emfer.examples.roadwork.RoadMap#getWesternSignal <em>Western Signal</em>}' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @param value the new value of the '<em>Western Signal</em>' reference.
+    * @param value the new value of the '<em>Western Signal</em>' containment reference.
     * @see #getWesternSignal()
     * @generated
     */
    void setWesternSignal(Signal value);
 
    /**
-    * Returns the value of the '<em><b>Eastern Signal</b></em>' reference.
+    * Returns the value of the '<em><b>Eastern Signal</b></em>' containment reference.
     * <!-- begin-user-doc -->
     * <p>
-    * If the meaning of the '<em>Eastern Signal</em>' reference isn't clear,
+    * If the meaning of the '<em>Eastern Signal</em>' containment reference isn't clear,
     * there really should be more of a description here...
     * </p>
     * <!-- end-user-doc -->
-    * @return the value of the '<em>Eastern Signal</em>' reference.
+    * @return the value of the '<em>Eastern Signal</em>' containment reference.
     * @see #setEasternSignal(Signal)
     * @see emfer.examples.roadwork.RoadworkPackage#getRoadMap_EasternSignal()
-    * @model
+    * @model containment="true"
     * @generated
     */
    Signal getEasternSignal();
 
    /**
-    * Sets the value of the '{@link emfer.examples.roadwork.RoadMap#getEasternSignal <em>Eastern Signal</em>}' reference.
+    * Sets the value of the '{@link emfer.examples.roadwork.RoadMap#getEasternSignal <em>Eastern Signal</em>}' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @param value the new value of the '<em>Eastern Signal</em>' reference.
+    * @param value the new value of the '<em>Eastern Signal</em>' containment reference.
     * @see #getEasternSignal()
     * @generated
     */

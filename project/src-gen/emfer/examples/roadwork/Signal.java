@@ -51,6 +51,7 @@ public interface Signal extends EObject
 
    /**
     * Returns the value of the '<em><b>Track</b></em>' reference.
+    * It is bidirectional and its opposite is '{@link emfer.examples.roadwork.Track#getSignal <em>Signal</em>}'.
     * <!-- begin-user-doc -->
     * <p>
     * If the meaning of the '<em>Track</em>' reference isn't clear,
@@ -60,7 +61,8 @@ public interface Signal extends EObject
     * @return the value of the '<em>Track</em>' reference.
     * @see #setTrack(Track)
     * @see emfer.examples.roadwork.RoadworkPackage#getSignal_Track()
-    * @model
+    * @see emfer.examples.roadwork.Track#getSignal
+    * @model opposite="signal"
     * @generated
     */
    Track getTrack();

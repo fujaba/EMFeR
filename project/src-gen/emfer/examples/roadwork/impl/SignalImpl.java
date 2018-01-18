@@ -7,6 +7,7 @@ import emfer.examples.roadwork.Signal;
 import emfer.examples.roadwork.Track;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -139,12 +140,71 @@ public class SignalImpl extends MinimalEObjectImpl.Container implements Signal
     * <!-- end-user-doc -->
     * @generated
     */
-   public void setTrack(Track newTrack)
+   public NotificationChain basicSetTrack(Track newTrack, NotificationChain msgs)
    {
       Track oldTrack = track;
       track = newTrack;
       if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, RoadworkPackage.SIGNAL__TRACK, oldTrack, track));
+      {
+         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RoadworkPackage.SIGNAL__TRACK, oldTrack, newTrack);
+         if (msgs == null) msgs = notification; else msgs.add(notification);
+      }
+      return msgs;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public void setTrack(Track newTrack)
+   {
+      if (newTrack != track)
+      {
+         NotificationChain msgs = null;
+         if (track != null)
+            msgs = ((InternalEObject)track).eInverseRemove(this, RoadworkPackage.TRACK__SIGNAL, Track.class, msgs);
+         if (newTrack != null)
+            msgs = ((InternalEObject)newTrack).eInverseAdd(this, RoadworkPackage.TRACK__SIGNAL, Track.class, msgs);
+         msgs = basicSetTrack(newTrack, msgs);
+         if (msgs != null) msgs.dispatch();
+      }
+      else if (eNotificationRequired())
+         eNotify(new ENotificationImpl(this, Notification.SET, RoadworkPackage.SIGNAL__TRACK, newTrack, newTrack));
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+   {
+      switch (featureID)
+      {
+         case RoadworkPackage.SIGNAL__TRACK:
+            if (track != null)
+               msgs = ((InternalEObject)track).eInverseRemove(this, RoadworkPackage.TRACK__SIGNAL, Track.class, msgs);
+            return basicSetTrack((Track)otherEnd, msgs);
+      }
+      return super.eInverseAdd(otherEnd, featureID, msgs);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+   {
+      switch (featureID)
+      {
+         case RoadworkPackage.SIGNAL__TRACK:
+            return basicSetTrack(null, msgs);
+      }
+      return super.eInverseRemove(otherEnd, featureID, msgs);
    }
 
    /**

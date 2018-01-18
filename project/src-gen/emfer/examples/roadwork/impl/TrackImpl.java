@@ -2,7 +2,9 @@
  */
 package emfer.examples.roadwork.impl;
 
+import emfer.examples.roadwork.Car;
 import emfer.examples.roadwork.RoadworkPackage;
+import emfer.examples.roadwork.Signal;
 import emfer.examples.roadwork.Track;
 import emfer.examples.roadwork.TravelDirection;
 
@@ -36,6 +38,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link emfer.examples.roadwork.impl.TrackImpl#getTravelDirection <em>Travel Direction</em>}</li>
  *   <li>{@link emfer.examples.roadwork.impl.TrackImpl#getWest <em>West</em>}</li>
  *   <li>{@link emfer.examples.roadwork.impl.TrackImpl#getEast <em>East</em>}</li>
+ *   <li>{@link emfer.examples.roadwork.impl.TrackImpl#getSignal <em>Signal</em>}</li>
+ *   <li>{@link emfer.examples.roadwork.impl.TrackImpl#getCar <em>Car</em>}</li>
  * </ul>
  *
  * @generated
@@ -101,6 +105,26 @@ public class TrackImpl extends MinimalEObjectImpl.Container implements Track
     * @ordered
     */
    protected EList<Track> east;
+
+   /**
+    * The cached value of the '{@link #getSignal() <em>Signal</em>}' reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getSignal()
+    * @generated
+    * @ordered
+    */
+   protected Signal signal;
+
+   /**
+    * The cached value of the '{@link #getCar() <em>Car</em>}' reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getCar()
+    * @generated
+    * @ordered
+    */
+   protected Car car;
 
    /**
     * <!-- begin-user-doc -->
@@ -202,6 +226,142 @@ public class TrackImpl extends MinimalEObjectImpl.Container implements Track
     * <!-- end-user-doc -->
     * @generated
     */
+   public Signal getSignal()
+   {
+      if (signal != null && signal.eIsProxy())
+      {
+         InternalEObject oldSignal = (InternalEObject)signal;
+         signal = (Signal)eResolveProxy(oldSignal);
+         if (signal != oldSignal)
+         {
+            if (eNotificationRequired())
+               eNotify(new ENotificationImpl(this, Notification.RESOLVE, RoadworkPackage.TRACK__SIGNAL, oldSignal, signal));
+         }
+      }
+      return signal;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public Signal basicGetSignal()
+   {
+      return signal;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public NotificationChain basicSetSignal(Signal newSignal, NotificationChain msgs)
+   {
+      Signal oldSignal = signal;
+      signal = newSignal;
+      if (eNotificationRequired())
+      {
+         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RoadworkPackage.TRACK__SIGNAL, oldSignal, newSignal);
+         if (msgs == null) msgs = notification; else msgs.add(notification);
+      }
+      return msgs;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public void setSignal(Signal newSignal)
+   {
+      if (newSignal != signal)
+      {
+         NotificationChain msgs = null;
+         if (signal != null)
+            msgs = ((InternalEObject)signal).eInverseRemove(this, RoadworkPackage.SIGNAL__TRACK, Signal.class, msgs);
+         if (newSignal != null)
+            msgs = ((InternalEObject)newSignal).eInverseAdd(this, RoadworkPackage.SIGNAL__TRACK, Signal.class, msgs);
+         msgs = basicSetSignal(newSignal, msgs);
+         if (msgs != null) msgs.dispatch();
+      }
+      else if (eNotificationRequired())
+         eNotify(new ENotificationImpl(this, Notification.SET, RoadworkPackage.TRACK__SIGNAL, newSignal, newSignal));
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public Car getCar()
+   {
+      if (car != null && car.eIsProxy())
+      {
+         InternalEObject oldCar = (InternalEObject)car;
+         car = (Car)eResolveProxy(oldCar);
+         if (car != oldCar)
+         {
+            if (eNotificationRequired())
+               eNotify(new ENotificationImpl(this, Notification.RESOLVE, RoadworkPackage.TRACK__CAR, oldCar, car));
+         }
+      }
+      return car;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public Car basicGetCar()
+   {
+      return car;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public NotificationChain basicSetCar(Car newCar, NotificationChain msgs)
+   {
+      Car oldCar = car;
+      car = newCar;
+      if (eNotificationRequired())
+      {
+         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RoadworkPackage.TRACK__CAR, oldCar, newCar);
+         if (msgs == null) msgs = notification; else msgs.add(notification);
+      }
+      return msgs;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public void setCar(Car newCar)
+   {
+      if (newCar != car)
+      {
+         NotificationChain msgs = null;
+         if (car != null)
+            msgs = ((InternalEObject)car).eInverseRemove(this, RoadworkPackage.CAR__TRACK, Car.class, msgs);
+         if (newCar != null)
+            msgs = ((InternalEObject)newCar).eInverseAdd(this, RoadworkPackage.CAR__TRACK, Car.class, msgs);
+         msgs = basicSetCar(newCar, msgs);
+         if (msgs != null) msgs.dispatch();
+      }
+      else if (eNotificationRequired())
+         eNotify(new ENotificationImpl(this, Notification.SET, RoadworkPackage.TRACK__CAR, newCar, newCar));
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    public String toString()
    {
       String _name = this.getName();
@@ -223,6 +383,14 @@ public class TrackImpl extends MinimalEObjectImpl.Container implements Track
             return ((InternalEList<InternalEObject>)(InternalEList<?>)getWest()).basicAdd(otherEnd, msgs);
          case RoadworkPackage.TRACK__EAST:
             return ((InternalEList<InternalEObject>)(InternalEList<?>)getEast()).basicAdd(otherEnd, msgs);
+         case RoadworkPackage.TRACK__SIGNAL:
+            if (signal != null)
+               msgs = ((InternalEObject)signal).eInverseRemove(this, RoadworkPackage.SIGNAL__TRACK, Signal.class, msgs);
+            return basicSetSignal((Signal)otherEnd, msgs);
+         case RoadworkPackage.TRACK__CAR:
+            if (car != null)
+               msgs = ((InternalEObject)car).eInverseRemove(this, RoadworkPackage.CAR__TRACK, Car.class, msgs);
+            return basicSetCar((Car)otherEnd, msgs);
       }
       return super.eInverseAdd(otherEnd, featureID, msgs);
    }
@@ -241,6 +409,10 @@ public class TrackImpl extends MinimalEObjectImpl.Container implements Track
             return ((InternalEList<?>)getWest()).basicRemove(otherEnd, msgs);
          case RoadworkPackage.TRACK__EAST:
             return ((InternalEList<?>)getEast()).basicRemove(otherEnd, msgs);
+         case RoadworkPackage.TRACK__SIGNAL:
+            return basicSetSignal(null, msgs);
+         case RoadworkPackage.TRACK__CAR:
+            return basicSetCar(null, msgs);
       }
       return super.eInverseRemove(otherEnd, featureID, msgs);
    }
@@ -263,6 +435,12 @@ public class TrackImpl extends MinimalEObjectImpl.Container implements Track
             return getWest();
          case RoadworkPackage.TRACK__EAST:
             return getEast();
+         case RoadworkPackage.TRACK__SIGNAL:
+            if (resolve) return getSignal();
+            return basicGetSignal();
+         case RoadworkPackage.TRACK__CAR:
+            if (resolve) return getCar();
+            return basicGetCar();
       }
       return super.eGet(featureID, resolve, coreType);
    }
@@ -292,6 +470,12 @@ public class TrackImpl extends MinimalEObjectImpl.Container implements Track
             getEast().clear();
             getEast().addAll((Collection<? extends Track>)newValue);
             return;
+         case RoadworkPackage.TRACK__SIGNAL:
+            setSignal((Signal)newValue);
+            return;
+         case RoadworkPackage.TRACK__CAR:
+            setCar((Car)newValue);
+            return;
       }
       super.eSet(featureID, newValue);
    }
@@ -318,6 +502,12 @@ public class TrackImpl extends MinimalEObjectImpl.Container implements Track
          case RoadworkPackage.TRACK__EAST:
             getEast().clear();
             return;
+         case RoadworkPackage.TRACK__SIGNAL:
+            setSignal((Signal)null);
+            return;
+         case RoadworkPackage.TRACK__CAR:
+            setCar((Car)null);
+            return;
       }
       super.eUnset(featureID);
    }
@@ -340,6 +530,10 @@ public class TrackImpl extends MinimalEObjectImpl.Container implements Track
             return west != null && !west.isEmpty();
          case RoadworkPackage.TRACK__EAST:
             return east != null && !east.isEmpty();
+         case RoadworkPackage.TRACK__SIGNAL:
+            return signal != null;
+         case RoadworkPackage.TRACK__CAR:
+            return car != null;
       }
       return super.eIsSet(featureID);
    }
