@@ -134,7 +134,6 @@ public class RoadWorkProblem
       Logger.getGlobal().info(text);
 
       EMFeR emfer = new EMFeR()
-         .withEPackage(FerrymanPackage.eINSTANCE)
          .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car), 1)
          .withTrafo("swap Signals", root -> swapSignals(root), 0)
          .withStart(roadMap);
