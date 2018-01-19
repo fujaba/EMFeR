@@ -445,40 +445,137 @@ right: wolf cabbage goat
 </p>
 <p>
 <pre>
+final step
 </pre>
 </p>
 
-<div class="alchemy" id="alchemy"></div>
+<div class="alchemy" id="alchemy_1075738627"></div>
 <script type="text/javascript">
 
 var data= {
 "nodes": [
-{type:"state",id:1,caption:"ReachableState: number: 1 metricValue: 12.0<b>left: wolf cabbage goat <b>boat at: left cargo: <b>right: <b>"},
-{type:"state",id:2,caption:"ReachableState: number: 2 metricValue: 11.0<b>left: wolf cabbage <b>boat at: left cargo: goat<b>right: <b>"},
-{type:"state",id:3,caption:"ReachableState: number: 3 metricValue: 10.0<b>left: wolf cabbage <b>boat at: right cargo: <b>right: goat <b>"},
-{type:"state",id:4,caption:"ReachableState: number: 4 metricValue: 13.0<b>left: wolf cabbage <b>boat at: right cargo: goat<b>right: <b>"},
-{type:"state",id:5,caption:"ReachableState: number: 5 metricValue: 9.0<b>left: wolf cabbage <b>boat at: left cargo: <b>right: goat <b>"},
-{type:"state",id:6,caption:"ReachableState: number: 6 metricValue: 8.0<b>left: cabbage <b>boat at: left cargo: wolf<b>right: goat <b>"},
-{type:"state",id:7,caption:"ReachableState: number: 7 metricValue: 8.0<b>left: wolf <b>boat at: left cargo: cabbage<b>right: goat <b>"},
-{type:"state",id:8,caption:"ReachableState: number: 8 metricValue: 7.0<b>left: cabbage <b>boat at: right cargo: <b>right: goat wolf <b>"},
-{type:"state",id:9,caption:"ReachableState: number: 9 metricValue: 7.0<b>left: wolf <b>boat at: right cargo: <b>right: goat cabbage <b>"},
-{type:"state",id:10,caption:"ReachableState: number: 10 metricValue: 6.0<b>left: cabbage <b>boat at: right cargo: goat<b>right: wolf <b>"},
-{type:"state",id:11,caption:"ReachableState: number: 11 metricValue: 10.0<b>left: cabbage <b>boat at: right cargo: wolf<b>right: goat <b>"},
-{type:"state",id:12,caption:"ReachableState: number: 12 metricValue: 6.0<b>left: wolf <b>boat at: right cargo: goat<b>right: cabbage <b>"},
-{type:"state",id:13,caption:"ReachableState: number: 13 metricValue: 10.0<b>left: wolf <b>boat at: right cargo: cabbage<b>right: goat <b>"},
-{type:"state",id:14,caption:"ReachableState: number: 14 metricValue: 5.0<b>left: cabbage goat <b>boat at: left cargo: <b>right: wolf <b>"},
-{type:"state",id:15,caption:"ReachableState: number: 15 metricValue: 5.0<b>left: wolf goat <b>boat at: left cargo: <b>right: cabbage <b>"},
-{type:"state",id:16,caption:"ReachableState: number: 16 metricValue: 4.0<b>left: goat <b>boat at: left cargo: cabbage<b>right: wolf <b>"},
-{type:"state",id:17,caption:"ReachableState: number: 17 metricValue: 8.0<b>left: cabbage <b>boat at: left cargo: goat<b>right: wolf <b>"},
-{type:"state",id:18,caption:"ReachableState: number: 18 metricValue: 4.0<b>left: goat <b>boat at: left cargo: wolf<b>right: cabbage <b>"},
-{type:"state",id:19,caption:"ReachableState: number: 19 metricValue: 8.0<b>left: wolf <b>boat at: left cargo: goat<b>right: cabbage <b>"},
-{type:"state",id:20,caption:"ReachableState: number: 20 metricValue: 3.0<b>left: goat <b>boat at: right cargo: <b>right: wolf cabbage <b>"},
-{type:"state",id:21,caption:"ReachableState: number: 21 metricValue: 6.0<b>left: goat <b>boat at: right cargo: wolf<b>right: cabbage <b>"},
-{type:"state",id:22,caption:"ReachableState: number: 22 metricValue: 6.0<b>left: goat <b>boat at: right cargo: cabbage<b>right: wolf <b>"},
-{type:"state",id:23,caption:"ReachableState: number: 23 metricValue: 2.0<b>left: goat <b>boat at: left cargo: <b>right: wolf cabbage <b>"},
-{type:"state",id:24,caption:"ReachableState: number: 24 metricValue: 1.0<b>left: <b>boat at: left cargo: goat<b>right: wolf cabbage <b>"},
-{type:"finalstate",id:25,caption:"ReachableState: number: 25 metricValue: 0.0<b>left: <b>boat at: right cargo: <b>right: wolf cabbage goat <b>"},
-{type:"state",id:26,caption:"ReachableState: number: 26 metricValue: 3.0<b>left: <b>boat at: right cargo: goat<b>right: wolf cabbage <b>"}
+{type:"state",id:274773041,caption:"left: , boat at: right cargo: , right: wolf cabbage goat , "},
+{type:"state",id:142555199,caption:"left: "},
+{type:"state",id:292917034,caption:"right: wolf cabbage goat "},
+{type:"state",id:1629911510,caption:"boat at: right cargo: "},
+{type:"state",id:674483268,caption:"Cargo: wolf"},
+{type:"state",id:665372494,caption:"Cargo: cabbage"},
+{type:"state",id:54495403,caption:"Cargo: goat"}
+],
+"edges": [
+{source:274773041,target:142555199,nr:0,caption:"banks",type:"normal"},
+{source:274773041,target:292917034,nr:1,caption:"banks",type:"normal"},
+{source:274773041,target:1629911510,nr:2,caption:"boat",type:"normal"},
+{source:1629911510,target:292917034,nr:3,caption:"at",type:"normal"},
+{source:292917034,target:674483268,nr:4,caption:"cargos",type:"normal"},
+{source:292917034,target:665372494,nr:5,caption:"cargos",type:"normal"},
+{source:292917034,target:54495403,nr:6,caption:"cargos",type:"normal"}
+]}
+var config = {
+		dataSource: data,
+		divSelector: alchemy_1075738627,
+		  directedEdges:true,
+		  graphWidth: function() {return screen.availWidth  * 0.7},
+		  graphHeight: function() {return screen.availHeight * 0.7},
+		  initialScale: 0.5, 
+		  initialTranslate: [250,250],
+		  curvedEdges:false,
+		  edgeCaptionsOnByDefault: true,
+		  backgroundColour: "#FFFFFF",
+		  nodeCaptionsOnByDefault: true,
+		  nodeTypes: {"type":["failure","state","startstate","finalstate"]},
+		   "nodeStyle": {
+		   "failure": {
+		         color: "#FE3E3E",
+		      },
+		   "finalstate": {
+		         color: "#0000FF",
+		         radius: 15, 
+		      borderColor: "#127DC1"            },
+		   "startstate": {
+		         color: "#FFFFFF",
+		         radius: 15, 
+		      borderColor: "#127DC1"            },
+		   "state":{
+		         color: "#8e00ed",
+		         borderColor: "#9018e0",
+		         captionColor: "#FFFFFF"
+		   }
+		  },
+		  "edgeTypes": {"type": ["failure","normal"]},
+		  "edgeStyle": {
+		      "failure": {
+		         color: "#ff794d",
+		      width: 7,
+		         opacity: 1
+		   },
+		      "greenpath": {
+		         color: "#00FF00",
+		      width: 7,
+		         opacity: 1
+		   },
+		   "normal": {
+		      opacity: .9,
+		      color: 575459
+		   }
+		  },     
+		   nodeClick: function OpenInNewTab(node) {
+		         var win = window.open('objectgraphs/graph'+node.id+'.html', '_blank');
+		         if (win) {
+		               win.focus();
+		         } else {
+		               alert('Please allow popups for this website');
+		         }
+		      }     
+			,     
+			edgeClick: function OpenInNewTab(edge) {
+			    var win = window.open('rulegraphs/graph'+edge._properties.nr+'.html', '_blank');
+			    if (win) {
+			          win.focus();
+			    } else {
+			          alert('Please allow popups for this website');
+			    }
+			 }     
+			    };
+alchemy = new Alchemy(config)
+</script>
+<p>
+<pre>
+ReachabilityGraph
+</pre>
+</p>
+
+<div class="alchemy" id="alchemy_1884122755"></div>
+<script type="text/javascript">
+
+var data= {
+"nodes": [
+{type:"state",id:1,caption:"state 1"},
+{type:"state",id:2,caption:"state 2"},
+{type:"state",id:3,caption:"state 3"},
+{type:"state",id:4,caption:"state 4"},
+{type:"state",id:5,caption:"state 5"},
+{type:"state",id:6,caption:"state 6"},
+{type:"state",id:7,caption:"state 7"},
+{type:"state",id:8,caption:"state 8"},
+{type:"state",id:9,caption:"state 9"},
+{type:"state",id:10,caption:"state 10"},
+{type:"state",id:11,caption:"state 11"},
+{type:"state",id:12,caption:"state 12"},
+{type:"state",id:13,caption:"state 13"},
+{type:"state",id:14,caption:"state 14"},
+{type:"state",id:15,caption:"state 15"},
+{type:"state",id:16,caption:"state 16"},
+{type:"state",id:17,caption:"state 17"},
+{type:"state",id:18,caption:"state 18"},
+{type:"state",id:19,caption:"state 19"},
+{type:"state",id:20,caption:"state 20"},
+{type:"state",id:21,caption:"state 21"},
+{type:"state",id:22,caption:"state 22"},
+{type:"state",id:23,caption:"state 23"},
+{type:"state",id:24,caption:"state 24"},
+{type:"finalstate",id:25,caption:"state 25"},
+{type:"state",id:26,caption:"state 26"}
 ],
 "edges": [
 {source:1,target:2,nr:0,caption:"load cargo Cargo: goat",type:"normal"},
@@ -519,66 +616,71 @@ var data= {
 {source:26,target:23,nr:35,caption:"move boat",type:"normal"}
 ]}
 var config = {
-dataSource: data,
-  directedEdges:true,
-  graphWidth: function() {return screen.availWidth  * 0.7},
-  graphHeight: function() {return screen.availHeight * 0.7},
-  initialScale: 0.5, 
-  initialTranslate: [250,250],
-  curvedEdges:true,
-  edgeCaptionsOnByDefault: true,
-  nodeTypes: {"type":["failure","state","startstate","finalstate"]},
-   "nodeStyle": {
-   "failure": {
-         color: "#FE3E3E",
-      },
-   "finalstate": {
-         color: "#0000FF",
-         radius: 15, 
-      borderColor: "#127DC1"            },
-   "startstate": {
-         color: "#FFFFFF",
-         radius: 15, 
-      borderColor: "#127DC1"            },
-   "state":{
-         color: "#00ff0e",
-         borderColor: "#00ffda"
-   }
-  },
-  "edgeTypes": {"type": ["failure","normal"]},
-  "edgeStyle": {
-      "failure": {
-         color: "#ff794d",
-      width: 7,
-         opacity: 1
-   },
-      "greenpath": {
-         color: "#00FF00",
-      width: 7,
-         opacity: 1
-   },
-   "normal": {
-      opacity: .9
-   }
-  },     
-   nodeClick: function OpenInNewTab(node) {
-         var win = window.open('objectgraphs/graph'+node.id+'.html', '_blank');
-         if (win) {
-               win.focus();
-         } else {
-               alert('Please allow popups for this website');
-         }
-      }     
-	,     
-	edgeClick: function OpenInNewTab(edge) {
-	    var win = window.open('rulegraphs/graph'+edge._properties.nr+'.html', '_blank');
-	    if (win) {
-	          win.focus();
-	    } else {
-	          alert('Please allow popups for this website');
-	    }
-	 }     
-	    };
+		dataSource: data,
+		divSelector: alchemy_1884122755,
+		  directedEdges:true,
+		  graphWidth: function() {return screen.availWidth  * 0.7},
+		  graphHeight: function() {return screen.availHeight * 0.7},
+		  initialScale: 0.5, 
+		  initialTranslate: [250,250],
+		  curvedEdges:false,
+		  edgeCaptionsOnByDefault: true,
+		  backgroundColour: "#FFFFFF",
+		  nodeCaptionsOnByDefault: true,
+		  nodeTypes: {"type":["failure","state","startstate","finalstate"]},
+		   "nodeStyle": {
+		   "failure": {
+		         color: "#FE3E3E",
+		      },
+		   "finalstate": {
+		         color: "#0000FF",
+		         radius: 15, 
+		      borderColor: "#127DC1"            },
+		   "startstate": {
+		         color: "#FFFFFF",
+		         radius: 15, 
+		      borderColor: "#127DC1"            },
+		   "state":{
+		         color: "#8e00ed",
+		         borderColor: "#9018e0",
+		         captionColor: "#FFFFFF"
+		   }
+		  },
+		  "edgeTypes": {"type": ["failure","normal"]},
+		  "edgeStyle": {
+		      "failure": {
+		         color: "#ff794d",
+		      width: 7,
+		         opacity: 1
+		   },
+		      "greenpath": {
+		         color: "#00FF00",
+		      width: 7,
+		         opacity: 1
+		   },
+		   "normal": {
+		      opacity: .9,
+		      color: 575459
+		   }
+		  },     
+		   nodeClick: function OpenInNewTab(node) {
+		         var win = window.open('objectgraphs/graph'+node.id+'.html', '_blank');
+		         if (win) {
+		               win.focus();
+		         } else {
+		               alert('Please allow popups for this website');
+		         }
+		      }     
+			,     
+			edgeClick: function OpenInNewTab(edge) {
+			    var win = window.open('rulegraphs/graph'+edge._properties.nr+'.html', '_blank');
+			    if (win) {
+			          win.focus();
+			    } else {
+			          alert('Please allow popups for this website');
+			    }
+			 }     
+			    };
 alchemy = new Alchemy(config)
 </script>
 </body>
