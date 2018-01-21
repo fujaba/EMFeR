@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import emfer.reachability.ReachableState;
 import emfer.reachability.TrafoApplication;
 
-public class ExistsGlobally
+public class ExistFinally
 {
 
    private ArrayList<TrafoApplication> examplePath;
@@ -25,47 +25,35 @@ public class ExistsGlobally
       
       // phi must hold for every state reachable from startState
       Set<ReachableState> done = new HashSet<ReachableState>();
-      Set<ReachableState> failStates = new HashSet<ReachableState>();
 
-      examplePath = test(startState, phi, done, failStates);
+      examplePath = test(startState, phi, done);
     
       return examplePath != null;
    }
 
 
 
-   private ArrayList<TrafoApplication> test(ReachableState startState, Predicate<ReachableState> phi, Set<ReachableState> done, Set<ReachableState> failStates)
+   private ArrayList<TrafoApplication> test(ReachableState startState, Predicate<ReachableState> phi, Set<ReachableState> done)
    {
-      if ( ! phi.test(startState))
+      if (phi.test(startState))
       {
-         // counter example found
-         return null;
+         // this path reaches phi
+         return examplePath;
       }
       
       done.add(startState);
-      
-      if (startState.getTrafoApplications().isEmpty())
-      {
-         return examplePath;
-      }
 
       for (TrafoApplication t : startState.getTrafoApplications())
       {
-         examplePath.add(t);
-
-         if ( done.contains(t.getTgt()))
+         if (done.contains(t.getTgt()))
          {
-            if (failStates.contains(t.getTgt()))
-            {
-               return null;
-            }
-            else
-            {
-               return examplePath;
-            }
+            continue;
          }
          
-         ArrayList<TrafoApplication> newPath = test(t.getTgt(), phi, done, failStates);
+         examplePath.add(t);
+
+         // go on 
+         ArrayList<TrafoApplication> newPath = test(t.getTgt(), phi, done);
 
          if (newPath != null)
          {
@@ -74,8 +62,6 @@ public class ExistsGlobally
             
          examplePath.remove(examplePath.size()-1);
       }
-      
-      failStates.add(startState);
       
       return null;
    }

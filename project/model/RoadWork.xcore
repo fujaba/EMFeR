@@ -80,7 +80,7 @@ class Track
 	
 	op String toString()
 	{
-		return "Track: " + name
+		return name
 	}
 }
 
@@ -89,6 +89,11 @@ class Signal
 	boolean pass
 	
 	refers Track track opposite signal
+	
+	op String toString() 
+	{
+		return ""+pass;
+	}
 }
 
 class Car
@@ -103,10 +108,10 @@ class Car
 		
 		if (track !== null)
 		{
-			result += "at: " + track
+			result += "" + track
 		}
 		
-		result += " going " + travelDirection
+		result += " " + travelDirection
 		
 		return result;
 	}

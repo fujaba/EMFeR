@@ -2,7 +2,9 @@ package emfer.examples.roadwork;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static emfer.examples.roadwork.TravelDirection.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -15,11 +17,10 @@ import emfer.AlwaysGlobally;
 import emfer.AlwaysNext;
 import emfer.AlwaysUntil;
 import emfer.EMFeR;
-import emfer.ExistsFinally;
-import emfer.ExistsGlobally;
-import emfer.ExistsNext;
-import emfer.ExistsUntil;
-import emfer.examples.ferryman.FerrymanPackage;
+import emfer.ExistFinally;
+import emfer.ExistGlobally;
+import emfer.ExistNext;
+import emfer.ExistUntil;
 import emfer.reachability.ReachableState;
 import emfer.reachability.TrafoApplication;
 import emfer.stories.Storyboard;
@@ -27,10 +28,64 @@ import emfer.stories.Storyboard;
 public class RoadWorkProblem
 {
    @Test
-   public void testRoadWorkProblem() throws Exception
+   public void testManyCarsRoadWorkProblem() throws Exception
    {
       Storyboard story = new Storyboard("RoadWorkProblem");
 
+      RoadMap roadMap = createStartSituation();
+
+      EMFeR emfer = new EMFeR()
+         .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car), 1)
+         .withTrafo("new Car West", root -> newCar(root, WEST), 1)
+         .withTrafo("new Car East", root -> newCar(root, EAST), 1)
+         .withTrafo("remove Car West", root -> removeCar(root, WEST), 1)
+         .withTrafo("remove Car East", root -> removeCar(root, EAST), 1)
+         .withTrafo("swap western signal", root -> swapSignal(root, WEST), 0)
+         .withTrafo("swap eastern signal", root -> swapSignal(root, EAST), 0)
+         .withStart(roadMap);
+
+      int size = emfer.explore();
+
+      story.addReachableState(emfer.getReachabilityGraph().getStates().get(0), "Start Model");
+      
+      story.addReachabilityGraph(emfer.getReachabilityGraph());
+
+      story.dumpHtml();
+   }
+
+   private void swapSignal(EObject root, TravelDirection signalPos)
+   {
+      RoadMap roadMap = (RoadMap) root;
+      
+   }
+
+   private void newCar(EObject root, TravelDirection direction) {
+      String startName = (direction == WEST) ? "n1" : "s1";
+      RoadMap roadMap = (RoadMap) root;
+      for (Track t : roadMap.getRoad().getTracks()) {
+         if (t.getName().equals(startName)) {
+            if (t.getCar() == null) {
+               Car newCar = RoadworkFactory.eINSTANCE.createCar();
+               newCar.setTravelDirection(direction);
+               newCar.setTrack(t);
+               roadMap.getCars().add(newCar);
+            }
+            return;
+   }  }  }
+   
+
+   private void removeCar(EObject root, TravelDirection direction) {
+      String endName = (direction == WEST) ? "n7" : "s7";
+      RoadMap roadMap = (RoadMap) root;
+      for (Car c : roadMap.getCars()) {
+         if (c.getTrack().getName().equals(endName)) {
+            c.setTrack(null);
+            roadMap.getCars().remove(c);
+   }  }  }
+
+
+   private RoadMap createStartSituation()
+   {
       RoadworkFactory factory = RoadworkFactory.eINSTANCE;
 
       RoadMap roadMap = factory.createRoadMap();
@@ -132,10 +187,21 @@ public class RoadWorkProblem
       String text = roadMap.toString();
 
       Logger.getGlobal().info(text);
+      return roadMap;
+   }
+
+   @Test
+   public void testRoadWorkProblem() throws Exception
+   {
+      Storyboard story = new Storyboard("RoadWorkProblem");
+
+      RoadworkFactory factory = RoadworkFactory.eINSTANCE;
+
+      RoadMap roadMap = createStartSituation(factory);
 
       EMFeR emfer = new EMFeR()
-         .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car), 1)
-         .withTrafo("swap Signals", root -> swapSignals(root), 0)
+         .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car), 1 )
+         .withTrafo("swap Signals", root -> swapSignals(root), 0 )
          .withStart(roadMap);
 
       int size = emfer.explore();
@@ -168,32 +234,45 @@ public class RoadWorkProblem
       // let's do some computational tree logic
       ReachableState startState = emfer.getReachabilityGraph().getStates().get(0);
 
-      boolean noDeadLock = new AlwaysGlobally().test(startState, s -> !isCarDeadLock(s));
+      AlwaysGlobally alwaysGlobally = new AlwaysGlobally();
+      boolean noDeadLock = alwaysGlobally.test(startState, s -> !isCarDeadLock(s));
       assertTrue("noDeadLock", noDeadLock);
 
       AlwaysFinally alwaysFinally = new AlwaysFinally();
       boolean finallyClear = alwaysFinally.test(startState, s -> isRoadWorkClear(s));
       assertTrue("finallyClear", finallyClear);
+      
+      boolean alwaysFinallyEastEnters = alwaysGlobally.test(startState, 
+         s->alwaysFinally.test(s, s2-> ! isEastCarWaitsAtRed(s2) || isEastCarPasses(s2)));
+      ArrayList<TrafoApplication> counterExample = alwaysFinally.getCounterExamplePath();
+      // System.out.println(counterExample);
+      // assertTrue("finallyEastPasses", alwaysFinallyEastEnters);
+      
+      boolean finallyEastPasses = alwaysFinally.test(emfer.getReachabilityGraph().getStates().get(1), s -> isEastCarPasses(s));
+      counterExample = alwaysFinally.getCounterExamplePath();
+      System.out.println(counterExample);
+      // assertTrue("finallyEastPasses", finallyEastPasses);
 
-      boolean finallyEastPasses = alwaysFinally.test(startState, s -> isEastCarPasses(s));
-      assertFalse("finallyEastPasses", finallyEastPasses);
-
-      ExistsFinally existsFinally = new ExistsFinally();
-      finallyEastPasses = existsFinally.test(startState, s -> isEastCarPasses(s));
+      ExistFinally existFinally = new ExistFinally();
+      finallyEastPasses = existFinally.test(startState, s -> isEastCarPasses(s));
       assertTrue("finallyEastPasses", finallyEastPasses);
 
-      boolean deadLock = existsFinally.test(startState, s -> isCarDeadLock(s));
+      boolean deadLock = existFinally.test(startState, s -> isCarDeadLock(s));
       assertFalse("finallyEastPasses", deadLock);
 
-      ExistsGlobally existsGlobally = new ExistsGlobally();
-      boolean existGloballyEastPassing = existsGlobally.test(startState, s -> isEasternSignalPassing(s));
-      assertFalse("existGloballyEastPassing", existGloballyEastPassing);
+      ExistGlobally existGlobally = new ExistGlobally();
+      boolean existGloballyEastPassing = existGlobally.test(startState, s -> isEasternSignalPassing(s));
+      // assertFalse("existGloballyEastPassing", existGloballyEastPassing);
 
-      boolean existGloballyRoadWorkClear = existsGlobally.test(startState, s -> isRoadWorkClear(s) && isEasternSignalPassing(s));
+      boolean existGloballyRoadWorkClear = existGlobally.test(startState, s -> isRoadWorkClear(s) && isEasternSignalPassing(s));
       assertFalse("existGloballyRoadWorkClear", existGloballyRoadWorkClear);
 
-      ExistsNext existsNext = new ExistsNext();
-      boolean westGetsGreen = existsNext.test(emfer.getReachabilityGraph().getStates().get(1),
+      boolean unfair = existFinally.test(startState, s-> existGlobally.test(s, s2->isEastCarWaitsAtRed(s2)));
+      System.out.println(existGlobally.getExamplePath());
+      // assertTrue("unfair",unfair);
+      
+      ExistNext existNext = new ExistNext();
+      boolean westGetsGreen = existNext.test(emfer.getReachabilityGraph().getStates().get(1),
          s -> !isEasternSignalPassing(s));
       assertTrue("westGetsGreen", westGetsGreen);
 
@@ -214,12 +293,14 @@ public class RoadWorkProblem
          s -> !isRoadWorkClear(s));
       assertTrue("alwaysRoadWorkIsEntered", alwaysRoadWorkIsEntered);
 
-      ExistsUntil existsUntil = new ExistsUntil();
-      boolean itsPossibleToEnterTheRoadWork = existsUntil.test(startState,
+      ExistUntil existUntil = new ExistUntil();
+      boolean itsPossibleToEnterTheRoadWork = existUntil.test(startState,
          s -> isRoadWorkClear(s),
          s -> !isRoadWorkClear(s));
       assertTrue("itsPossibleToEnterTheRoadWork", itsPossibleToEnterTheRoadWork);
 
+      story.addReachableState(emfer.getReachabilityGraph().getStates().get(0), "Start Model");
+      
       story.addReachabilityGraph(emfer.getReachabilityGraph());
 
       story.dumpHtml();
@@ -234,19 +315,37 @@ public class RoadWorkProblem
    }
 
 
-   private boolean isEastCarPasses(ReachableState s)
-   {
+   //   private boolean isEastCarPasses(ReachableState s)
+   //   {
+   //      RoadMap roadMap = (RoadMap) s.getRoot();
+   //
+   //      Optional<Car> eastCar = roadMap.getCars().stream()
+   //         .filter(c -> c.getTravelDirection() == TravelDirection.EAST).findAny();
+   //
+   //      Car car = eastCar.get();
+   //
+   //      return car.getTrack().getTravelDirection() == TravelDirection.UNDEFINED;
+   //   }
+
+
+   private boolean isEastCarWaitsAtRed(ReachableState s) {
       RoadMap roadMap = (RoadMap) s.getRoot();
-
-      Optional<Car> eastCar = roadMap.getCars().stream()
-         .filter(c -> c.getTravelDirection() == TravelDirection.EAST).findAny();
-
-      Car car = eastCar.get();
-
-      return car.getTrack().getTravelDirection() == TravelDirection.UNDEFINED;
+      if (roadMap.getWesternSignal().isPass()) return false;
+      return roadMap.getWesternSignal().getTrack().getCar() != null;
    }
 
+   
+   private boolean isEastCarPasses(ReachableState s) {
+      RoadMap roadMap = (RoadMap) s.getRoot();
+      for (Car c : roadMap.getCars()) {
+         if (c.getTravelDirection() == TravelDirection.EAST
+               && c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED) {
+            return true;
+      }  }
+      return false;
+   }
 
+   
    private boolean isRoadWorkClear(ReachableState s)
    {
       RoadMap roadMap = (RoadMap) s.getRoot();
@@ -264,9 +363,9 @@ public class RoadWorkProblem
       RoadMap roadMap = (RoadMap) s.getRoot();
 
       long count = roadMap.getCars().stream()
-         .filter(c -> c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED)
-         .map(c -> c.getTravelDirection())
-         .count();
+            .filter(c -> c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED)
+            .map(c -> c.getTravelDirection())
+            .count();
 
       return count >= 2;
    }

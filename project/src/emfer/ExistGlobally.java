@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import emfer.reachability.ReachableState;
 import emfer.reachability.TrafoApplication;
 
-public class ExistsFinally
+public class ExistGlobally
 {
 
    private ArrayList<TrafoApplication> examplePath;
@@ -25,35 +25,47 @@ public class ExistsFinally
       
       // phi must hold for every state reachable from startState
       Set<ReachableState> done = new HashSet<ReachableState>();
+      Set<ReachableState> failStates = new HashSet<ReachableState>();
 
-      examplePath = test(startState, phi, done);
+      examplePath = test(startState, phi, done, failStates);
     
       return examplePath != null;
    }
 
 
 
-   private ArrayList<TrafoApplication> test(ReachableState startState, Predicate<ReachableState> phi, Set<ReachableState> done)
+   private ArrayList<TrafoApplication> test(ReachableState startState, Predicate<ReachableState> phi, Set<ReachableState> done, Set<ReachableState> failStates)
    {
-      if (phi.test(startState))
+      if ( ! phi.test(startState))
       {
-         // this path reaches phi
-         return examplePath;
+         // counter example found
+         return null;
       }
       
       done.add(startState);
+      
+      if (startState.getTrafoApplications().isEmpty())
+      {
+         return examplePath;
+      }
 
       for (TrafoApplication t : startState.getTrafoApplications())
       {
-         if (done.contains(t.getTgt()))
-         {
-            continue;
-         }
-         
          examplePath.add(t);
 
-         // go on 
-         ArrayList<TrafoApplication> newPath = test(t.getTgt(), phi, done);
+         if ( done.contains(t.getTgt()))
+         {
+            if (failStates.contains(t.getTgt()))
+            {
+               return null;
+            }
+            else
+            {
+               return examplePath;
+            }
+         }
+         
+         ArrayList<TrafoApplication> newPath = test(t.getTgt(), phi, done, failStates);
 
          if (newPath != null)
          {
@@ -62,6 +74,8 @@ public class ExistsFinally
             
          examplePath.remove(examplePath.size()-1);
       }
+      
+      failStates.add(startState);
       
       return null;
    }

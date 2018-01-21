@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import emfer.reachability.ReachableState;
 import emfer.reachability.TrafoApplication;
 
-public class ExistsNext
+public class ExistNext
 {
 
    private ArrayList<TrafoApplication> examplePath;

@@ -25,19 +25,22 @@ public class AlwaysFinally
       
       // phi must hold for every state reachable from startState
       Set<ReachableState> done = new HashSet<ReachableState>();
+      Set<ReachableState> successStates = new HashSet<ReachableState>();
 
-      counterExamplePath = test(startState, phi, done);
+      counterExamplePath = test(startState, phi, done, successStates);
     
       return counterExamplePath == null;
    }
 
 
 
-   private ArrayList<TrafoApplication> test(ReachableState startState, Predicate<ReachableState> phi, Set<ReachableState> done)
+   private ArrayList<TrafoApplication> test(ReachableState startState, Predicate<ReachableState> phi, 
+         Set<ReachableState> done, Set<ReachableState> successStates)
    {
       if (phi.test(startState))
       {
          // this path reaches phi
+         successStates.add(startState);
          return null;
       }
       
@@ -45,8 +48,13 @@ public class AlwaysFinally
 
       for (TrafoApplication t : startState.getTrafoApplications())
       {
-         counterExamplePath.add(t);
+         if (successStates.contains(t.getTgt()))
+         {
+            continue;
+         }
 
+         counterExamplePath.add(t);
+         
          if (done.contains(t.getTgt()))
          {
             // we may cycle for ever, not reaching phi
@@ -55,7 +63,7 @@ public class AlwaysFinally
          else
          {
             // go on 
-            ArrayList<TrafoApplication> newPath = test(t.getTgt(), phi, done);
+            ArrayList<TrafoApplication> newPath = test(t.getTgt(), phi, done, successStates);
 
             if (newPath != null)
             {
@@ -66,6 +74,7 @@ public class AlwaysFinally
          }
       }
       
+      successStates.add(startState);
       return null;
    }
 
