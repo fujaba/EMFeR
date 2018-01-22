@@ -89,13 +89,18 @@ public class RoadWorkProblem
          for (TrafoApplication t : previous.getTrafoApplications())
          {
             ReachableState s = t.getTgt();
+            RoadMap roadMap = (RoadMap) s.getRoot();
             if (s.getMetricValue() != -1) continue; // already assigned
             int newMetricValue = 0;
-            if (isCarDeadLock(s)) newMetricValue = Integer.MAX_VALUE;
+            if (isDangerous(s)) {
+               newMetricValue = Integer.MAX_VALUE;
+               // previous.setMetricValue(Integer.MAX_VALUE / 2);
+            }
             else {
-               if (t.getDescription().startsWith("swap")) newMetricValue = 1;
-               if (isCarWaitsAtRed(s)) newMetricValue += 2;
-               newMetricValue += noOfBlockers(s) * 2;
+               if (roadMap.getWesternSignal().isPass() && roadMap.getWesternSignal().getTrack().getCar() == null) newMetricValue++;
+               if (roadMap.getEasternSignal().isPass() && roadMap.getEasternSignal().getTrack().getCar() == null) newMetricValue++;
+               if (isCarWaitsAtRed(s)) newMetricValue += 3;
+               newMetricValue += noOfBlockers(s) * 3;
             }
             s.setMetricValue(newMetricValue);
             todo.add(s);   
@@ -374,7 +379,8 @@ public class RoadWorkProblem
          {
             ReachableState tgt = t.getTgt();
 
-            buf.append(s.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(tgt.getNumber()).append("\n");
+            buf.append(s.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(tgt.getNumber())
+            .append(" ").append(tgt.getMetricValue()).append("\n");
          }
 
          Logger.getGlobal().info(buf.toString());
@@ -441,6 +447,24 @@ public class RoadWorkProblem
       return count == 0;
    }
 
+   
+   private boolean isDangerous(ReachableState s)
+   {
+      RoadMap roadMap = (RoadMap) s.getRoot();
+      
+      int westCount = 0;
+      int eastCount = 0;
+      for (Car c : roadMap.getCars()) {
+         if (c.getTrack().getTravelDirection() == UNDEFINED) {
+            if (c.getTravelDirection() == WEST && ! c.getTrack().getName().equals("n5")) westCount++;
+            if (c.getTravelDirection() == EAST && ! c.getTrack().getName().equals("n3")) eastCount++;
+         }
+      }
+      if (roadMap.getWesternSignal().isPass() && roadMap.getWesternSignal().getTrack().getCar() != null) eastCount++;
+      if (roadMap.getEasternSignal().isPass() && roadMap.getEasternSignal().getTrack().getCar() != null) westCount++;
+         
+      return westCount > 0 && eastCount > 0;
+   }
 
    private boolean isCarDeadLock(ReachableState s)
    {
