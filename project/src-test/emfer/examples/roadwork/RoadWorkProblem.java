@@ -107,12 +107,14 @@ public class RoadWorkProblem
    {
       RoadMap roadMap = (RoadMap) s.getRoot();
       int blockers = 0;
+      int rwac = 0;
       for (Car c : roadMap.getCars()) {
          if (c.getTrack().getTravelDirection() == UNDEFINED)
          {
             Signal signal = roadMap.getWesternSignal();
-            if (c.getTravelDirection() == WEST) signal = roadMap.getEasternSignal();
-            if ( ! signal.isPass()) blockers++;
+            if (c.getTravelDirection() == EAST) signal = roadMap.getEasternSignal();
+            if ( ! signal.isPass() && signal.getTrack().getCar() != null) 
+               blockers++;
          }
       }
       return blockers;
@@ -365,7 +367,7 @@ public class RoadWorkProblem
             buf.append("\n").append(src.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(s.getNumber());
          }
 
-         buf.append(s.getMetricValue()).append("\n");
+         buf.append("\n").append(s.getMetricValue());
          buf.append(s.getRoot().toString());
 
          for (TrafoApplication t : s.getTrafoApplications())
@@ -446,7 +448,7 @@ public class RoadWorkProblem
 
       long count = roadMap.getCars().stream()
             .filter(c -> c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED)
-            .map(c -> c.getTravelDirection())
+            .map(c -> c.getTravelDirection()).distinct()
             .count();
 
       return count >= 2;
