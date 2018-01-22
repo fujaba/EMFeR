@@ -112,7 +112,7 @@ class StoryStep {
 					         radius: 15, 
 					      borderColor: "#127DC1"            },
 					   "state":{
-					         color: "#8e00ed",
+					         color: "#bd59f7",
 					         borderColor: "#9018e0",
 					         captionColor: "#FFFFFF"
 					   }
@@ -121,7 +121,7 @@ class StoryStep {
 					  "edgeStyle": {
 					      "failure": {
 					         color: "#ff794d",
-					      width: 7,
+					      width: 3,
 					         opacity: 1
 					   },
 					      "greenpath": {
@@ -131,7 +131,8 @@ class StoryStep {
 					   },
 					   "normal": {
 					      opacity: .9,
-					      color: 575459
+					      color: "#575459",
+					      width: 3
 					   }
 					  },     
 					   nodeClick: function OpenInNewTab(node) {
