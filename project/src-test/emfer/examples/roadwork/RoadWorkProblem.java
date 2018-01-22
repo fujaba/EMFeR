@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static emfer.examples.roadwork.TravelDirection.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -21,6 +22,7 @@ import emfer.ExistFinally;
 import emfer.ExistGlobally;
 import emfer.ExistNext;
 import emfer.ExistUntil;
+import emfer.reachability.ReachabilityGraph;
 import emfer.reachability.ReachableState;
 import emfer.reachability.TrafoApplication;
 import emfer.stories.Storyboard;
@@ -30,21 +32,40 @@ public class RoadWorkProblem
    @Test
    public void testManyCarsRoadWorkProblem() throws Exception
    {
-      Storyboard story = new Storyboard("RoadWorkProblem");
+      Storyboard story = new Storyboard("MultiCarRoadWorkProblem");
 
       RoadMap roadMap = createStartSituation();
 
+      for (Track t : roadMap.getRoad().getTracks())
+      {
+         if (t.getName().equals("n7"))
+         {
+            Car newCar = RoadworkFactory.eINSTANCE.createCar();
+            newCar.setTravelDirection(WEST);
+            newCar.setTrack(t);
+            roadMap.getCars().add(newCar);
+         }
+
+         if (t.getName().equals("s7"))
+         {
+            Car newCar = RoadworkFactory.eINSTANCE.createCar();
+            newCar.setTravelDirection(EAST);
+            newCar.setTrack(t);
+            roadMap.getCars().add(newCar);
+         }
+      }
+      
       EMFeR emfer = new EMFeR()
-         .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car), 1)
-         .withTrafo("new Car West", root -> newCar(root, WEST), 1)
-         .withTrafo("new Car East", root -> newCar(root, EAST), 1)
-         .withTrafo("remove Car West", root -> removeCar(root, WEST), 1)
-         .withTrafo("remove Car East", root -> removeCar(root, EAST), 1)
-         .withTrafo("swap western signal", root -> swapSignal(root, WEST), 0)
-         .withTrafo("swap eastern signal", root -> swapSignal(root, EAST), 0)
+         .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car))
+         .withTrafo("swap western signal", root -> swapSignal(root, WEST))
+         .withTrafo("swap eastern signal", root -> swapSignal(root, EAST))
          .withStart(roadMap);
 
       int size = emfer.explore();
+      
+      applyMetric(emfer.getReachabilityGraph());
+      
+      printReachableStatesList(emfer);
 
       story.addReachableState(emfer.getReachabilityGraph().getStates().get(0), "Start Model");
       
@@ -53,10 +74,58 @@ public class RoadWorkProblem
       story.dumpHtml();
    }
 
+   private void applyMetric(ReachabilityGraph reachabilityGraph)
+   {
+      LinkedList<ReachableState> todo = new LinkedList<ReachableState>();
+      ReachableState startState = reachabilityGraph.getStates().get(0);
+      todo.add(startState);
+      for (ReachableState s : reachabilityGraph.getStates()) {
+         s.setMetricValue(-1);
+      }
+      
+      while ( ! todo.isEmpty())
+      {
+         ReachableState previous = todo.pollFirst();
+         for (TrafoApplication t : previous.getTrafoApplications())
+         {
+            ReachableState s = t.getTgt();
+            if (s.getMetricValue() != -1) continue; // already assigned
+            int newMetricValue = 0;
+            if (isCarDeadLock(s)) newMetricValue = Integer.MAX_VALUE;
+            else {
+               if (t.getDescription().startsWith("swap")) newMetricValue = 1;
+               if (isCarWaitsAtRed(s)) newMetricValue += 2;
+               newMetricValue += noOfBlockers(s) * 2;
+            }
+            s.setMetricValue(newMetricValue);
+            todo.add(s);   
+         }
+      }
+   }
+
+   private int noOfBlockers(ReachableState s)
+   {
+      RoadMap roadMap = (RoadMap) s.getRoot();
+      int blockers = 0;
+      for (Car c : roadMap.getCars()) {
+         if (c.getTrack().getTravelDirection() == UNDEFINED)
+         {
+            Signal signal = roadMap.getWesternSignal();
+            if (c.getTravelDirection() == WEST) signal = roadMap.getEasternSignal();
+            if ( ! signal.isPass()) blockers++;
+         }
+      }
+      return blockers;
+   }
+
    private void swapSignal(EObject root, TravelDirection signalPos)
    {
       RoadMap roadMap = (RoadMap) root;
-      
+      Signal signal = roadMap.getWesternSignal();
+      if (signalPos == EAST) {
+         signal = roadMap.getEasternSignal();
+      }
+      signal.setPass( ! signal.isPass());
    }
 
    private void newCar(EObject root, TravelDirection direction) {
@@ -195,9 +264,7 @@ public class RoadWorkProblem
    {
       Storyboard story = new Storyboard("RoadWorkProblem");
 
-      RoadworkFactory factory = RoadworkFactory.eINSTANCE;
-
-      RoadMap roadMap = createStartSituation(factory);
+      RoadMap roadMap = createStartSituation();
 
       EMFeR emfer = new EMFeR()
          .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car), 1 )
@@ -208,28 +275,7 @@ public class RoadWorkProblem
 
       // Assert.assertEquals("Number of states:", 7, size);
 
-      for (ReachableState s : emfer.getReachabilityGraph().getStates())
-      {
-         StringBuilder buf = new StringBuilder();
-
-         for (TrafoApplication t : s.getResultOf())
-         {
-            ReachableState src = t.getSrc();
-
-            buf.append("\n").append(src.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(s.getNumber());
-         }
-
-         buf.append(s.getRoot().toString());
-
-         for (TrafoApplication t : s.getTrafoApplications())
-         {
-            ReachableState tgt = t.getTgt();
-
-            buf.append(s.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(tgt.getNumber()).append("\n");
-         }
-
-         Logger.getGlobal().info(buf.toString());
-      }
+      printReachableStatesList(emfer);
 
       // let's do some computational tree logic
       ReachableState startState = emfer.getReachabilityGraph().getStates().get(0);
@@ -306,6 +352,33 @@ public class RoadWorkProblem
       story.dumpHtml();
    }
 
+   private void printReachableStatesList(EMFeR emfer)
+   {
+      for (ReachableState s : emfer.getReachabilityGraph().getStates())
+      {
+         StringBuilder buf = new StringBuilder();
+
+         for (TrafoApplication t : s.getResultOf())
+         {
+            ReachableState src = t.getSrc();
+
+            buf.append("\n").append(src.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(s.getNumber());
+         }
+
+         buf.append(s.getMetricValue()).append("\n");
+         buf.append(s.getRoot().toString());
+
+         for (TrafoApplication t : s.getTrafoApplications())
+         {
+            ReachableState tgt = t.getTgt();
+
+            buf.append(s.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(tgt.getNumber()).append("\n");
+         }
+
+         Logger.getGlobal().info(buf.toString());
+      }
+   }
+
 
    private boolean isEasternSignalPassing(ReachableState s)
    {
@@ -327,6 +400,15 @@ public class RoadWorkProblem
    //      return car.getTrack().getTravelDirection() == TravelDirection.UNDEFINED;
    //   }
 
+
+   private boolean isCarWaitsAtRed(ReachableState s) {
+      RoadMap roadMap = (RoadMap) s.getRoot();
+      if ( ! roadMap.getWesternSignal().isPass() 
+            && roadMap.getWesternSignal().getTrack().getCar() != null) return true;
+      if ( ! roadMap.getEasternSignal().isPass() 
+            && roadMap.getEasternSignal().getTrack().getCar() != null) return true;
+      return false;
+   }
 
    private boolean isEastCarWaitsAtRed(ReachableState s) {
       RoadMap roadMap = (RoadMap) s.getRoot();
