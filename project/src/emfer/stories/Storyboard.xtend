@@ -78,7 +78,7 @@ class Storyboard {
 	def dumpHtml() {
 		var htmlText = getHtmlText()
 
-		Files.write(Paths.get("doc/" + storyName + ".html"), htmlText.bytes, StandardOpenOption.TRUNCATE_EXISTING)
+		Files.write(Paths.get("doc/" + storyName + ".html"), htmlText.bytes, StandardOpenOption.CREATE)
 	}
 
 	def String getHtmlText() {
