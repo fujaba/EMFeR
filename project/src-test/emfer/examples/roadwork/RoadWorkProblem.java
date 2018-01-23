@@ -1,12 +1,13 @@
 package emfer.examples.roadwork;
 
+import static emfer.examples.roadwork.TravelDirection.EAST;
+import static emfer.examples.roadwork.TravelDirection.UNDEFINED;
+import static emfer.examples.roadwork.TravelDirection.WEST;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static emfer.examples.roadwork.TravelDirection.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.eclipse.emf.common.util.EList;
@@ -54,7 +55,7 @@ public class RoadWorkProblem
             roadMap.getCars().add(newCar);
          }
       }
-      
+
       EMFeR emfer = new EMFeR()
          .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car))
          .withTrafo("swap western signal", root -> swapSignal(root, WEST))
@@ -62,95 +63,120 @@ public class RoadWorkProblem
          .withStart(roadMap);
 
       int size = emfer.explore();
-      
+
       applyMetric(emfer.getReachabilityGraph());
-      
+
       printReachableStatesList(emfer);
 
       story.addReachableState(emfer.getReachabilityGraph().getStates().get(0), "Start Model");
-      
+
       story.addReachabilityGraph(emfer.getReachabilityGraph());
 
       story.dumpHtml();
    }
+
 
    private void applyMetric(ReachabilityGraph reachabilityGraph)
    {
       LinkedList<ReachableState> todo = new LinkedList<ReachableState>();
       ReachableState startState = reachabilityGraph.getStates().get(0);
       todo.add(startState);
-      for (ReachableState s : reachabilityGraph.getStates()) {
+      for (ReachableState s : reachabilityGraph.getStates())
+      {
          s.setMetricValue(-1);
       }
-      
-      while ( ! todo.isEmpty())
+
+      while (!todo.isEmpty())
       {
          ReachableState previous = todo.pollFirst();
          for (TrafoApplication t : previous.getTrafoApplications())
          {
             ReachableState s = t.getTgt();
-            if (s.getMetricValue() != -1) continue; // already assigned
+            if (s.getMetricValue() != -1)
+               continue; // already assigned
             int newMetricValue = 0;
-            if (isCarDeadLock(s)) newMetricValue = Integer.MAX_VALUE;
-            else {
-               if (t.getDescription().startsWith("swap")) newMetricValue = 1;
-               if (isCarWaitsAtRed(s)) newMetricValue += 2;
+            if (isCarDeadLock(s))
+               newMetricValue = Integer.MAX_VALUE;
+            else
+            {
+               if (t.getDescription().startsWith("swap"))
+                  newMetricValue = 1;
+               if (isCarWaitsAtRed(s))
+                  newMetricValue += 2;
                newMetricValue += noOfBlockers(s) * 2;
             }
             s.setMetricValue(newMetricValue);
-            todo.add(s);   
+            todo.add(s);
          }
       }
    }
+
 
    private int noOfBlockers(ReachableState s)
    {
       RoadMap roadMap = (RoadMap) s.getRoot();
       int blockers = 0;
-      for (Car c : roadMap.getCars()) {
+      for (Car c : roadMap.getCars())
+      {
          if (c.getTrack().getTravelDirection() == UNDEFINED)
          {
             Signal signal = roadMap.getWesternSignal();
-            if (c.getTravelDirection() == WEST) signal = roadMap.getEasternSignal();
-            if ( ! signal.isPass()) blockers++;
+            if (c.getTravelDirection() == WEST)
+               signal = roadMap.getEasternSignal();
+            if (!signal.isPass())
+               blockers++;
          }
       }
       return blockers;
    }
 
+
    private void swapSignal(EObject root, TravelDirection signalPos)
    {
       RoadMap roadMap = (RoadMap) root;
       Signal signal = roadMap.getWesternSignal();
-      if (signalPos == EAST) {
+      if (signalPos == EAST)
+      {
          signal = roadMap.getEasternSignal();
       }
-      signal.setPass( ! signal.isPass());
+      signal.setPass(!signal.isPass());
    }
 
-   private void newCar(EObject root, TravelDirection direction) {
+
+   private void newCar(EObject root, TravelDirection direction)
+   {
       String startName = (direction == WEST) ? "n1" : "s1";
       RoadMap roadMap = (RoadMap) root;
-      for (Track t : roadMap.getRoad().getTracks()) {
-         if (t.getName().equals(startName)) {
-            if (t.getCar() == null) {
+      for (Track t : roadMap.getRoad().getTracks())
+      {
+         if (t.getName().equals(startName))
+         {
+            if (t.getCar() == null)
+            {
                Car newCar = RoadworkFactory.eINSTANCE.createCar();
                newCar.setTravelDirection(direction);
                newCar.setTrack(t);
                roadMap.getCars().add(newCar);
             }
             return;
-   }  }  }
-   
+         }
+      }
+   }
 
-   private void removeCar(EObject root, TravelDirection direction) {
+
+   private void removeCar(EObject root, TravelDirection direction)
+   {
       String endName = (direction == WEST) ? "n7" : "s7";
       RoadMap roadMap = (RoadMap) root;
-      for (Car c : roadMap.getCars()) {
-         if (c.getTrack().getName().equals(endName)) {
+      for (Car c : roadMap.getCars())
+      {
+         if (c.getTrack().getName().equals(endName))
+         {
             c.setTrack(null);
             roadMap.getCars().remove(c);
-   }  }  }
+         }
+      }
+   }
 
 
    private RoadMap createStartSituation()
@@ -259,16 +285,17 @@ public class RoadWorkProblem
       return roadMap;
    }
 
+
    @Test
-   public void testRoadWorkProblem() throws Exception
+   public EMFeR testRoadWorkProblem() throws Exception
    {
       Storyboard story = new Storyboard("RoadWorkProblem");
 
       RoadMap roadMap = createStartSituation();
 
       EMFeR emfer = new EMFeR()
-         .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car), 1 )
-         .withTrafo("swap Signals", root -> swapSignals(root), 0 )
+         .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car), 1)
+         .withTrafo("swap Signals", root -> swapSignals(root), 0)
          .withStart(roadMap);
 
       int size = emfer.explore();
@@ -287,13 +314,13 @@ public class RoadWorkProblem
       AlwaysFinally alwaysFinally = new AlwaysFinally();
       boolean finallyClear = alwaysFinally.test(startState, s -> isRoadWorkClear(s));
       assertTrue("finallyClear", finallyClear);
-      
-      boolean alwaysFinallyEastEnters = alwaysGlobally.test(startState, 
-         s->alwaysFinally.test(s, s2-> ! isEastCarWaitsAtRed(s2) || isEastCarPasses(s2)));
+
+      boolean alwaysFinallyEastEnters = alwaysGlobally.test(startState,
+         s -> alwaysFinally.test(s, s2 -> !isEastCarWaitsAtRed(s2) || isEastCarPasses(s2)));
       ArrayList<TrafoApplication> counterExample = alwaysFinally.getCounterExamplePath();
       // System.out.println(counterExample);
       // assertTrue("finallyEastPasses", alwaysFinallyEastEnters);
-      
+
       boolean finallyEastPasses = alwaysFinally.test(emfer.getReachabilityGraph().getStates().get(1), s -> isEastCarPasses(s));
       counterExample = alwaysFinally.getCounterExamplePath();
       System.out.println(counterExample);
@@ -313,10 +340,10 @@ public class RoadWorkProblem
       boolean existGloballyRoadWorkClear = existGlobally.test(startState, s -> isRoadWorkClear(s) && isEasternSignalPassing(s));
       assertFalse("existGloballyRoadWorkClear", existGloballyRoadWorkClear);
 
-      boolean unfair = existFinally.test(startState, s-> existGlobally.test(s, s2->isEastCarWaitsAtRed(s2)));
+      boolean unfair = existFinally.test(startState, s -> existGlobally.test(s, s2 -> isEastCarWaitsAtRed(s2)));
       System.out.println(existGlobally.getExamplePath());
       // assertTrue("unfair",unfair);
-      
+
       ExistNext existNext = new ExistNext();
       boolean westGetsGreen = existNext.test(emfer.getReachabilityGraph().getStates().get(1),
          s -> !isEasternSignalPassing(s));
@@ -346,11 +373,16 @@ public class RoadWorkProblem
       assertTrue("itsPossibleToEnterTheRoadWork", itsPossibleToEnterTheRoadWork);
 
       story.addReachableState(emfer.getReachabilityGraph().getStates().get(0), "Start Model");
-      
+
       story.addReachabilityGraph(emfer.getReachabilityGraph());
 
       story.dumpHtml();
+
+      TMXRoadworkVisualizer.visualize(emfer, "doc/rwp-images/");
+
+      return emfer;
    }
+
 
    private void printReachableStatesList(EMFeR emfer)
    {
@@ -388,46 +420,55 @@ public class RoadWorkProblem
    }
 
 
-   //   private boolean isEastCarPasses(ReachableState s)
-   //   {
-   //      RoadMap roadMap = (RoadMap) s.getRoot();
+   // private boolean isEastCarPasses(ReachableState s)
+   // {
+   // RoadMap roadMap = (RoadMap) s.getRoot();
    //
-   //      Optional<Car> eastCar = roadMap.getCars().stream()
-   //         .filter(c -> c.getTravelDirection() == TravelDirection.EAST).findAny();
+   // Optional<Car> eastCar = roadMap.getCars().stream()
+   // .filter(c -> c.getTravelDirection() == TravelDirection.EAST).findAny();
    //
-   //      Car car = eastCar.get();
+   // Car car = eastCar.get();
    //
-   //      return car.getTrack().getTravelDirection() == TravelDirection.UNDEFINED;
-   //   }
+   // return car.getTrack().getTravelDirection() == TravelDirection.UNDEFINED;
+   // }
 
-
-   private boolean isCarWaitsAtRed(ReachableState s) {
+   private boolean isCarWaitsAtRed(ReachableState s)
+   {
       RoadMap roadMap = (RoadMap) s.getRoot();
-      if ( ! roadMap.getWesternSignal().isPass() 
-            && roadMap.getWesternSignal().getTrack().getCar() != null) return true;
-      if ( ! roadMap.getEasternSignal().isPass() 
-            && roadMap.getEasternSignal().getTrack().getCar() != null) return true;
+      if (!roadMap.getWesternSignal().isPass()
+         && roadMap.getWesternSignal().getTrack().getCar() != null)
+         return true;
+      if (!roadMap.getEasternSignal().isPass()
+         && roadMap.getEasternSignal().getTrack().getCar() != null)
+         return true;
       return false;
    }
 
-   private boolean isEastCarWaitsAtRed(ReachableState s) {
+
+   private boolean isEastCarWaitsAtRed(ReachableState s)
+   {
       RoadMap roadMap = (RoadMap) s.getRoot();
-      if (roadMap.getWesternSignal().isPass()) return false;
+      if (roadMap.getWesternSignal().isPass())
+         return false;
       return roadMap.getWesternSignal().getTrack().getCar() != null;
    }
 
-   
-   private boolean isEastCarPasses(ReachableState s) {
+
+   private boolean isEastCarPasses(ReachableState s)
+   {
       RoadMap roadMap = (RoadMap) s.getRoot();
-      for (Car c : roadMap.getCars()) {
+      for (Car c : roadMap.getCars())
+      {
          if (c.getTravelDirection() == TravelDirection.EAST
-               && c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED) {
+            && c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED)
+         {
             return true;
-      }  }
+         }
+      }
       return false;
    }
 
-   
+
    private boolean isRoadWorkClear(ReachableState s)
    {
       RoadMap roadMap = (RoadMap) s.getRoot();
@@ -445,74 +486,76 @@ public class RoadWorkProblem
       RoadMap roadMap = (RoadMap) s.getRoot();
 
       long count = roadMap.getCars().stream()
-            .filter(c -> c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED)
-            .map(c -> c.getTravelDirection())
-            .count();
+         .filter(c -> c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED)
+         .map(c -> c.getTravelDirection())
+         .count();
 
       return count >= 2;
    }
 
 
-   //   private void swapSignals(EObject root)
-   //   {
-   //      // no car in narrowing
-   //      RoadMap roadMap = (RoadMap) root;
+   // private void swapSignals(EObject root)
+   // {
+   // // no car in narrowing
+   // RoadMap roadMap = (RoadMap) root;
    //
-   //      Optional<Track> usedUndefTrack = roadMap.getCars().stream().map(c -> c.getTrack()).filter(t -> t.getTravelDirection() == TravelDirection.UNDEFINED).findAny();
+   // Optional<Track> usedUndefTrack = roadMap.getCars().stream().map(c -> c.getTrack()).filter(t -> t.getTravelDirection() == TravelDirection.UNDEFINED).findAny();
    //
-   //      if (usedUndefTrack.isPresent())
-   //      {
-   //         return;
-   //      }
+   // if (usedUndefTrack.isPresent())
+   // {
+   // return;
+   // }
    //
-   //      boolean carIsWaiting = false;
+   // boolean carIsWaiting = false;
    //
-   //      // no car about to enter and one car waiting at red light
-   //      if (roadMap.getWesternSignal().isPass())
-   //      {
-   //         Track enterTrack = roadMap.getWesternSignal().getTrack();
-   //         boolean carIsEntering = roadMap.getCars().stream().map(c -> c.getTrack()).anyMatch(t -> t == enterTrack);
+   // // no car about to enter and one car waiting at red light
+   // if (roadMap.getWesternSignal().isPass())
+   // {
+   // Track enterTrack = roadMap.getWesternSignal().getTrack();
+   // boolean carIsEntering = roadMap.getCars().stream().map(c -> c.getTrack()).anyMatch(t -> t == enterTrack);
    //
-   //         if (carIsEntering)
-   //         {
-   //            // do not swap signals
-   //            return;
-   //         }
+   // if (carIsEntering)
+   // {
+   // // do not swap signals
+   // return;
+   // }
    //
-   //         Track waitTrack = roadMap.getEasternSignal().getTrack();
-   //         carIsWaiting = roadMap.getCars().stream().map(c -> c.getTrack()).anyMatch(t -> t == waitTrack);
-   //      }
-   //      else
-   //      {
-   //         Track enterTrack = roadMap.getEasternSignal().getTrack();
-   //         boolean carIsEntering = roadMap.getCars().stream().map(c -> c.getTrack()).anyMatch(t -> t == enterTrack);
+   // Track waitTrack = roadMap.getEasternSignal().getTrack();
+   // carIsWaiting = roadMap.getCars().stream().map(c -> c.getTrack()).anyMatch(t -> t == waitTrack);
+   // }
+   // else
+   // {
+   // Track enterTrack = roadMap.getEasternSignal().getTrack();
+   // boolean carIsEntering = roadMap.getCars().stream().map(c -> c.getTrack()).anyMatch(t -> t == enterTrack);
    //
-   //         if (carIsEntering)
-   //         {
-   //            // do not swap signals
-   //            return;
-   //         }
+   // if (carIsEntering)
+   // {
+   // // do not swap signals
+   // return;
+   // }
    //
-   //         Track waitTrack = roadMap.getWesternSignal().getTrack();
-   //         carIsWaiting = roadMap.getCars().stream().map(c -> c.getTrack()).anyMatch(t -> t == waitTrack);
-   //      }
+   // Track waitTrack = roadMap.getWesternSignal().getTrack();
+   // carIsWaiting = roadMap.getCars().stream().map(c -> c.getTrack()).anyMatch(t -> t == waitTrack);
+   // }
    //
-   //      if (carIsWaiting)
-   //      {
-   //         roadMap.getEasternSignal().setPass(!roadMap.getEasternSignal().isPass());
+   // if (carIsWaiting)
+   // {
+   // roadMap.getEasternSignal().setPass(!roadMap.getEasternSignal().isPass());
    //
-   //         roadMap.getWesternSignal().setPass(!roadMap.getWesternSignal().isPass());
-   //      }
-   //   }
+   // roadMap.getWesternSignal().setPass(!roadMap.getWesternSignal().isPass());
+   // }
+   // }
    //
 
-   
-   private void swapSignals(EObject root) {
+   private void swapSignals(EObject root)
+   {
       // no car in narrowing
       RoadMap roadMap = (RoadMap) root;
 
-      for (Car c : roadMap.getCars()){
-         if (c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED) return;
+      for (Car c : roadMap.getCars())
+      {
+         if (c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED)
+            return;
       }
 
       boolean carIsWaiting = false;
@@ -521,113 +564,128 @@ public class RoadWorkProblem
       boolean carAtWest = roadMap.getWesternSignal().getTrack().getCar() != null;
       boolean carAtEast = roadMap.getEasternSignal().getTrack().getCar() != null;
 
-      if (roadMap.getWesternSignal().isPass() && carAtWest) return;
-      if (roadMap.getEasternSignal().isPass() && carAtEast) return;
-      
+      if (roadMap.getWesternSignal().isPass() && carAtWest)
+         return;
+      if (roadMap.getEasternSignal().isPass() && carAtEast)
+         return;
 
-      if (   roadMap.getWesternSignal().isPass() && carAtEast
-          || roadMap.getEasternSignal().isPass() && carAtWest) {
+      if (roadMap.getWesternSignal().isPass() && carAtEast
+         || roadMap.getEasternSignal().isPass() && carAtWest)
+      {
          roadMap.getEasternSignal().setPass(!roadMap.getEasternSignal().isPass());
          roadMap.getWesternSignal().setPass(!roadMap.getWesternSignal().isPass());
-   } }
+      }
+   }
 
 
-   private void moveCar(EObject root, EObject handle) {
+   private void moveCar(EObject root, EObject handle)
+   {
       RoadMap roadMap = (RoadMap) root;
       Car car = (Car) handle;
 
       // red light?
       Signal signal = car.getTrack().getSignal();
-      if (signal != null && ! signal.isPass()) return;
+      if (signal != null && !signal.isPass())
+         return;
 
       EList<Track> targets;
-      if (car.getTravelDirection() == TravelDirection.EAST) {
+      if (car.getTravelDirection() == TravelDirection.EAST)
+      {
          targets = car.getTrack().getEast();
-      } else {
+      }
+      else
+      {
          targets = car.getTrack().getWest();
       }
 
       Track newPos = null;
 
-      if (targets.size() == 0) return;
-      if (targets.size() == 1) {
+      if (targets.size() == 0)
+         return;
+      if (targets.size() == 1)
+      {
          newPos = targets.get(0);
-      } else {
-         for (Track t : targets) {
-            if (t.getTravelDirection() == car.getTravelDirection()) {
+      }
+      else
+      {
+         for (Track t : targets)
+         {
+            if (t.getTravelDirection() == car.getTravelDirection())
+            {
                newPos = t;
             }
          }
       }
 
-      if (newPos.getCar() != null) return;
+      if (newPos.getCar() != null)
+         return;
 
       car.setTrack(newPos);
    }
 
-   //   private void moveCar(EObject root, EObject handle)
-   //   {
-   //      RoadMap roadMap = (RoadMap) root;
-   //      Car car = (Car) handle;
+   // private void moveCar(EObject root, EObject handle)
+   // {
+   // RoadMap roadMap = (RoadMap) root;
+   // Car car = (Car) handle;
    //
-   //      Track pos = car.getTrack();
-   //      EList<Track> targets;
+   // Track pos = car.getTrack();
+   // EList<Track> targets;
    //
-   //      // red light?
-   //      if (pos == roadMap.getEasternSignal().getTrack() && !roadMap.getEasternSignal().isPass())
-   //      {
-   //         return;
-   //      }
+   // // red light?
+   // if (pos == roadMap.getEasternSignal().getTrack() && !roadMap.getEasternSignal().isPass())
+   // {
+   // return;
+   // }
    //
-   //      if (pos == roadMap.getWesternSignal().getTrack() && !roadMap.getWesternSignal().isPass())
-   //      {
-   //         return;
-   //      }
+   // if (pos == roadMap.getWesternSignal().getTrack() && !roadMap.getWesternSignal().isPass())
+   // {
+   // return;
+   // }
    //
-   //      if (car.getTravelDirection() == TravelDirection.EAST)
-   //      {
-   //         targets = pos.getEast();
-   //      }
-   //      else
-   //      {
-   //         targets = pos.getWest();
-   //      }
+   // if (car.getTravelDirection() == TravelDirection.EAST)
+   // {
+   // targets = pos.getEast();
+   // }
+   // else
+   // {
+   // targets = pos.getWest();
+   // }
    //
-   //      Track newPos = null;
+   // Track newPos = null;
    //
-   //      if (targets.size() == 0)
-   //      {
-   //         return;
-   //      }
-   //      else if (targets.size() == 1)
-   //      {
-   //         newPos = targets.get(0);
-   //      }
-   //      else
-   //      {
-   //         for (Track t : targets)
-   //         {
-   //            if (t.getTravelDirection() == car.getTravelDirection())
-   //            {
-   //               newPos = t;
-   //               break;
-   //            }
-   //         }
-   //      }
+   // if (targets.size() == 0)
+   // {
+   // return;
+   // }
+   // else if (targets.size() == 1)
+   // {
+   // newPos = targets.get(0);
+   // }
+   // else
+   // {
+   // for (Track t : targets)
+   // {
+   // if (t.getTravelDirection() == car.getTravelDirection())
+   // {
+   // newPos = t;
+   // break;
+   // }
+   // }
+   // }
    //
-   //      // newPos is blocked?
-   //      Track blockPos = newPos;
-   //      Optional<Car> blocker = roadMap.getCars().stream().filter(c -> c.getTrack() == blockPos).findAny();
+   // // newPos is blocked?
+   // Track blockPos = newPos;
+   // Optional<Car> blocker = roadMap.getCars().stream().filter(c -> c.getTrack() == blockPos).findAny();
    //
-   //      if (blocker.isPresent())
-   //      {
-   //         return;
-   //      }
+   // if (blocker.isPresent())
+   // {
+   // return;
+   // }
    //
-   //      car.setTrack(newPos);
+   // car.setTrack(newPos);
    //
-   //      return;
-   //   }
+   // return;
+   // }
 
 
    private EList getCars(EObject root)

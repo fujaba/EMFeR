@@ -136,7 +136,7 @@ class StoryStep {
 					   }
 					  },     
 					   nodeClick: function OpenInNewTab(node) {
-					         var win = window.open('objectgraphs/graph'+node.id+'.html', '_blank');
+					         var win = window.open('rwp-images/state'+node.id+'.png', '_blank');
 					         if (win) {
 					               win.focus();
 					         } else {
