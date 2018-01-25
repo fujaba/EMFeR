@@ -10,13 +10,25 @@ class RoadMap
 	contains Signal westernSignal
 	contains Signal easternSignal
 	
+	TravelDirection lastDirection = "UNDEFINED"
+	
 	op String toString()
 	{
 		var bufNorthSignal = new StringBuilder("       \n")
 		var bufNorthCars =   new StringBuilder("-------\n")
-		var bufSouthCars =   new StringBuilder("--/ \\--\n")
+		var bufSouthCars =   new StringBuilder("--/=\\--\n")
 		var bufSouthSignal = new StringBuilder("       \n")
 		
+		if (lastDirection == TravelDirection.WEST)
+		{
+			bufSouthCars.setCharAt(3, '<')
+		}
+
+		if (lastDirection == TravelDirection.EAST)
+		{
+			bufSouthCars.setCharAt(3, '>')
+		}
+
 		if (easternSignal.pass)
 		{
 			bufNorthSignal.setCharAt(5, 'T')

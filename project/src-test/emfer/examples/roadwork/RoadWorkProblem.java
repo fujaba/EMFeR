@@ -1,15 +1,11 @@
 package emfer.examples.roadwork;
 
-import static emfer.examples.roadwork.TravelDirection.EAST;
-import static emfer.examples.roadwork.TravelDirection.UNDEFINED;
-import static emfer.examples.roadwork.TravelDirection.WEST;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static emfer.examples.roadwork.TravelDirection.*;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.eclipse.emf.common.util.EList;
@@ -80,36 +76,29 @@ public class RoadWorkProblem
 
    private void applyMetric(ReachabilityGraph reachabilityGraph)
    {
-      LinkedList<ReachableState> todo = new LinkedList<ReachableState>();
-      ReachableState startState = reachabilityGraph.getStates().get(0);
-      todo.add(startState);
       for (ReachableState s : reachabilityGraph.getStates())
       {
-         s.setMetricValue(-1);
-      }
+         RoadMap roadMap = (RoadMap) s.getRoot();
 
-      while (!todo.isEmpty())
-      {
-         ReachableState previous = todo.pollFirst();
-         for (TrafoApplication t : previous.getTrafoApplications())
+         int newMetricValue = 0;
+
+         if (isDangerous(s)) 
          {
-            ReachableState s = t.getTgt();
-            RoadMap roadMap = (RoadMap) s.getRoot();
-            if (s.getMetricValue() != -1) continue; // already assigned
-            int newMetricValue = 0;
-            if (isDangerous(s)) {
-               newMetricValue = Integer.MAX_VALUE;
-               // previous.setMetricValue(Integer.MAX_VALUE / 2);
-            }
-            else {
-               if (roadMap.getWesternSignal().isPass() && roadMap.getWesternSignal().getTrack().getCar() == null) newMetricValue++;
-               if (roadMap.getEasternSignal().isPass() && roadMap.getEasternSignal().getTrack().getCar() == null) newMetricValue++;
-               if (isCarWaitsAtRed(s)) newMetricValue += 3;
-               newMetricValue += noOfBlockers(s) * 3;
-            }
-            s.setMetricValue(newMetricValue);
-            todo.add(s);
+            newMetricValue = Integer.MAX_VALUE;
          }
+         else 
+         {
+            if (roadMap.getWesternSignal().isPass() && roadMap.getWesternSignal().getTrack().getCar() == null) newMetricValue++;
+            if ( ! roadMap.getWesternSignal().isPass() && roadMap.getWesternSignal().getTrack().getCar() != null) newMetricValue += 3;
+            if (roadMap.getWesternSignal().isPass() && roadMap.getLastDirection() == EAST) newMetricValue++;
+            if (roadMap.getEasternSignal().isPass() && roadMap.getEasternSignal().getTrack().getCar() == null) newMetricValue++;
+            if ( ! roadMap.getEasternSignal().isPass() && roadMap.getEasternSignal().getTrack().getCar() != null) newMetricValue += 3;
+            if (roadMap.getEasternSignal().isPass() && roadMap.getLastDirection() == WEST) newMetricValue++;
+
+            newMetricValue += noOfBlockers(s) * 3;
+         }
+
+         s.setMetricValue(newMetricValue);
       }
    }
 
@@ -140,7 +129,16 @@ public class RoadWorkProblem
       {
          signal = roadMap.getEasternSignal();
       }
-      signal.setPass(!signal.isPass());
+      signal.setPass( ! signal.isPass());
+      
+      if ( ! signal.isPass())
+      {
+         roadMap.setLastDirection(EAST);
+         if (signalPos == EAST)
+         {
+            roadMap.setLastDirection(WEST);
+         }
+      }
    }
 
 
@@ -288,7 +286,7 @@ public class RoadWorkProblem
 
 
    @Test
-   public EMFeR testRoadWorkProblem() throws Exception
+   public void testRoadWorkProblem() throws Exception
    {
       Storyboard story = new Storyboard("RoadWorkProblem");
 
@@ -381,7 +379,7 @@ public class RoadWorkProblem
 
       TMXRoadworkVisualizer.visualize(emfer, "doc/rwp-images/");
 
-      return emfer;
+      // return emfer;
    }
 
 
@@ -491,8 +489,8 @@ public class RoadWorkProblem
       int eastCount = 0;
       for (Car c : roadMap.getCars()) {
          if (c.getTrack().getTravelDirection() == UNDEFINED) {
-            if (c.getTravelDirection() == WEST && ! c.getTrack().getName().equals("n5")) westCount++;
-            if (c.getTravelDirection() == EAST && ! c.getTrack().getName().equals("n3")) eastCount++;
+            if (c.getTravelDirection() == WEST) westCount++;
+            if (c.getTravelDirection() == EAST) eastCount++;
          }
       }
       if (roadMap.getWesternSignal().isPass() && roadMap.getWesternSignal().getTrack().getCar() != null) eastCount++;
