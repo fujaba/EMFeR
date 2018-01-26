@@ -21,6 +21,7 @@ import emfer.ExistFinally;
 import emfer.ExistGlobally;
 import emfer.ExistNext;
 import emfer.ExistUntil;
+import emfer.SyntheticControl;
 import emfer.reachability.ReachabilityGraph;
 import emfer.reachability.ReachableState;
 import emfer.reachability.TrafoApplication;
@@ -64,11 +65,26 @@ public class RoadWorkProblem
 
       applyMetric(emfer.getReachabilityGraph());
 
-      printReachableStatesList(emfer);
+      // printReachableStatesList(emfer);
 
-      story.addReachableState(emfer.getReachabilityGraph().getStates().get(0), "Start Model");
+      // story.addReachableState(emfer.getReachabilityGraph().getStates().get(0), "Start Model");
 
-      story.addReachabilityGraph(emfer.getReachabilityGraph());
+      // story.addReachabilityGraph(emfer.getReachabilityGraph());
+      
+      SyntheticControl syntheticControl = new SyntheticControl(emfer)
+            .withTrafo("swap western signal", root -> swapSignal(root, WEST))
+            .withTrafo("swap eastern signal", root -> swapSignal(root, EAST));
+      
+      EMFeR emfer2 = new EMFeR()
+            .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car), 1)
+            .withTrafo("synthetic control", root -> syntheticControl.run(root), 0)
+            .withStart(roadMap);
+      
+      int size2 = emfer2.explore();
+      
+      Logger.getGlobal().info("Emfer 2 size " + size2);
+      
+      printReachableStatesList(emfer2);
 
       story.dumpHtml();
    }
@@ -89,11 +105,22 @@ public class RoadWorkProblem
          else 
          {
             if (roadMap.getWesternSignal().isPass() && roadMap.getWesternSignal().getTrack().getCar() == null) newMetricValue++;
+            
             if ( ! roadMap.getWesternSignal().isPass() && roadMap.getWesternSignal().getTrack().getCar() != null) newMetricValue += 3;
+            
             if (roadMap.getWesternSignal().isPass() && roadMap.getLastDirection() == EAST) newMetricValue++;
+            
             if (roadMap.getEasternSignal().isPass() && roadMap.getEasternSignal().getTrack().getCar() == null) newMetricValue++;
+            
             if ( ! roadMap.getEasternSignal().isPass() && roadMap.getEasternSignal().getTrack().getCar() != null) newMetricValue += 3;
+            
             if (roadMap.getEasternSignal().isPass() && roadMap.getLastDirection() == WEST) newMetricValue++;
+            
+            if (roadMap.getEasternSignal().isPass() && roadMap.getLastDirection() == WEST && 
+                  roadMap.getWesternSignal().getTrack().getCar() != null) newMetricValue += 3;
+
+            if (roadMap.getWesternSignal().isPass() && roadMap.getLastDirection() == EAST && 
+                  roadMap.getEasternSignal().getTrack().getCar() != null) newMetricValue += 3;
 
             newMetricValue += noOfBlockers(s) * 3;
          }

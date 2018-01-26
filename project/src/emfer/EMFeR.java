@@ -187,6 +187,10 @@ public class EMFeR
 
    private CertInfo staticCertInfo;
 
+   public CertInfo getStaticCertInfo()
+   {
+      return staticCertInfo;
+   }
 
    public EMFeR withStatic(Object... items)
    {
@@ -209,6 +213,10 @@ public class EMFeR
 
    private Map<String, ArrayList<ReachableState>> cert2StateListMap = new HashMap<String, ArrayList<ReachableState>>();
 
+   public Map<String, ArrayList<ReachableState>> getCert2StateListMap()
+   {
+      return cert2StateListMap;
+   }
 
    private void put2Cert2StateListMap(String cert, ReachableState newState)
    {
@@ -224,11 +232,21 @@ public class EMFeR
    }
 
    private ModelIsomorphismOp isoOp = new ModelIsomorphismOp();
+   
+   public ModelIsomorphismOp getIsoOp()
+   {
+      return isoOp;
+   }
 
    @FunctionalInterface
    public interface Metric
    {
       public double compute(EObject graphRoot);
+   }
+   
+   public String computeCertificate(EObject root)
+   {
+      return isoOp.computeCertificate(root, staticCertInfo).getCertificate();
    }
 
    private Metric metric = null;
