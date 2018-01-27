@@ -104,29 +104,45 @@ public class RoadWorkProblem
          }
          else 
          {
-            if (roadMap.getWesternSignal().isPass() && roadMap.getWesternSignal().getTrack().getCar() == null) newMetricValue++;
-            
-            if ( ! roadMap.getWesternSignal().isPass() && roadMap.getWesternSignal().getTrack().getCar() != null) newMetricValue += 3;
-            
-            if (roadMap.getWesternSignal().isPass() && roadMap.getLastDirection() == EAST) newMetricValue++;
-            
-            if (roadMap.getEasternSignal().isPass() && roadMap.getEasternSignal().getTrack().getCar() == null) newMetricValue++;
-            
-            if ( ! roadMap.getEasternSignal().isPass() && roadMap.getEasternSignal().getTrack().getCar() != null) newMetricValue += 3;
-            
-            if (roadMap.getEasternSignal().isPass() && roadMap.getLastDirection() == WEST) newMetricValue++;
-            
-            if (roadMap.getEasternSignal().isPass() && roadMap.getLastDirection() == WEST && 
-                  roadMap.getWesternSignal().getTrack().getCar() != null) newMetricValue += 3;
+            Signal westernSignal = roadMap.getWesternSignal();
+            Signal easternSignal = roadMap.getEasternSignal();
 
-            if (roadMap.getWesternSignal().isPass() && roadMap.getLastDirection() == EAST && 
-                  roadMap.getEasternSignal().getTrack().getCar() != null) newMetricValue += 3;
+            Car westernCar = westernSignal.getTrack().getCar();
+            Car easternCar = easternSignal.getTrack().getCar();
 
-            newMetricValue += noOfBlockers(s) * 3;
+            if (westernSignal.isPass() && westernCar == null) newMetricValue++;
+            
+            if ( ! westernSignal.isPass() && westernCar != null) newMetricValue += 3;
+            
+            if (westernSignal.isPass() && roadMap.getLastDirection() == EAST) newMetricValue++;
+            
+            if (easternSignal.isPass() && easternCar == null) newMetricValue++;
+            
+            if ( ! easternSignal.isPass() && easternCar != null) newMetricValue += 3;
+            
+            if (easternSignal.isPass() && roadMap.getLastDirection() == WEST) newMetricValue++;
+            
+            if (easternSignal.isPass() && roadMap.getLastDirection() == WEST && 
+                  westernCar != null) newMetricValue += 3;
+
+            if (westernSignal.isPass() && roadMap.getLastDirection() == EAST && 
+                  easternCar != null) newMetricValue += 3;
          }
 
          s.setMetricValue(newMetricValue);
       }
+   }
+   
+   public boolean isPassTo(RoadMap roadMap, TravelDirection dir)
+   {
+      Signal signal = roadMap.getWesternSignal();
+      
+      if (dir == WEST)
+      {
+         signal = roadMap.getEasternSignal();
+      }
+      
+      return signal.isPass();
    }
 
 
