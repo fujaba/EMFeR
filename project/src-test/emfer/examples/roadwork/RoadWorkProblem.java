@@ -75,13 +75,8 @@ public class RoadWorkProblem
             .withTrafo("swap eastern signal", root -> swapSignal(root, EAST))
             .withMetric( state -> dangerMetric(state))
             .withMetric( state -> redWaitCosts(state))
+            .applyMetric()
             ;
-      
-      // predefine local costs
-      for (ReachableState s : emfer.getReachabilityGraph().getStates())
-      {
-         syntheticControl.localCosts(s);
-      }
       
       printReachableStatesList(emfer);
 
@@ -130,10 +125,6 @@ public class RoadWorkProblem
       if ( ! signal.isPass() && ! otherSignal.isPass()) 
       {
          signal.setRedCount(1);
-         //         if (otherSignal.getRedCount() != 2)
-         //         {
-         //            otherSignal.setRedCount(2);
-         //         }
       }
    }
 
@@ -151,12 +142,15 @@ public class RoadWorkProblem
          waitCosts += signal.getRedCount();
       }
       
+      
       signal = roadMap.getEasternSignal();
       
       if ( ! signal.isPass() && signal.getTrack().getCar() != null)
       {
-         waitCosts = Math.max(waitCosts, signal.getRedCount());
+         waitCosts += signal.getRedCount();
       }
+      if (roadMap.getWesternSignal().isPass()) waitCosts++;
+      if (roadMap.getEasternSignal().isPass()) waitCosts++;
       
       return waitCosts;
    }

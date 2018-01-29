@@ -34,72 +34,73 @@ public class SyntheticControl
       this.emfer = emfer;
    }
 
-   public void run(EObject root)
-   {
-      ReachableState currentState = findMatchingOldState(root);
-      
-      double currentCosts = localCosts(currentState);
-      
-      if (currentState == null)
-      {
-         // ups
-         return;
-      }
-         
-      // for all states I can reach
-      HashSet<ReachableState>  myTargetStates = findMyTargetStates(currentState);
-      
-      // choose best option
-      ReachableState bestMyTarget = chooseBestMyTarget(myTargetStates);
-      
-      if (bestMyTarget == null || currentCosts <= localCosts(bestMyTarget))
-      {
-         return;
-      }
-      
-      // run it
-      emfer.computeDistancesTo(bestMyTarget);
-      
-      if (currentState.getMetricValue() == 0) 
-      {
-         return; // we are at target
-      }
-      
-      TrafoApplication bestTrafo = null;
-      double bestCosts = Double.MAX_VALUE;
-      double bestDistance = Integer.MAX_VALUE;
-      
-      for (TrafoApplication trafoApp : currentState.getTrafoApplications())
-      {
-         if (isMyTrafo(trafoApp))
-         {
-            ReachableState nextState = trafoApp.getTgt();
-            if (nextState.getMetricValue() == 0)
-            {
-               bestTrafo = trafoApp;
-               localCosts(nextState);
-               break;
-            }
-            
-            if (nextState.getMetricValue() <= bestDistance)
-            {
-               bestDistance = nextState.getMetricValue();
-               
-               double localCosts = localCosts(nextState);
-               
-               if (localCosts < bestCosts)
-               {
-                  bestCosts = localCosts;
-                  bestTrafo = trafoApp;
-               }
-            }
-         }
-      }
-      
-      // run the trafo
-      PathTrafo pathTrafo = pathTrafoMap.get(bestTrafo.getDescription());
-      pathTrafo.trafo.run(root, root);
-   }
+   //   public void run(EObject root)
+   //   {
+   //      ReachableState currentState = findMatchingOldState(root);
+   //      
+   //      double currentCosts = localCosts(currentState);
+   //      
+   //      if (currentState == null)
+   //      {
+   //         // ups
+   //         return;
+   //      }
+   //         
+   //      // for all states I can reach
+   //      HashSet<ReachableState>  myTargetStates = findMyTargetStates(currentState);
+   //      
+   //      // choose best option
+   //      ReachableState bestMyTarget = chooseBestMyTarget(myTargetStates);
+   //      
+   //      if (bestMyTarget == null || currentCosts <= localCosts(bestMyTarget))
+   //      {
+   //         return;
+   //      }
+   //      
+   //      // run it
+   //      emfer.computeDistancesTo(bestMyTarget);
+   //      
+   //      if (currentState.getMetricValue() == 0) 
+   //      {
+   //         return; // we are at target
+   //      }
+   //      
+   //      TrafoApplication bestTrafo = null;
+   //      double bestCosts = Double.MAX_VALUE;
+   //      double bestDistance = Integer.MAX_VALUE;
+   //      double bestNum = currentState.getNumber();
+   //      for (TrafoApplication trafoApp : currentState.getTrafoApplications())
+   //      {
+   //         if (isMyTrafo(trafoApp))
+   //         {
+   //            ReachableState nextState = trafoApp.getTgt();
+   //            if (nextState.getMetricValue() == 0)
+   //            {
+   //               bestTrafo = trafoApp;
+   //               localCosts(nextState);
+   //               break;
+   //            }
+   //            
+   //            if (nextState.getMetricValue() <= bestDistance)
+   //            {
+   //               bestDistance = nextState.getMetricValue();
+   //               
+   //               double localCosts = localCosts(nextState);
+   //               
+   //               if (localCosts < bestCosts || (localCosts == bestCosts && nextState.getNumber() > bestNum))
+   //               {
+   //                  bestCosts = localCosts;
+   //                  bestTrafo = trafoApp;
+   //                  bestNum = nextState.getNumber();
+   //               }
+   //            }
+   //         }
+   //      }
+   //      
+   //      // run the trafo
+   //      PathTrafo pathTrafo = pathTrafoMap.get(bestTrafo.getDescription());
+   //      pathTrafo.trafo.run(root, root);
+   //   }
 
    private ReachableState chooseBestMyTarget(HashSet<ReachableState> myTargetStates)
    {
@@ -235,75 +236,43 @@ public class SyntheticControl
    
    // private Integer currentCosts = 0;
 
-//   public void run(EObject root)
-//   {
-//      // identify current state
-//      String certificate = emfer.computeCertificate(root);
-//      
-//      Map<String, ArrayList<ReachableState>> cert2StateListMap = emfer.getCert2StateListMap();
-//      
-//      ArrayList<ReachableState> candidateStates = cert2StateListMap.get(certificate);
-//      
-//      ReachableState newReachableState = ReachabilityFactory.eINSTANCE.createReachableState();
-//      newReachableState.setRoot(root);
-//      
-//      ReachableState currentState = null;
-//      
-//      for (ReachableState oldState : candidateStates)
-//      {
-//         Boolean match = emfer.getIsoOp().lazyMatch(oldState, newReachableState, emfer.getStaticCertInfo());
-//
-//         if (match)
-//         {
-//            currentState = oldState;
-//            break;
-//         }
-//      }
-//      
-//      if (currentState == null)
-//      {
-//         // ups
-//         return;
-//      }
-//         
-//      
-//      
-//      // choose best operation
-//      double worstMetricValue = currentState.getMetricValue();
-//      double bestMyValue = currentState.getMetricValue();
-//      TrafoApplication bestTrafoApp = null;
-//      
-//      for (TrafoApplication trafoApp : currentState.getTrafoApplications())
-//      {
-//         if (pathTrafoMap.get(trafoApp.getDescription()) != null)
-//         {
-//            // control it
-//            if (trafoApp.getTgt().getMetricValue() < bestMyValue)
-//            {
-//               bestTrafoApp = trafoApp;
-//            }
-//         }
-//         //         else
-//         //         {
-//         //            // uncontrolled simulation step
-//         //            double tgtMetricValue = trafoApp.getTgt().getMetricValue();
-//         //            
-//         //            if (tgtMetricValue > worstMetricValue)
-//         //            {
-//         //               
-//         //            }
-//         //            
-//         //         }
-//      }
-//      
-//      // run it
-//      if (bestTrafoApp != null)
-//      {
-//         PathTrafo pathTrafo = pathTrafoMap.get(bestTrafoApp.getDescription());
-//         
-//         pathTrafo.trafo.run(root, root);
-//      }
-//   }
+   public void run(EObject root)
+   {
+      // identify current state
+      ReachableState currentState = findMatchingOldState(root);      
+      
+      if (currentState == null)
+      {
+         // ups
+         return;
+      }
+               
+      
+      // choose best operation
+      double worstMetricValue = currentState.getMetricValue();
+      double bestMyValue = currentState.getMetricValue();
+      TrafoApplication bestTrafoApp = null;
+      
+      for (TrafoApplication trafoApp : currentState.getTrafoApplications())
+      {
+         if (pathTrafoMap.get(trafoApp.getDescription()) != null)
+         {
+            // control it
+            if (trafoApp.getTgt().getMetricValue() < bestMyValue)
+            {
+               bestTrafoApp = trafoApp;
+            }
+         }
+      }
+      
+      // run it
+      if (bestTrafoApp != null)
+      {
+         PathTrafo pathTrafo = pathTrafoMap.get(bestTrafoApp.getDescription());
+         
+         pathTrafo.trafo.run(root, root);
+      }
+   }
 
    public SyntheticControl withTrafo(String trafoName, Trafo trafo)
    {
@@ -336,6 +305,24 @@ public class SyntheticControl
    public SyntheticControl withMetric(Function<ReachableState, Integer> metric)
    {
       metricsList.add(metric);
+      
+      return this;
+   }
+
+   public SyntheticControl applyMetric()
+   {
+      for (ReachableState s : emfer.getReachabilityGraph().getStates())
+      {
+         double localCosts = 0;
+         
+         for ( Function<ReachableState, Integer> m : metricsList)
+         {
+            int newCosts = m.apply(s);
+            localCosts += newCosts;
+         }
+         
+         s.setMetricValue(localCosts);
+      }
       
       return this;
    }
