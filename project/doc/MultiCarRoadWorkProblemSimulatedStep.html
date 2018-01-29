@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8">
+<link rel="stylesheet" href="includes/alchemy.css">
+<link rel="stylesheet" type="text/css" href="includes/vendor.css">
+<script type="text/javascript" src="includes/vendor.js"></script>
+<script type="text/javascript" src="includes/alchemy.js"></script>
+</head>
+<body>
+<h2>MultiCarRoadWorkProblemSimulatedStep</h2>
+<p>
+<pre>
+
+     T 
+------W
+E-/=\--
+ F     
+</pre>
+</p>
+<p>
+<pre>
+ReachabilityGraph
+</pre>
+</p>
+
+<div class="alchemy" id="alchemy_622946713"></div>
+<script type="text/javascript">
+
+var data= {
+"nodes": [
+{type:"finalstate",id:1,caption:"state 1"},
+{type:"finalstate",id:2,caption:"state 2"},
+{type:"finalstate",id:3,caption:"state 3"},
+{type:"finalstate",id:4,caption:"state 4"},
+{type:"finalstate",id:5,caption:"state 5"},
+{type:"finalstate",id:6,caption:"state 6"},
+{type:"finalstate",id:7,caption:"state 7"},
+{type:"finalstate",id:8,caption:"state 8"},
+{type:"finalstate",id:9,caption:"state 9"},
+{type:"finalstate",id:10,caption:"state 10"},
+{type:"finalstate",id:11,caption:"state 11"},
+{type:"finalstate",id:12,caption:"state 12"},
+{type:"finalstate",id:13,caption:"state 13"},
+{type:"finalstate",id:14,caption:"state 14"},
+{type:"finalstate",id:15,caption:"state 15"},
+{type:"finalstate",id:16,caption:"state 16"},
+{type:"finalstate",id:17,caption:"state 17"},
+{type:"finalstate",id:18,caption:"state 18"},
+{type:"finalstate",id:19,caption:"state 19"}
+],
+"edges": [
+{source:1,target:2,nr:0,caption:"synthetic control",type:"normal"},
+{source:2,target:3,nr:1,caption:"simulation step",type:"normal"},
+{source:3,target:4,nr:2,caption:"synthetic control",type:"normal"},
+{source:4,target:5,nr:3,caption:"simulation step",type:"normal"},
+{source:5,target:6,nr:4,caption:"simulation step",type:"normal"},
+{source:6,target:7,nr:5,caption:"synthetic control",type:"normal"},
+{source:7,target:8,nr:6,caption:"simulation step",type:"normal"},
+{source:8,target:9,nr:7,caption:"simulation step",type:"normal"},
+{source:9,target:10,nr:8,caption:"simulation step",type:"normal"},
+{source:10,target:11,nr:9,caption:"synthetic control",type:"normal"},
+{source:11,target:12,nr:10,caption:"simulation step",type:"normal"},
+{source:12,target:13,nr:11,caption:"simulation step",type:"normal"},
+{source:13,target:14,nr:12,caption:"synthetic control",type:"normal"},
+{source:14,target:15,nr:13,caption:"simulation step",type:"normal"},
+{source:15,target:16,nr:14,caption:"simulation step",type:"normal"},
+{source:16,target:17,nr:15,caption:"simulation step",type:"normal"},
+{source:17,target:18,nr:16,caption:"synthetic control",type:"normal"},
+{source:18,target:19,nr:17,caption:"simulation step",type:"normal"},
+{source:19,target:6,nr:18,caption:"simulation step",type:"normal"}
+]}
+var config = {
+		dataSource: data,
+		divSelector: alchemy_622946713,
+		  directedEdges:true,
+		  graphWidth: function() {return screen.availWidth  * 0.7},
+		  graphHeight: function() {return screen.availHeight * 0.7},
+		  initialScale: 0.5, 
+		  initialTranslate: [250,250],
+		  curvedEdges:false,
+		  edgeCaptionsOnByDefault: true,
+		  backgroundColour: "#FFFFFF",
+		  nodeCaptionsOnByDefault: true,
+		  nodeTypes: {"type":["failure","state","startstate","finalstate"]},
+		   "nodeStyle": {
+		   "failure": {
+		         color: "#FE3E3E",
+		      },
+		   "finalstate": {
+		         color: "#0000FF",
+		         radius: 15, 
+		      borderColor: "#127DC1"            },
+		   "startstate": {
+		         color: "#FFFFFF",
+		         radius: 15, 
+		      borderColor: "#127DC1"            },
+		   "state":{
+		         color: "#bd59f7",
+		         borderColor: "#9018e0",
+		         captionColor: "#FFFFFF"
+		   }
+		  },
+		  "edgeTypes": {"type": ["failure","normal"]},
+		  "edgeStyle": {
+		      "failure": {
+		         color: "#ff794d",
+		      width: 3,
+		         opacity: 1
+		   },
+		      "greenpath": {
+		         color: "#00FF00",
+		      width: 7,
+		         opacity: 1
+		   },
+		   "normal": {
+		      opacity: .9,
+		      color: "#575459",
+		      width: 3
+		   }
+		  },     
+		   nodeClick: function OpenInNewTab(node) {
+		         var win = window.open('rwp-images/state'+node.id+'.png', '_blank');
+		         if (win) {
+		               win.focus();
+		         } else {
+		               alert('Please allow popups for this website');
+		         }
+		      }     
+			,     
+			edgeClick: function OpenInNewTab(edge) {
+			    var win = window.open('rulegraphs/graph'+edge._properties.nr+'.html', '_blank');
+			    if (win) {
+			          win.focus();
+			    } else {
+			          alert('Please allow popups for this website');
+			    }
+			 }     
+			    };
+alchemy = new Alchemy(config)
+</script>
+<p>
+<pre>
+Emfer 2 size 19
+</pre>
+</p>
+<p>
+<pre>
+
+0.0
+     T 
+W-----W
+E-/=\-E
+ F     
+1 --synthetic control-> 2 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+1 --synthetic control-> 2
+0.0
+     F 
+W-----W
+E-/=\-E
+ F     
+2 --simulation step-> 3 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+2 --simulation step-> 3
+0.0
+     F 
+-----WW
+EE/=\--
+ F     
+3 --synthetic control-> 4 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+3 --synthetic control-> 4
+0.0
+     T 
+-----WW
+EE/=\--
+ F     
+4 --simulation step-> 5 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+4 --simulation step-> 5
+0.0
+     T 
+----WW-
+EE/=\--
+ F     
+5 --simulation step-> 6 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+5 --simulation step-> 6
+19 --simulation step-> 6
+0.0
+     T 
+---WW--
+EE/=\--
+ F     
+6 --synthetic control-> 7 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+6 --synthetic control-> 7
+0.0
+     F 
+---WW--
+EE/=\--
+ F     
+7 --simulation step-> 8 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+7 --simulation step-> 8
+0.0
+     F 
+--WW---
+EE/=\--
+ F     
+8 --simulation step-> 9 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+8 --simulation step-> 9
+0.0
+     F 
+-WW----
+EE/=\--
+ F     
+9 --simulation step-> 10 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+9 --simulation step-> 10
+0.0
+     F 
+WW-----
+EE/=\--
+ F     
+10 --synthetic control-> 11 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+10 --synthetic control-> 11
+0.0
+     F 
+WW-----
+EE/=\--
+ T     
+11 --simulation step-> 12 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+11 --simulation step-> 12
+0.0
+     F 
+W-E---W
+-E/=\--
+ T     
+12 --simulation step-> 13 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+12 --simulation step-> 13
+0.0
+     F 
+--EE-WW
+--/=\--
+ T     
+13 --synthetic control-> 14 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+13 --synthetic control-> 14
+0.0
+     F 
+--EE-WW
+--/=\--
+ F     
+14 --simulation step-> 15 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+14 --simulation step-> 15
+0.0
+     F 
+---EEWW
+--/=\--
+ F     
+15 --simulation step-> 16 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+15 --simulation step-> 16
+0.0
+     F 
+----EWW
+--/=\E-
+ F     
+16 --simulation step-> 17 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+16 --simulation step-> 17
+0.0
+     F 
+-----WW
+--/=\EE
+ F     
+17 --synthetic control-> 18 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+17 --synthetic control-> 18
+0.0
+     T 
+-----WW
+--/=\EE
+ F     
+18 --simulation step-> 19 0.0
+</pre>
+</p>
+<p>
+<pre>
+
+18 --simulation step-> 19
+0.0
+     T 
+----WW-
+E-/=\-E
+ F     
+19 --simulation step-> 6 0.0
+</pre>
+</p>
+</body>
+</html>
