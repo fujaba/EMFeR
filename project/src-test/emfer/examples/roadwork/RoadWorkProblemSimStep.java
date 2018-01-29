@@ -63,8 +63,8 @@ public class RoadWorkProblemSimStep
       // story.addReachabilityGraph(emfer.getReachabilityGraph());
 
       SyntheticControl syntheticControl = new SyntheticControl(emfer)
-         .withTrafo("swap western signal", root -> swapSignal(root, WEST))
-         .withTrafo("swap eastern signal", root -> swapSignal(root, EAST));
+         .withTrafo("swap western signal")
+         .withTrafo("swap eastern signal");
 
       EMFeR emfer2 = new EMFeR()
          .withTrafo("simulation step", root -> simulationStep(root))
