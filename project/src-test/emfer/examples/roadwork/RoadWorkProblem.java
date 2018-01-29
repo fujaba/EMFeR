@@ -71,8 +71,8 @@ public class RoadWorkProblem
       Logger.getGlobal().info("emfer.size: " + size);
 
       SyntheticControl syntheticControl = new SyntheticControl(emfer)
-            .withTrafo("swap western signal", root -> swapSignal(root, WEST))
-            .withTrafo("swap eastern signal", root -> swapSignal(root, EAST))
+            .withTrafo("swap western signal")
+            .withTrafo("swap eastern signal")
             .withMetric( state -> dangerMetric(state))
             .withMetric( state -> redWaitCosts(state))
             .applyMetric()
@@ -88,11 +88,6 @@ public class RoadWorkProblem
       int size2 = emfer2.explore();
       
       Logger.getGlobal().info("Emfer 2 size " + size2);
-      
-      for (ReachableState s : emfer2.getReachabilityGraph().getStates())
-      {
-         syntheticControl.localCosts(s);
-      }
       
       printReachableStatesList(emfer2);
 

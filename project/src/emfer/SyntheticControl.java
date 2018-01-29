@@ -8,6 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.function.Function;
 
 import org.eclipse.emf.ecore.EObject;
@@ -27,7 +28,7 @@ public class SyntheticControl
 
 
    private EMFeR emfer;
-   private Map<String, PathTrafo> pathTrafoMap = new HashMap<String,PathTrafo>();
+   private Set<String> trafoNameSet = new LinkedHashSet<String>();
 
    public SyntheticControl(EMFeR emfer)
    {
@@ -196,9 +197,9 @@ public class SyntheticControl
    private boolean isMyTrafo(TrafoApplication trafoApp)
    {
       boolean isMyTrafo = false;
-      for( Entry<String, PathTrafo> e : pathTrafoMap.entrySet())
+      for(String trafoName : trafoNameSet)
       {
-         if (e.getKey().equals(trafoApp.getDescription()))
+         if (trafoName.equals(trafoApp.getDescription()))
          {
             isMyTrafo = true;
             break;
@@ -255,7 +256,7 @@ public class SyntheticControl
       
       for (TrafoApplication trafoApp : currentState.getTrafoApplications())
       {
-         if (pathTrafoMap.get(trafoApp.getDescription()) != null)
+         if (emfer.getPathTrafosList(trafoApp.getDescription()) != null)
          {
             // control it
             if (trafoApp.getTgt().getMetricValue() < bestMyValue)
@@ -268,34 +269,15 @@ public class SyntheticControl
       // run it
       if (bestTrafoApp != null)
       {
-         PathTrafo pathTrafo = pathTrafoMap.get(bestTrafoApp.getDescription());
+         PathTrafo pathTrafo = emfer.getPathTrafosList(bestTrafoApp.getDescription());
          
          pathTrafo.trafo.run(root, root);
       }
    }
 
-   public SyntheticControl withTrafo(String trafoName, Trafo trafo)
+   public SyntheticControl withTrafo(String trafoName)
    {
-      withTrafo(trafoName,
-         root -> {
-            LinkedHashSet<EObject> result = new LinkedHashSet<EObject>();
-            result.add(root);
-            return result;
-         },
-         (root, handle) -> trafo.run(root));
-      
-      return this;
-   }
-   
-   public SyntheticControl withTrafo(String trafoName, Path path, Trafo2 trafo)
-   {
-      PathTrafo pathTrafo = new PathTrafo()
-         .withName(trafoName)
-         .withPath(path)
-         .withTrafo(trafo)
-         .withPriority(Integer.MAX_VALUE);
-
-      pathTrafoMap.put(trafoName, pathTrafo);
+      trafoNameSet.add(trafoName);
 
       return this;
    }

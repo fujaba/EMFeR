@@ -110,6 +110,22 @@ public class EMFeR
 
    private ArrayList<PathTrafo> pathTrafosList = new ArrayList<PathTrafo>();
 
+   public ArrayList<PathTrafo> getPathTrafosList()
+   {
+      return pathTrafosList;
+   }
+
+   public PathTrafo getPathTrafosList(String trafoName)
+   {
+      for (PathTrafo trafo : pathTrafosList)
+      {
+         if (trafo.name.startsWith(trafoName))
+         {
+            return trafo;
+         }
+      }
+      return null;
+   }
 
    public EMFeR withTrafo(String string, Path path, Trafo2 trafo)
    {
