@@ -55,6 +55,11 @@ public class RoadWorkProblem
          }
       }
 
+      roadMap.getWesternSignal().setRedCount(2);
+      
+      Logger.getGlobal().info(roadMap.toString());
+      
+
       EMFeR emfer = new EMFeR()
          .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car))
          .withTrafo("swap western signal", root -> swapSignal(root, WEST))
@@ -62,19 +67,24 @@ public class RoadWorkProblem
          .withStart(roadMap);
 
       int size = emfer.explore();
-
-      applyMetric(emfer.getReachabilityGraph());
-
-      // printReachableStatesList(emfer);
-
-      // story.addReachableState(emfer.getReachabilityGraph().getStates().get(0), "Start Model");
-
-      // story.addReachabilityGraph(emfer.getReachabilityGraph());
       
+      Logger.getGlobal().info("emfer.size: " + size);
+
       SyntheticControl syntheticControl = new SyntheticControl(emfer)
             .withTrafo("swap western signal", root -> swapSignal(root, WEST))
-            .withTrafo("swap eastern signal", root -> swapSignal(root, EAST));
+            .withTrafo("swap eastern signal", root -> swapSignal(root, EAST))
+            .withMetric( state -> dangerMetric(state))
+            .withMetric( state -> redWaitCosts(state))
+            ;
       
+      // predefine local costs
+      for (ReachableState s : emfer.getReachabilityGraph().getStates())
+      {
+         syntheticControl.localCosts(s);
+      }
+      
+      printReachableStatesList(emfer);
+
       EMFeR emfer2 = new EMFeR()
             .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car), 1)
             .withTrafo("synthetic control", root -> syntheticControl.run(root), 0)
@@ -84,9 +94,148 @@ public class RoadWorkProblem
       
       Logger.getGlobal().info("Emfer 2 size " + size2);
       
+      for (ReachableState s : emfer2.getReachabilityGraph().getStates())
+      {
+         syntheticControl.localCosts(s);
+      }
+      
       printReachableStatesList(emfer2);
 
       story.dumpHtml();
+   }
+
+
+   private void swapSignal(EObject root, TravelDirection signalPos)
+   {
+      RoadMap roadMap = (RoadMap) root;
+      Signal signal = roadMap.getWesternSignal();
+      Signal otherSignal = roadMap.getEasternSignal();
+      if (signalPos == EAST)
+      {
+         signal = roadMap.getEasternSignal();
+         otherSignal = roadMap.getWesternSignal();
+      }
+      
+      signal.setPass( ! signal.isPass());
+      
+      if (signal.isPass())
+      {
+         signal.setRedCount(0);
+         
+         if ( ! otherSignal.isPass()) otherSignal.setRedCount(2);
+      }
+      
+      if ( ! signal.isPass() && otherSignal.isPass()) signal.setRedCount(2);
+
+      if ( ! signal.isPass() && ! otherSignal.isPass()) 
+      {
+         signal.setRedCount(1);
+         //         if (otherSignal.getRedCount() != 2)
+         //         {
+         //            otherSignal.setRedCount(2);
+         //         }
+      }
+   }
+
+
+   private int redWaitCosts(ReachableState s)
+   {
+      RoadMap roadMap = (RoadMap) s.getRoot();
+      
+      int waitCosts = 0; 
+
+      Signal signal = roadMap.getWesternSignal();
+
+      if ( ! signal.isPass() && signal.getTrack().getCar() != null)
+      {
+         waitCosts += signal.getRedCount();
+      }
+      
+      signal = roadMap.getEasternSignal();
+      
+      if ( ! signal.isPass() && signal.getTrack().getCar() != null)
+      {
+         waitCosts = Math.max(waitCosts, signal.getRedCount());
+      }
+      
+      return waitCosts;
+   }
+   
+   
+   private int dangerMetric(ReachableState s)
+   {
+      RoadMap roadMap = (RoadMap) s.getRoot();
+      
+      // two cars in road work area
+      int carCount = 0;
+      for (Car c : roadMap.getCars())
+      {
+         if (c.getTrack().getTravelDirection() == UNDEFINED) carCount++;
+      }
+      
+      Signal signal = roadMap.getEasternSignal();
+
+      if (signal.isPass() && signal.getTrack().getCar() != null) carCount++;
+      
+      signal = roadMap.getWesternSignal();
+      
+      if (signal.isPass() && signal.getTrack().getCar() != null) carCount++;
+         
+      if (carCount >= 2) return Integer.MAX_VALUE;
+      
+      if (roadMap.getWesternSignal().isPass() 
+            && roadMap.getEasternSignal().isPass())
+      {
+         return Integer.MAX_VALUE;
+      }
+      
+      return 0;
+   }
+
+
+   private int carBlocking(ReachableState state)
+   {
+      RoadMap roadMap = (RoadMap) state.getRoot();
+      int blockCosts = 0;
+      
+      int eastCars = 0;
+      int westCars = 0;
+      
+      for (Car c : roadMap.getCars())
+      {
+         if (c.getTrack().getTravelDirection() == UNDEFINED)
+         {
+            if (c.getTravelDirection() == WEST)
+            {
+               westCars++;
+            }
+            else
+            {
+               eastCars++;
+            }
+         }
+      }
+      
+      Signal signal = roadMap.getEasternSignal();
+      if ( ! signal.isPass() 
+            && signal.getTrack().getCar() != null)
+      {
+         blockCosts += eastCars;
+      }
+      
+      signal = roadMap.getWesternSignal();
+      if ( ! signal.isPass() 
+            && signal.getTrack().getCar() != null)
+      {
+         blockCosts += westCars;
+      }
+      
+      if (blockCosts >= 2)
+      {
+         blockCosts *= 11;
+      }
+
+      return blockCosts;
    }
 
 
@@ -161,27 +310,6 @@ public class RoadWorkProblem
          }
       }
       return blockers;
-   }
-
-
-   private void swapSignal(EObject root, TravelDirection signalPos)
-   {
-      RoadMap roadMap = (RoadMap) root;
-      Signal signal = roadMap.getWesternSignal();
-      if (signalPos == EAST)
-      {
-         signal = roadMap.getEasternSignal();
-      }
-      signal.setPass( ! signal.isPass());
-      
-      if ( ! signal.isPass())
-      {
-         roadMap.setLastDirection(EAST);
-         if (signalPos == EAST)
-         {
-            roadMap.setLastDirection(WEST);
-         }
-      }
    }
 
 
@@ -321,9 +449,6 @@ public class RoadWorkProblem
 
       roadMap.getCars().add(car2);
 
-      String text = roadMap.toString();
-
-      Logger.getGlobal().info(text);
       return roadMap;
    }
 
@@ -334,6 +459,9 @@ public class RoadWorkProblem
       Storyboard story = new Storyboard("RoadWorkProblem");
 
       RoadMap roadMap = createStartSituation();
+      
+      Logger.getGlobal().info(roadMap.toString());
+      
 
       EMFeR emfer = new EMFeR()
          .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car), 1)
@@ -486,7 +614,21 @@ public class RoadWorkProblem
          return true;
       return false;
    }
-
+   
+   private int signalInsecure(ReachableState s)
+   {
+      RoadMap roadMap = (RoadMap) s.getRoot();
+      int result = 0;
+      
+      Signal signal = roadMap.getWesternSignal();
+      if (signal.isPass() && signal.getTrack().getCar() == null) result++;
+      
+      signal = roadMap.getEasternSignal();
+      if (signal.isPass() && signal.getTrack().getCar() == null) result++;
+      
+      return result;
+      
+   }
 
    private boolean isEastCarWaitsAtRed(ReachableState s)
    {
@@ -524,10 +666,11 @@ public class RoadWorkProblem
    }
 
    
+
    private boolean isDangerous(ReachableState s)
    {
       RoadMap roadMap = (RoadMap) s.getRoot();
-      
+
       int westCount = 0;
       int eastCount = 0;
       for (Car c : roadMap.getCars()) {
@@ -538,10 +681,11 @@ public class RoadWorkProblem
       }
       if (roadMap.getWesternSignal().isPass() && roadMap.getWesternSignal().getTrack().getCar() != null) eastCount++;
       if (roadMap.getEasternSignal().isPass() && roadMap.getEasternSignal().getTrack().getCar() != null) westCount++;
-         
+
       return westCount > 0 && eastCount > 0;
    }
 
+   
    private boolean isCarDeadLock(ReachableState s)
    {
       RoadMap roadMap = (RoadMap) s.getRoot();

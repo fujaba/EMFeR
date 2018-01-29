@@ -31,20 +31,20 @@ class RoadMap
 
 		if (easternSignal.pass)
 		{
-			bufNorthSignal.setCharAt(5, 'T')
+			bufNorthSignal.insert(5, "T"  + easternSignal.redCount)
 		}
 		else
 		{
-			bufNorthSignal.setCharAt(5, 'F')			
+			bufNorthSignal.insert(5, "F" + easternSignal.redCount)			
 		}
 		
 		if (westernSignal.pass)
 		{
-			bufSouthSignal.setCharAt(1, 'T')
+			bufSouthSignal.insert(1, "T" + westernSignal.redCount)
 		}
 		else
 		{
-			bufSouthSignal.setCharAt(1, 'F')			
+			bufSouthSignal.insert(1, "F" + westernSignal.redCount)			
 		}
 		
 		for (Car c : cars)
@@ -99,6 +99,8 @@ class Track
 class Signal
 {
 	boolean pass
+	
+	int redCount = "0"
 	
 	refers Track track opposite signal
 	
