@@ -7,8 +7,11 @@ import static emfer.examples.roadwork.TravelDirection.WEST;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.junit.Test;
 
 import emfer.EMFeR;
@@ -26,6 +29,14 @@ public class RoadWorkProblemSimStep
       Storyboard story = new Storyboard("MultiCarRoadWorkProblemSimulatedStep");
 
       RoadMap roadMap = createStartSituation();
+      
+      roadMap.eAdapters().add(new EContentAdapter() {
+         @Override
+         public void notifyChanged(Notification notification)
+         {
+            System.out.println(notification);
+         }
+      });
 
       for (Track t : roadMap.getRoad().getTracks())
       {
