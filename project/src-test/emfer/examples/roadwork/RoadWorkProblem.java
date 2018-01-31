@@ -55,7 +55,7 @@ public class RoadWorkProblem
          }
       }
 
-      roadMap.getWesternSignal().setRedCount(2);
+      roadMap.getWesternSignal().setRedCount(1);
       
       Logger.getGlobal().info(roadMap.toString());
       
@@ -87,11 +87,30 @@ public class RoadWorkProblem
       
       int size2 = emfer2.explore();
       
+      // for debugging
+      syntheticControl.applyMetric(emfer2);
+      
       Logger.getGlobal().info("Emfer 2 size " + size2);
       
       printReachableStatesList(emfer2);
 
       story.dumpHtml();
+      
+      AlwaysGlobally alwaysGlobally = new AlwaysGlobally();
+      AlwaysFinally alwaysFinally = new AlwaysFinally();
+      ExistFinally existFinally = new ExistFinally();
+      
+      ReachableState startState = emfer2.getReachabilityGraph().getStates().get(0);
+      
+      // we are save
+      boolean save = alwaysGlobally.test(startState, s -> ! isDangerous(s));
+
+      System.out.println("Save: " + save);
+      
+      // its fair
+      boolean fair = alwaysGlobally.test(startState, s -> ! isEastCarWaitsAtRed(s) || alwaysFinally.test(s, s2 -> isEastCarPasses(s2)));
+      
+      System.out.println("Fair: " + fair);
    }
 
 
@@ -100,6 +119,7 @@ public class RoadWorkProblem
       RoadMap roadMap = (RoadMap) root;
       Signal signal = roadMap.getWesternSignal();
       Signal otherSignal = roadMap.getEasternSignal();
+      
       if (signalPos == EAST)
       {
          signal = roadMap.getEasternSignal();
@@ -112,14 +132,19 @@ public class RoadWorkProblem
       {
          signal.setRedCount(0);
          
-         if ( ! otherSignal.isPass()) otherSignal.setRedCount(2);
+         // if ( ! otherSignal.isPass()) otherSignal.setRedCount(1);
       }
-      
-      if ( ! signal.isPass() && otherSignal.isPass()) signal.setRedCount(2);
-
-      if ( ! signal.isPass() && ! otherSignal.isPass()) 
+      else
       {
-         signal.setRedCount(1);
+         if (otherSignal.isPass())
+         {
+            signal.setRedCount(1);
+         }
+         else
+         {
+            signal.setRedCount(2);
+            otherSignal.setRedCount(1);
+         }
       }
    }
 
@@ -129,23 +154,23 @@ public class RoadWorkProblem
       RoadMap roadMap = (RoadMap) s.getRoot();
       
       int waitCosts = 0; 
-
-      Signal signal = roadMap.getWesternSignal();
-
-      if ( ! signal.isPass() && signal.getTrack().getCar() != null)
+      
+      int fairnessCosts = 1;
+      
+      if ( ! isRoadWorkClear(s))
       {
-         waitCosts += signal.getRedCount();
+         fairnessCosts = 4;
       }
       
       
-      signal = roadMap.getEasternSignal();
-      
-      if ( ! signal.isPass() && signal.getTrack().getCar() != null)
+      for (Signal signal : roadMap.getSignals())
       {
-         waitCosts += signal.getRedCount();
+         if (! signal.isPass() && signal.isCarAtSignal())
+         {
+            waitCosts += (3 - signal.getRedCount());
+         }
+         if (signal.isPass()) waitCosts += fairnessCosts;
       }
-      if (roadMap.getWesternSignal().isPass()) waitCosts++;
-      if (roadMap.getEasternSignal().isPass()) waitCosts++;
       
       return waitCosts;
    }
@@ -157,18 +182,16 @@ public class RoadWorkProblem
       
       // two cars in road work area
       int carCount = 0;
+      
       for (Car c : roadMap.getCars())
       {
          if (c.getTrack().getTravelDirection() == UNDEFINED) carCount++;
       }
       
-      Signal signal = roadMap.getEasternSignal();
-
-      if (signal.isPass() && signal.getTrack().getCar() != null) carCount++;
-      
-      signal = roadMap.getWesternSignal();
-      
-      if (signal.isPass() && signal.getTrack().getCar() != null) carCount++;
+      for (Signal signal : roadMap.getSignals())
+      {
+         if (signal.isPass() && signal.isCarAtSignal()) carCount++;
+      }
          
       if (carCount >= 2) return Integer.MAX_VALUE;
       
@@ -181,96 +204,6 @@ public class RoadWorkProblem
       return 0;
    }
 
-
-   private int carBlocking(ReachableState state)
-   {
-      RoadMap roadMap = (RoadMap) state.getRoot();
-      int blockCosts = 0;
-      
-      int eastCars = 0;
-      int westCars = 0;
-      
-      for (Car c : roadMap.getCars())
-      {
-         if (c.getTrack().getTravelDirection() == UNDEFINED)
-         {
-            if (c.getTravelDirection() == WEST)
-            {
-               westCars++;
-            }
-            else
-            {
-               eastCars++;
-            }
-         }
-      }
-      
-      Signal signal = roadMap.getEasternSignal();
-      if ( ! signal.isPass() 
-            && signal.getTrack().getCar() != null)
-      {
-         blockCosts += eastCars;
-      }
-      
-      signal = roadMap.getWesternSignal();
-      if ( ! signal.isPass() 
-            && signal.getTrack().getCar() != null)
-      {
-         blockCosts += westCars;
-      }
-      
-      if (blockCosts >= 2)
-      {
-         blockCosts *= 11;
-      }
-
-      return blockCosts;
-   }
-
-
-   private void applyMetric(ReachabilityGraph reachabilityGraph)
-   {
-      for (ReachableState s : reachabilityGraph.getStates())
-      {
-         RoadMap roadMap = (RoadMap) s.getRoot();
-
-         int newMetricValue = 0;
-
-         if (isDangerous(s)) 
-         {
-            newMetricValue = Integer.MAX_VALUE;
-         }
-         else 
-         {
-            Signal westernSignal = roadMap.getWesternSignal();
-            Signal easternSignal = roadMap.getEasternSignal();
-
-            Car westernCar = westernSignal.getTrack().getCar();
-            Car easternCar = easternSignal.getTrack().getCar();
-
-            if (westernSignal.isPass() && westernCar == null) newMetricValue++;
-            
-            if ( ! westernSignal.isPass() && westernCar != null) newMetricValue += 3;
-            
-            if (westernSignal.isPass() && roadMap.getLastDirection() == EAST) newMetricValue++;
-            
-            if (easternSignal.isPass() && easternCar == null) newMetricValue++;
-            
-            if ( ! easternSignal.isPass() && easternCar != null) newMetricValue += 3;
-            
-            if (easternSignal.isPass() && roadMap.getLastDirection() == WEST) newMetricValue++;
-            
-            if (easternSignal.isPass() && roadMap.getLastDirection() == WEST && 
-                  westernCar != null) newMetricValue += 3;
-
-            if (westernSignal.isPass() && roadMap.getLastDirection() == EAST && 
-                  easternCar != null) newMetricValue += 3;
-         }
-
-         s.setMetricValue(newMetricValue);
-      }
-   }
-   
    public boolean isPassTo(RoadMap roadMap, TravelDirection dir)
    {
       Signal signal = roadMap.getWesternSignal();
@@ -624,7 +557,7 @@ public class RoadWorkProblem
       RoadMap roadMap = (RoadMap) s.getRoot();
       if (roadMap.getWesternSignal().isPass())
          return false;
-      return roadMap.getWesternSignal().getTrack().getCar() != null;
+      return roadMap.getWesternSignal().isCarAtSignal();
    }
 
 
@@ -671,7 +604,14 @@ public class RoadWorkProblem
       if (roadMap.getWesternSignal().isPass() && roadMap.getWesternSignal().getTrack().getCar() != null) eastCount++;
       if (roadMap.getEasternSignal().isPass() && roadMap.getEasternSignal().getTrack().getCar() != null) westCount++;
 
-      return westCount > 0 && eastCount > 0;
+      boolean result = westCount > 0 && eastCount > 0;
+      
+      if (result)
+      {
+         System.out.println(s);
+      }
+      
+      return result;
    }
 
    
