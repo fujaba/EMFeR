@@ -76,6 +76,8 @@ public class RoadWorkProblemSimStep
       SyntheticControl syntheticControl = new SyntheticControl(emfer)
          .withTrafo("swap western signal")
          .withTrafo("swap eastern signal");
+      
+      
 
       EMFeR emfer2 = new EMFeR()
          .withTrafo("simulation step", root -> simulationStep(root))
@@ -94,56 +96,56 @@ public class RoadWorkProblemSimStep
    }
 
 
-   private void applyMetric(ReachabilityGraph reachabilityGraph)
-   {
-      for (ReachableState s : reachabilityGraph.getStates())
+      private void applyMetric(ReachabilityGraph reachabilityGraph)
       {
-         RoadMap roadMap = (RoadMap) s.getRoot();
-
-         int newMetricValue = 0;
-
-         if (isDangerous(s))
+         for (ReachableState s : reachabilityGraph.getStates())
          {
-            newMetricValue = Integer.MAX_VALUE;
+            RoadMap roadMap = (RoadMap) s.getRoot();
+   
+            int newMetricValue = 0;
+   
+            if (isDangerous(s))
+            {
+               newMetricValue = Integer.MAX_VALUE;
+            }
+            else
+            {
+               Signal westernSignal = roadMap.getWesternSignal();
+               Signal easternSignal = roadMap.getEasternSignal();
+   
+               Car westernCar = westernSignal.getTrack().getCar();
+               Car easternCar = easternSignal.getTrack().getCar();
+   
+               if (westernSignal.isPass() && westernCar == null)
+                  newMetricValue++;
+   
+               if (!westernSignal.isPass() && westernCar != null)
+                  newMetricValue += 3;
+   
+//               if (westernSignal.isPass() && roadMap.getLastDirection() == EAST)
+//                  newMetricValue++;
+//   
+               if (easternSignal.isPass() && easternCar == null)
+                  newMetricValue++;
+   
+               if (!easternSignal.isPass() && easternCar != null)
+                  newMetricValue += 3;
+   
+//               if (easternSignal.isPass() && roadMap.getLastDirection() == WEST)
+//                  newMetricValue++;
+//   
+//               if (easternSignal.isPass() && roadMap.getLastDirection() == WEST &&
+//                  westernCar != null)
+//                  newMetricValue += 3;
+//   
+//               if (westernSignal.isPass() && roadMap.getLastDirection() == EAST &&
+//                  easternCar != null)
+//                  newMetricValue += 3;
+            }
+   
+            s.setMetricValue(newMetricValue);
          }
-         else
-         {
-            Signal westernSignal = roadMap.getWesternSignal();
-            Signal easternSignal = roadMap.getEasternSignal();
-
-            Car westernCar = westernSignal.getTrack().getCar();
-            Car easternCar = easternSignal.getTrack().getCar();
-
-            if (westernSignal.isPass() && westernCar == null)
-               newMetricValue++;
-
-            if (!westernSignal.isPass() && westernCar != null)
-               newMetricValue += 3;
-
-            if (westernSignal.isPass() && roadMap.getLastDirection() == EAST)
-               newMetricValue++;
-
-            if (easternSignal.isPass() && easternCar == null)
-               newMetricValue++;
-
-            if (!easternSignal.isPass() && easternCar != null)
-               newMetricValue += 3;
-
-            if (easternSignal.isPass() && roadMap.getLastDirection() == WEST)
-               newMetricValue++;
-
-            if (easternSignal.isPass() && roadMap.getLastDirection() == WEST &&
-               westernCar != null)
-               newMetricValue += 3;
-
-            if (westernSignal.isPass() && roadMap.getLastDirection() == EAST &&
-               easternCar != null)
-               newMetricValue += 3;
-         }
-
-         s.setMetricValue(newMetricValue);
       }
-   }
 
 
    private void swapSignal(EObject root, TravelDirection signalPos)

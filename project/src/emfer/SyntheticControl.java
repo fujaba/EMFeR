@@ -284,6 +284,11 @@ public class SyntheticControl
 
    private ArrayList<Function<ReachableState, Integer>> metricsList = new ArrayList<Function<ReachableState, Integer>>();
    
+   public ArrayList<Function<ReachableState, Integer>> getMetricsList()
+   {
+      return metricsList;
+   }
+   
    public SyntheticControl withMetric(Function<ReachableState, Integer> metric)
    {
       metricsList.add(metric);
@@ -293,7 +298,13 @@ public class SyntheticControl
 
    public SyntheticControl applyMetric()
    {
-      for (ReachableState s : emfer.getReachabilityGraph().getStates())
+      return applyMetric(emfer);
+   }
+   
+   
+   public SyntheticControl applyMetric(EMFeR myEmfer)
+   {
+      for (ReachableState s : myEmfer.getReachabilityGraph().getStates())
       {
          double localCosts = 0;
          

@@ -45,6 +45,7 @@ public class TMXRoadworkVisualizer
       // ArrayList<TrafoApplication> examplePath = rwp.examplePath;
 
       TMXMapReader tmxReader = new TMXMapReader();
+      TMXMapReader.checkRoot("assets");
       Map map = tmxReader.readMap("assets/roadwork.tmx");
 
       MapRenderer renderer = new IsometricRenderer(map);
