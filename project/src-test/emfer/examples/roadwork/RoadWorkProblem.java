@@ -17,6 +17,7 @@ import emfer.AlwaysGlobally;
 import emfer.AlwaysNext;
 import emfer.AlwaysUntil;
 import emfer.EMFeR;
+import emfer.EMFeRGame;
 import emfer.ExistFinally;
 import emfer.ExistGlobally;
 import emfer.ExistNext;
@@ -25,10 +26,96 @@ import emfer.SyntheticControl;
 import emfer.reachability.ReachabilityGraph;
 import emfer.reachability.ReachableState;
 import emfer.reachability.TrafoApplication;
+import emfer.stories.StoryStep;
 import emfer.stories.Storyboard;
 
 public class RoadWorkProblem
 {
+   
+   @Test
+   public void testRoadWorkGame() throws Exception
+   {
+      Storyboard story = new Storyboard("RoadWorkGame");
+
+      RoadMap roadMap = createStartSituation();
+
+      for (Track t : roadMap.getRoad().getTracks())
+      {
+         if (t.getName().equals("n7"))
+         {
+            Car newCar = RoadworkFactory.eINSTANCE.createCar();
+            newCar.setTravelDirection(WEST);
+            newCar.setTrack(t);
+            roadMap.getCars().add(newCar);
+         }
+
+         if (t.getName().equals("s7"))
+         {
+            Car newCar = RoadworkFactory.eINSTANCE.createCar();
+            newCar.setTravelDirection(EAST);
+            newCar.setTrack(t);
+            roadMap.getCars().add(newCar);
+         }
+      }
+
+      roadMap.getWesternSignal().setPass(true);
+      
+      Logger.getGlobal().info(roadMap.toString());
+      
+
+      EMFeRGame game = new EMFeRGame()
+         .withOpponentTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car))
+         .withMyTrafo("swap western signal", root -> swapSimpleSignal(root, WEST))
+         .withMyTrafo("swap eastern signal", root -> swapSimpleSignal(root, EAST))
+         .withMyTrafo("swap both signals", root -> swapSimpleSignal(root, BOTH))
+         .withMyTrafo("swap both signals", root -> swapSimpleSignal(root, UNDEFINED))
+         .withMuCondition(root -> ! isCarWaitsAtRed(root, WEST))
+         .withMuCondition(root -> ! isCarWaitsAtRed(root, EAST))
+         .withGeneralCondition(root -> isCarDeadLock(root))
+         .withStart(roadMap);
+
+      int size = game.explore();
+      
+      Logger.getGlobal().info("game.size: " + size);
+
+      printReachableStatesList(game.getEmfer(), "e1_");
+
+
+      story.dumpHtml();
+      
+   }
+   
+   
+   private void swapSimpleSignal(EObject root, TravelDirection dir)
+   {
+      RoadMap roadMap = (RoadMap) root;
+      Signal signal = roadMap.getWesternSignal();
+      
+      if (dir == UNDEFINED)
+      {
+         // do nothing
+      }
+      else if (dir == WEST)
+      {
+         signal.setPass( ! signal.isPass());
+      }
+      else if (dir == EAST)
+      {
+         signal = roadMap.getEasternSignal();
+         signal.setPass( ! signal.isPass());
+      }
+      else 
+      {
+         signal.setPass( ! signal.isPass());
+         signal = roadMap.getEasternSignal();
+         signal.setPass( ! signal.isPass());
+      }
+   }
+   
+   
+   
+
+
    @Test
    public void testManyCarsRoadWorkProblem() throws Exception
    {
@@ -73,12 +160,12 @@ public class RoadWorkProblem
       SyntheticControl syntheticControl = new SyntheticControl(emfer)
             .withTrafo("swap western signal")
             .withTrafo("swap eastern signal")
-            .withMetric( state -> dangerMetric(state))
-            .withMetric( state -> redWaitCosts(state))
+            .withMetric( root -> dangerMetric(root))
+            .withMetric( root -> redWaitCosts(root))
             .applyMetric()
             ;
       
-      printReachableStatesList(emfer);
+      printReachableStatesList(emfer, "e1_");
 
       EMFeR emfer2 = new EMFeR()
             .withTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car), 1)
@@ -92,7 +179,7 @@ public class RoadWorkProblem
       
       Logger.getGlobal().info("Emfer 2 size " + size2);
       
-      printReachableStatesList(emfer2);
+      printReachableStatesList(emfer2, "e2_");
 
       story.dumpHtml();
       
@@ -112,7 +199,6 @@ public class RoadWorkProblem
       
       System.out.println("Fair: " + fair);
    }
-
 
    private void swapSignal(EObject root, TravelDirection signalPos)
    {
@@ -149,15 +235,15 @@ public class RoadWorkProblem
    }
 
 
-   private int redWaitCosts(ReachableState s)
+   private int redWaitCosts(EObject root)
    {
-      RoadMap roadMap = (RoadMap) s.getRoot();
+      RoadMap roadMap = (RoadMap) root;
       
       int waitCosts = 0; 
       
       int fairnessCosts = 1;
       
-      if ( ! isRoadWorkClear(s))
+      if ( ! isRoadWorkClear(roadMap))
       {
          fairnessCosts = 4;
       }
@@ -176,9 +262,9 @@ public class RoadWorkProblem
    }
    
    
-   private int dangerMetric(ReachableState s)
+   private int dangerMetric(EObject root)
    {
-      RoadMap roadMap = (RoadMap) s.getRoot();
+      RoadMap roadMap = (RoadMap) root;
       
       // two cars in road work area
       int carCount = 0;
@@ -394,7 +480,7 @@ public class RoadWorkProblem
 
       // Assert.assertEquals("Number of states:", 7, size);
 
-      printReachableStatesList(emfer);
+      printReachableStatesList(emfer, "e1_");
 
       // let's do some computational tree logic
       ReachableState startState = emfer.getReachabilityGraph().getStates().get(0);
@@ -476,31 +562,17 @@ public class RoadWorkProblem
    }
 
 
-   private void printReachableStatesList(EMFeR emfer)
+   private void printReachableStatesList(EMFeR emfer, String prefix)
    {
+      StoryStep step = new StoryStep();
+      
       for (ReachableState s : emfer.getReachabilityGraph().getStates())
       {
          StringBuilder buf = new StringBuilder();
+         
+         String descr = step.genHtmlStateDescription(s, prefix);
 
-         for (TrafoApplication t : s.getResultOf())
-         {
-            ReachableState src = t.getSrc();
-
-            buf.append("\n").append(src.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(s.getNumber());
-         }
-
-         buf.append("\n").append(s.getMetricValue());
-         buf.append(s.getRoot().toString());
-
-         for (TrafoApplication t : s.getTrafoApplications())
-         {
-            ReachableState tgt = t.getTgt();
-
-            buf.append(s.getNumber()).append(" --").append(t.getDescription()).append("-> ").append(tgt.getNumber())
-            .append(" ").append(tgt.getMetricValue()).append("\n");
-         }
-
-         Logger.getGlobal().info(buf.toString());
+         Logger.getGlobal().info(descr);
       }
    }
 
@@ -525,9 +597,25 @@ public class RoadWorkProblem
    // return car.getTrack().getTravelDirection() == TravelDirection.UNDEFINED;
    // }
 
-   private boolean isCarWaitsAtRed(ReachableState s)
+   private boolean isCarWaitsAtRed(EObject root, TravelDirection dir)
    {
-      RoadMap roadMap = (RoadMap) s.getRoot();
+      RoadMap roadMap = (RoadMap) root;
+     
+      Signal signal = roadMap.getWesternSignal();
+      
+      if (dir == EAST)
+      {
+         signal = roadMap.getEasternSignal();
+      }
+      
+      boolean result =  ! signal.isPass() && signal.isCarAtSignal();
+
+      return result;
+   }
+   
+   private boolean isCarWaitsAtRed(EObject root)
+   {
+      RoadMap roadMap = (RoadMap) root;
       if (!roadMap.getWesternSignal().isPass()
          && roadMap.getWesternSignal().getTrack().getCar() != null)
          return true;
@@ -576,9 +664,9 @@ public class RoadWorkProblem
    }
 
 
-   private boolean isRoadWorkClear(ReachableState s)
+   private boolean isRoadWorkClear(EObject root)
    {
-      RoadMap roadMap = (RoadMap) s.getRoot();
+      RoadMap roadMap = (RoadMap) root;
 
       long count = roadMap.getCars().stream()
          .filter(c -> c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED)
@@ -615,9 +703,9 @@ public class RoadWorkProblem
    }
 
    
-   private boolean isCarDeadLock(ReachableState s)
+   private boolean isCarDeadLock(EObject root)
    {
-      RoadMap roadMap = (RoadMap) s.getRoot();
+      RoadMap roadMap = (RoadMap) root;
 
       long count = roadMap.getCars().stream()
             .filter(c -> c.getTrack().getTravelDirection() == TravelDirection.UNDEFINED)

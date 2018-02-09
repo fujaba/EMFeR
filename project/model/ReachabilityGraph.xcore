@@ -10,6 +10,24 @@ class ReachabilityGraph
 	contains TrafoApplication[] trafoApplications opposite parent
 }
 
+class GameState 
+{
+	Turn turn
+	
+	int alternativeNum = "0"
+	
+	refers EObject board	
+	
+	op String toString()
+	{
+		return "\n" + turn + " " + alternativeNum + board.toString
+	}
+}
+
+enum Turn {
+	MY_TURN, OPPONENT_TURN
+}
+
 class ReachableState
 {
 	long number

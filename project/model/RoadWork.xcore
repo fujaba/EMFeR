@@ -140,5 +140,6 @@ enum TravelDirection
 {
 	UNDEFINED,
 	EAST, 
-	WEST
+	WEST, 
+	BOTH
 }

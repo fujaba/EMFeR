@@ -13,6 +13,7 @@ import java.util.Set
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.ENamedElement
+import emfer.reachability.TrafoApplication
 
 class StoryStep {
 	public String content
@@ -33,6 +34,43 @@ class StoryStep {
 				«addReachableState»
 			«ENDIF»
 		'''
+	}
+	
+	def genHtmlStateDescription(ReachableState state, String nameSpace)
+	{
+		var result = "";		
+        
+        for (TrafoApplication t : state.getResultOf())
+        {
+           var ReachableState src = t.getSrc();
+        	
+        	result = 
+        	'''
+        	«result»
+        	<p><a href="#«nameSpace»«src.number»">«src.number»</a> --«t.description»-+ «state.number»
+        	'''
+        }
+
+      	result = 
+      	'''
+      	«result»
+      	<p id="«nameSpace»«state.number»">
+      	«state.metricValue»«state.root»
+      	</p>
+      	'''
+
+        for (TrafoApplication t : state.getTrafoApplications())
+        {
+            var ReachableState tgt = t.getTgt();
+
+        	result = 
+        	'''
+        	«result»
+        	<p>«state.number» --«t.description»-+ <a href="#«nameSpace»«tgt.number»">«tgt.number»</a>
+        	'''
+        }
+        
+        return result
 	}
 
 	def addReachableState() {

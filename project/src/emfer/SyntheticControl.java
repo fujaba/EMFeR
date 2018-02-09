@@ -137,9 +137,9 @@ public class SyntheticControl
    {
       double localCosts = 0;
       
-      for ( Function<ReachableState, Integer> m : metricsList)
+      for ( Function<EObject, Integer> m : metricsList)
       {
-         int newCosts = m.apply(otherTargetState);
+         int newCosts = m.apply(otherTargetState.getRoot());
          localCosts += newCosts;
       }
       
@@ -282,14 +282,14 @@ public class SyntheticControl
       return this;
    }
 
-   private ArrayList<Function<ReachableState, Integer>> metricsList = new ArrayList<Function<ReachableState, Integer>>();
+   private ArrayList<Function<EObject, Integer>> metricsList = new ArrayList<Function<EObject, Integer>>();
    
-   public ArrayList<Function<ReachableState, Integer>> getMetricsList()
+   public ArrayList<Function<EObject, Integer>> getMetricsList()
    {
       return metricsList;
    }
    
-   public SyntheticControl withMetric(Function<ReachableState, Integer> metric)
+   public SyntheticControl withMetric(Function<EObject, Integer> metric)
    {
       metricsList.add(metric);
       
@@ -308,9 +308,9 @@ public class SyntheticControl
       {
          double localCosts = 0;
          
-         for ( Function<ReachableState, Integer> m : metricsList)
+         for ( Function<EObject, Integer> m : metricsList)
          {
-            int newCosts = m.apply(s);
+            int newCosts = m.apply(s.getRoot());
             localCosts += newCosts;
          }
          

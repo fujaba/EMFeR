@@ -21,8 +21,7 @@ class Storyboard {
 			storyboard = story
 		}
 
-		override close() throws SecurityException 
-			{
+		override close() throws SecurityException {
 			// ??? 
 		}
 
