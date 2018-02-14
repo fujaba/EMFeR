@@ -94,7 +94,7 @@ public class RoadWorkProblem
       gameRoadMap.setBoard(roadMap);
       gameRoadMap.setTurn(Turn.MY_TURN);
       
-      // game.applyAndMarkMuCondition(gameRoadMap);
+      game.applyAndMarkMuCondition(gameRoadMap);
       
 
       // test gameStrategy
@@ -1126,7 +1126,7 @@ public class RoadWorkProblem
          gameState.setTurn(Turn.MY_TURN);
       }
 
-      // game.applyAndMarkMuCondition(gameState);
+      game.applyAndMarkMuCondition(gameState);
    }
 
    
