@@ -200,12 +200,22 @@ public class EMFeR
    }
 
    private Set<EObject> staticNodes = new LinkedHashSet<EObject>();
+   
+   public Set<EObject> getStaticNodes()
+   {
+      return staticNodes;
+   }
 
    private CertInfo staticCertInfo;
 
    public CertInfo getStaticCertInfo()
    {
       return staticCertInfo;
+   }
+   
+   public void setStaticCertInfo(CertInfo staticCertInfo)
+   {
+      this.staticCertInfo = staticCertInfo;
    }
 
    public EMFeR withStatic(Object... items)
@@ -234,7 +244,7 @@ public class EMFeR
       return cert2StateListMap;
    }
 
-   private void put2Cert2StateListMap(String cert, ReachableState newState)
+   public void put2Cert2StateListMap(String cert, ReachableState newState)
    {
       ArrayList<ReachableState> arrayList = cert2StateListMap.get(cert);
 
@@ -334,6 +344,11 @@ public class EMFeR
    }
 
    private int maxNoOfNewStates = 300 * 1000;
+   
+   public int getMaxNoOfNewStates()
+   {
+      return maxNoOfNewStates;
+   }
 
 
    public EMFeR withMaxNoOfNewStates(int newMax)
@@ -404,6 +419,10 @@ public class EMFeR
 
    private LazyCloneOp lazyCloneOp = new LazyCloneOp();
 
+   public LazyCloneOp getLazyCloneOp()
+   {
+      return lazyCloneOp;
+   }
 
    private void exploreTrafos(ReachableState current)
    {
@@ -555,9 +574,7 @@ public class EMFeR
 
       for (ReachableState s : states)
       {
-         {
-            s.setMetricValue(Double.MAX_VALUE);
-         }
+         s.setMetricValue(Double.MAX_VALUE);
       }
 
       for (ReachableState s : targets)

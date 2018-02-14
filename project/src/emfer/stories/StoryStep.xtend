@@ -38,7 +38,7 @@ class StoryStep {
 	
 	def genHtmlStateDescription(ReachableState state, String nameSpace)
 	{
-		var result = "";		
+		var result = '''<p id="«nameSpace»«state.number»"> </p>''';		
         
         for (TrafoApplication t : state.getResultOf())
         {
@@ -54,8 +54,8 @@ class StoryStep {
       	result = 
       	'''
       	«result»
-      	<p id="«nameSpace»«state.number»">
-      	«state.metricValue»«state.root»
+      	<p>
+      	«state»
       	</p>
       	'''
 
@@ -66,7 +66,7 @@ class StoryStep {
         	result = 
         	'''
         	«result»
-        	<p>«state.number» --«t.description»-+ <a href="#«nameSpace»«tgt.number»">«tgt.number»</a>
+        	<p>«state.number» --«t.description»-+ <a href="#«nameSpace»«tgt.number»">«tgt.number»</a> metricValue: «tgt.metricValue»
         	'''
         }
         

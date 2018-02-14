@@ -14,13 +14,20 @@ class GameState
 {
 	Turn turn
 	
-	int alternativeNum = "0"
-	
+	refers OperationName[] achievedMuConditions
+		
 	refers EObject board	
+	
 	
 	op String toString()
 	{
-		return "\n" + turn + " " + alternativeNum + board.toString
+		var StringBuilder buf = new StringBuilder()
+		
+		for (x : achievedMuConditions)
+		{
+			buf.append(x.opName).append(" ") 
+		}
+		return "\n" + turn + " "  + buf.toString() + board.toString
 	}
 }
 
@@ -37,6 +44,10 @@ class ReachableState
 	container ReachabilityGraph parent opposite states
 	
 	refers EObject root
+
+	boolean allMuHold = "false"
+	
+	refers OperationName[] conditionsTrue
 	
 	refers TrafoApplication[] resultOf opposite tgt
 
@@ -48,12 +59,32 @@ class ReachableState
 		
 		buf.append("ReachableState: number: ").append(number).append(" metricValue: ").append(metricValue).append("\n")
 		
-		if (root != null)
+		if (allMuHold)
+		{
+			buf.append("allMuHold ")
+		}
+		
+		for (x : conditionsTrue)
+		{
+			buf.append(x.opName).append(" ") 
+		}
+		
+		if (root !== null)
 		{
 			buf.append(root.toString)
 		}
 		
 		return buf.toString()
+	}
+}
+
+class OperationName
+{
+	String opName
+	
+	op String toString()
+	{
+		opName + " "
 	}
 }
 
