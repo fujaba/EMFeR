@@ -38,6 +38,95 @@ public class RoadWorkProblem
 {
    
    @Test
+   public void testDynamicRoadWorkGame() throws Exception
+   {
+      Storyboard story = new Storyboard("DynamicRoadWorkGame");
+
+      RoadMap roadMap = createStartSituation();
+
+      roadMap.getWesternSignal().setPass(true);
+      
+      EMFeRGame game = new EMFeRGame()
+         .withOpponentTrafo("move car", root -> getCars(root), (root, car) -> moveCar(root, car))
+         .withOpponentTrafo("create car going east", root -> createCarGoingEast(root))
+         .withOpponentTrafo("remove car going east", root -> removeCarGoingEast(root))
+         .withOpponentTrafo("create car going west", root -> createCarGoingWest(root))
+         .withOpponentTrafo("remove car going west", root -> removeCarGoingWest(root))
+         .withMyTrafo("swap green green", root -> swapGreenGreen(root))
+         .withMyTrafo("swap green red", root -> swapGreenRed(root))
+         .withMyTrafo("swap red green", root -> swapRedGreen(root))
+         .withMyTrafo("swap red red", root -> swapRedRed(root))
+         .withMuCondition("noLeftCar", root -> ! isCarAt(root, WEST))
+         .withMuCondition("noRightCar", root -> ! isCarAt(root, EAST))
+         .withGeneralCondition("safe", root -> ! isCarDeadLock(root))
+         .withStart(roadMap);
+
+      Logger.getGlobal().info(game.getEmfer().getReachabilityGraph().getStates().get(0).toString());
+      
+      int size = game.explore();
+      
+      Logger.getGlobal().info("game.size: " + size);
+
+      // printReachableStatesList(game.getEmfer(), "g1_");
+      
+      // story.dumpHtml();
+
+      // build game Control
+      GameControl gameControl = new GameControl(game);
+      
+      // prepare game start
+      GameState gameRoadMap = ReachabilityFactory.eINSTANCE.createGameState();
+      gameRoadMap.setBoard(roadMap);
+      gameRoadMap.setTurn(Turn.MY_TURN);
+      
+      game.applyAndMarkMuCondition(gameRoadMap);
+      
+
+      // test gameStrategy
+      EMFeR emfer2 = new EMFeR()
+            .withTrafo("move car", g -> gameGetCars(g), (g, car) -> gameMoveCar(g, car, game), 1)
+            .withTrafo("create car going east", root -> gameCreateCarGoingEast(root), 1)
+            .withTrafo("remove car going east", root -> gameRemoveCarGoingEast(root), 1)
+            .withTrafo("create car going west", root -> gameCreateCarGoingWest(root), 1)
+            .withTrafo("remove car going west", root -> gameRemoveCarGoingWest(root), 1)
+            .withTrafo("game control", root -> gameControl.run(root), 0)
+            .withStart(gameRoadMap);
+      
+      int size2 = emfer2.explore();
+      
+      // for debugging
+      Logger.getGlobal().info("Emfer 2 size " + size2);
+      
+      printReachableStatesList(emfer2, "g2_");
+
+      story.dumpHtml();
+      
+      AlwaysGlobally alwaysGlobally = new AlwaysGlobally();
+      AlwaysFinally alwaysFinally = new AlwaysFinally();
+      ExistFinally existFinally = new ExistFinally();
+      
+      ReachableState startState = emfer2.getReachabilityGraph().getStates().get(0);
+      
+      // we are save
+      boolean save = alwaysGlobally.test(startState, s -> ! gameIsCarDeadLock(s.getRoot()));
+
+      Logger.getGlobal().info("Save: " + save);
+      
+      // its fair
+      boolean fair = alwaysGlobally.test(
+         startState, s -> ! gameIsEastCarWaitsAtRed(s.getRoot()) 
+         || alwaysFinally.test(s, s2 -> gameIsEastCarPasses(s2.getRoot())));
+      
+      Logger.getGlobal().info("Fair: " + fair);
+      
+      
+      story.dumpHtml();
+      
+   }
+   
+   
+   
+   @Test
    public void testRoadWorkGame() throws Exception
    {
       Storyboard story = new Storyboard("RoadWorkGame");
@@ -84,7 +173,7 @@ public class RoadWorkProblem
 
       printReachableStatesList(game.getEmfer(), "g1_");
       
-      story.dumpHtml();
+      // story.dumpHtml();
 
       // build game Control
       GameControl gameControl = new GameControl(game);
@@ -106,33 +195,32 @@ public class RoadWorkProblem
       int size2 = emfer2.explore();
       
       // for debugging
-      
       Logger.getGlobal().info("Emfer 2 size " + size2);
       
       printReachableStatesList(emfer2, "g2_");
 
       story.dumpHtml();
       
-//      AlwaysGlobally alwaysGlobally = new AlwaysGlobally();
-//      AlwaysFinally alwaysFinally = new AlwaysFinally();
-//      ExistFinally existFinally = new ExistFinally();
-//      
-//      ReachableState startState = emfer2.getReachabilityGraph().getStates().get(0);
-//      
-//      // we are save
-//      boolean save = alwaysGlobally.test(startState, s -> ! isDangerous(s.getRoot()));
-//
-//      Logger.getGlobal().info("Save: " + save);
-//      
-//      // its fair
-//      boolean fair = alwaysGlobally.test(
-//         startState, s -> ! isEastCarWaitsAtRed(s.getRoot()) 
-//         || alwaysFinally.test(s, s2 -> isEastCarPasses(s2.getRoot())));
-//      
-//      Logger.getGlobal().info("Fair: " + fair);
-//      
-//      
-//      story.dumpHtml();
+      AlwaysGlobally alwaysGlobally = new AlwaysGlobally();
+      AlwaysFinally alwaysFinally = new AlwaysFinally();
+      ExistFinally existFinally = new ExistFinally();
+      
+      ReachableState startState = emfer2.getReachabilityGraph().getStates().get(0);
+      
+      // we are save
+      boolean save = alwaysGlobally.test(startState, s -> ! gameIsCarDeadLock(s.getRoot()));
+
+      Logger.getGlobal().info("Save: " + save);
+      
+      // its fair
+      boolean fair = alwaysGlobally.test(
+         startState, s -> ! gameIsEastCarWaitsAtRed(s.getRoot()) 
+         || alwaysFinally.test(s, s2 -> gameIsEastCarPasses(s2.getRoot())));
+      
+      Logger.getGlobal().info("Fair: " + fair);
+      
+      
+      story.dumpHtml();
       
    }
    
@@ -833,9 +921,20 @@ public class RoadWorkProblem
 
 
    
+   private void gameCreateCarGoingEast(EObject root)
+   {
+      GameState gameState = (GameState) root;
+      
+      boolean moveDone = createCarGoingEast(gameState.getBoard()); 
+
+      if (moveDone)
+      {
+         gameState.setTurn(Turn.MY_TURN);
+      }
+   }
+
    
-   
-   private void createCarGoingEast(EObject root)
+   private boolean createCarGoingEast(EObject root)
    {
       RoadMap roadMap = (RoadMap) root;
       
@@ -849,14 +948,30 @@ public class RoadWorkProblem
                newCar.setTravelDirection(EAST);
                newCar.setTrack(t);
                roadMap.getCars().add(newCar);
+               return true;
             }
-            break;
+            return false;
          }
       }
+      
+      return false;
    }
 
 
-   private void removeCarGoingEast(EObject root)
+   private void gameRemoveCarGoingEast(EObject root)
+   {
+      GameState gameState = (GameState) root;
+      
+      boolean moveDone = removeCarGoingEast(gameState.getBoard()); 
+
+      if (moveDone)
+      {
+         gameState.setTurn(Turn.MY_TURN);
+      }
+   }
+
+   
+   private boolean removeCarGoingEast(EObject root)
    {
       RoadMap roadMap = (RoadMap) root;
       
@@ -870,14 +985,29 @@ public class RoadWorkProblem
             {
                oldCar.setTrack(null);
                roadMap.getCars().remove(oldCar);
+               return true;
             }
             break;
          }
       }
+      return false;
    }
 
    
-   private void createCarGoingWest(EObject root)
+   private void gameCreateCarGoingWest(EObject root)
+   {
+      GameState gameState = (GameState) root;
+      
+      boolean moveDone = createCarGoingWest(gameState.getBoard()); 
+
+      if (moveDone)
+      {
+         gameState.setTurn(Turn.MY_TURN);
+      }
+   }
+
+   
+   private boolean createCarGoingWest(EObject root)
    {
       RoadMap roadMap = (RoadMap) root;
       
@@ -891,14 +1021,29 @@ public class RoadWorkProblem
                newCar.setTravelDirection(WEST);
                newCar.setTrack(t);
                roadMap.getCars().add(newCar);
+               return true;
             }
             break;
          }
       }
+      return false;
    }
 
 
-   private void removeCarGoingWest(EObject root)
+   private void gameRemoveCarGoingWest(EObject root)
+   {
+      GameState gameState = (GameState) root;
+      
+      boolean moveDone = removeCarGoingWest(gameState.getBoard()); 
+
+      if (moveDone)
+      {
+         gameState.setTurn(Turn.MY_TURN);
+      }
+   }
+
+   
+   private boolean removeCarGoingWest(EObject root)
    {
       RoadMap roadMap = (RoadMap) root;
       
@@ -912,10 +1057,12 @@ public class RoadWorkProblem
             {
                oldCar.setTrack(null);
                roadMap.getCars().remove(oldCar);
+               return true;
             }
             break;
          }
       }
+      return false;
    }
 
    private void printReachableStatesList(EMFeR emfer, String prefix)
@@ -996,6 +1143,13 @@ public class RoadWorkProblem
       
    }
 
+   private boolean gameIsEastCarWaitsAtRed(EObject root)
+   {
+      GameState gameState = (GameState) root;
+      
+      return isEastCarWaitsAtRed(gameState.getBoard());
+   }
+   
    private boolean isEastCarWaitsAtRed(EObject root)
    {
       RoadMap roadMap = (RoadMap) root;
@@ -1005,6 +1159,14 @@ public class RoadWorkProblem
    }
 
 
+   private boolean gameIsEastCarPasses(EObject root)
+   {
+      GameState gameState = (GameState) root;
+      
+      return isEastCarPasses(gameState.getBoard());
+   }
+   
+   
    private boolean isEastCarPasses(EObject root)
    {
       RoadMap roadMap = (RoadMap) root;
@@ -1064,6 +1226,16 @@ public class RoadWorkProblem
       return result;
    }
 
+   
+   
+   private boolean gameIsCarDeadLock(EObject root)
+   {
+      GameState gameState = (GameState) root;
+      
+      return isCarDeadLock(gameState.getBoard());
+   }
+   
+   
    
    private boolean isCarDeadLock(EObject root)
    {

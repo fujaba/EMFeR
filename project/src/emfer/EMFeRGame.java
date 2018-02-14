@@ -60,6 +60,20 @@ public class EMFeRGame
    private ArrayList<PathTrafo> opponentPathTrafosList = new ArrayList<PathTrafo>();
 
    
+   public EMFeRGame withOpponentTrafo(String string, Trafo trafo)
+   {
+      withOpponentTrafo(string,
+         root -> {
+            LinkedHashSet<EObject> result = new LinkedHashSet<EObject>();
+            result.add(root);
+            return result;
+         },
+         (root, handle) -> trafo.run(root));
+
+      return this;
+   }
+   
+   
    public EMFeRGame withOpponentTrafo(String string, Path path, Trafo2 trafo)
    {
       PathTrafo pathTrafo = new PathTrafo()
