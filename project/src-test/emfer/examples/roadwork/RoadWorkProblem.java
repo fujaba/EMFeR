@@ -1039,13 +1039,19 @@ public class RoadWorkProblem
 
       int westCount = 0;
       int eastCount = 0;
-      for (Car c : roadMap.getCars()) {
-         if (c.getTrack().getTravelDirection() == UNDEFINED) {
+      
+      for (Car c : roadMap.getCars()) 
+      {
+         if (c.getTrack().getTravelDirection() == UNDEFINED) 
+         {
             if (c.getTravelDirection() == WEST) westCount++;
+            
             if (c.getTravelDirection() == EAST) eastCount++;
          }
       }
+      
       if (roadMap.getWesternSignal().isPass() && roadMap.getWesternSignal().getTrack().getCar() != null) eastCount++;
+
       if (roadMap.getEasternSignal().isPass() && roadMap.getEasternSignal().getTrack().getCar() != null) westCount++;
 
       boolean result = westCount > 0 && eastCount > 0;

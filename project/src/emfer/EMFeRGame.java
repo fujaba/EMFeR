@@ -106,11 +106,11 @@ public class EMFeRGame
       gameState.setTurn(Turn.MY_TURN);
       gameState.setBoard(startBoard);
       
-      // boolean allMuHold = applyAndMarkMuCondition(gameState);
+      boolean allMuHold = applyAndMarkMuCondition(gameState);
       
       emfer.withStart(gameState);
       
-      // emfer.getReachabilityGraph().getStates().get(0).setAllMuHold(allMuHold);
+      emfer.getReachabilityGraph().getStates().get(0).setAllMuHold(allMuHold);
       
       return this;
    }
@@ -153,7 +153,7 @@ public class EMFeRGame
 
       for (ReachableState s : states)
       {
-         if (s.isAllMuHold())
+         if (s.isAllMuHold() && allGeneralConditionsHold(s))
          {
             s.setMetricValue(0);
             todo.add(s);
@@ -226,6 +226,30 @@ public class EMFeRGame
          }
 
       }
+   }
+
+   private boolean allGeneralConditionsHold(ReachableState s)
+   {
+      GameState gameState = (GameState) s.getRoot();
+      
+      RoadMap roadMap = (RoadMap) gameState.getBoard();
+      
+      for (Entry<String, Predicate<EObject>> e : allGeneralConditions.entrySet())
+      {
+         Predicate<EObject> phi = e.getValue();
+         boolean conditionHolds = phi.test(roadMap);
+         
+         if ( ! conditionHolds)
+         {
+            return false;
+         }
+         
+         String condName = e.getKey();
+
+         storeConditionResult(s, condName, true);
+      }
+      
+      return true;
    }
 
    private void runTrafos()
@@ -618,7 +642,7 @@ public class EMFeRGame
       if (gameState.getTurn() == Turn.MY_TURN)
       {
          // apply and mark mu conditions
-         applyAndMarkMuCondition(current);
+         // applyAndMarkMuCondition(current);
       }
       else
       {
@@ -655,8 +679,10 @@ public class EMFeRGame
       
       boolean allMuHold = applyAndMarkMuCondition(gameState);
       
-      state.setAllMuHold(allMuHold);
-
+      if (allMuHold)
+      {
+         state.setAllMuHold(true);
+      }
    }
 
    public boolean applyAndMarkMuCondition(GameState gameState)
@@ -679,27 +705,8 @@ public class EMFeRGame
       }
       
       EList<OperationName> achievedMuConditions = gameState.getAchievedMuConditions();
-      if (achievedMuConditions.size() == allMuConditions.size())
-      {
-         // inherited plus current fulfill all mu condiditons
-         // go on just with the current
-
-         allMuHold = true;
-         
-         while ( ! achievedMuConditions.isEmpty())
-         {
-            achievedMuConditions.remove(achievedMuConditions.size()-1);
-         }
-         
-         for (Entry<String, Predicate<EObject>> e : allMuConditions.entrySet())
-         {
-            if (e.getValue().test(root))
-            {
-               addNameToGameState(gameState, e.getKey());
-            }
-         }
-      }
-      return allMuHold;
+      
+      return (achievedMuConditions.size() == allMuConditions.size());
    }
 
  
@@ -759,8 +766,10 @@ public class EMFeRGame
          {
             // toggle turn because opponent has actually done something
             GameState newGameState = (GameState) newReachableState.getRoot();
+            
             newGameState.setTurn(Turn.MY_TURN);
-            // applyAndMarkMuCondition(newReachableState);
+            
+            applyAndMarkMuCondition(newReachableState);
          }
          
          // merge with old states
