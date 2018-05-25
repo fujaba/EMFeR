@@ -27,12 +27,13 @@ import emfer.GameControl;
 import emfer.SyntheticControl;
 import emfer.reachability.GameState;
 import emfer.reachability.ReachabilityFactory;
-import emfer.reachability.ReachabilityGraph;
 import emfer.reachability.ReachableState;
 import emfer.reachability.TrafoApplication;
 import emfer.reachability.Turn;
 import emfer.stories.StoryStep;
 import emfer.stories.Storyboard;
+
+import java.lang.reflect.*;
 
 public class RoadWorkProblem
 {
@@ -62,6 +63,7 @@ public class RoadWorkProblem
          .withStart(roadMap);
 
       Logger.getGlobal().info(game.getEmfer().getReachabilityGraph().getStates().get(0).toString());
+      
       
       int size = game.explore();
       

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="C:/Users/zuendorf/IdeaProjects/ttc18/jastadd-mquat-solver-emfer/libs/libEMFER.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/EMFeR/libEmfer.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
+        <folder path="/EMFeR/libs"/>
+        <file path="/EMFeR/plugin.properties"/>
+        <file path="/EMFeR/carBlue6_006.png"/>
+        <file path="/EMFeR/roadwork.tmx"/>
+        <file path="/EMFeR/plugin.xml"/>
+        <folder path="/EMFeR/doc"/>
+        <javaElement handleIdentifier="=EMFeR/src"/>
+        <file path="/EMFeR/roadEW.png"/>
+        <file path="/EMFeR/cityDetails_002.png"/>
+        <file path="/EMFeR/.classpath"/>
+        <folder path="/EMFeR/META-INF"/>
+        <file path="/EMFeR/build.properties"/>
+        <file path="/EMFeR/cityDetails_006.png"/>
+        <file path="/EMFeR/carRed1_008.png"/>
+        <file path="/EMFeR/cityDetails_008.png"/>
+        <file path="/EMFeR/grass.png"/>
+        <javaElement handleIdentifier="=EMFeR/src-test"/>
+        <file path="/EMFeR/cityDetails_001.png"/>
+        <folder path="/EMFeR/model"/>
+        <javaElement handleIdentifier="=EMFeR/src-gen"/>
+        <file path="/EMFeR/.gitignore"/>
+        <file path="/EMFeR/.project"/>
+        <folder path="/EMFeR/assets"/>
+        <file path="/EMFeR/cityDetails_010.png"/>
+        <file path="/EMFeR/cityDetails_000.png"/>
+        <javaElement handleIdentifier="=EMFeR/xtend-gen"/>
+    </selectedElements>
+</jardesc>

@@ -19,7 +19,10 @@ Export-Package: emfer.examples.tower,
  emfer.examples.ferryman.util,
  emfer.reachability,
  emfer.reachability.impl,
- emfer.reachability.util
+ emfer.reachability.util,
+ uniks.ttc18,
+ uniks.ttc18.impl,
+ uniks.ttc18.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.xtext.xbase.lib,

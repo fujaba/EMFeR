@@ -1,0 +1,18 @@
+
+package uniks.ttc18
+
+class ESolution
+{
+	String requestName
+	refers EAssignment[] assignments
+}
+
+class EAssignment
+{
+	String requestName
+	String compName
+	String implName
+	String nodeName
+	refers EAssignment[] assignments
+}
+

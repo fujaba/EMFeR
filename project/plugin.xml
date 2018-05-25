@@ -38,4 +38,12 @@
             genModel="model/TowerOfHanoiProblem.xcore"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated TTC18 -->
+      <package
+            uri="uniks.ttc18"
+            class="uniks.ttc18.Ttc18Package"
+            genModel="model/TTC18.xcore"/>
+   </extension>
+
 </plugin>
