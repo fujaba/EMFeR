@@ -5,6 +5,18 @@ class ESolution
 {
 	String requestName
 	refers EAssignment[] assignments
+
+	op String toString()
+	{
+		var StringBuilder buf = new StringBuilder()
+		
+		for (EAssignment kid : assignments)
+		{
+			buf.append(kid.toString)
+		}
+		
+		return buf.toString
+	}
 }
 
 class EAssignment
@@ -14,5 +26,34 @@ class EAssignment
 	String implName
 	String nodeName
 	refers EAssignment[] assignments
+	
+	op String toString()
+	{
+		var StringBuilder buf = new StringBuilder()
+		
+		buf.append(requestName).append(" requires ").append(compName).append(" implemented by ").append(implName).append(" on node ").append(nodeName).append("\n")
+		
+		for (EAssignment kid : assignments)
+		{
+			buf.append("   ").append(kid.toString)
+		}
+		
+		return buf.toString
+	}
 }
 
+class EChoice
+{
+	refers EAssignment assignment
+	String resName
+	
+	op String toString()
+	{
+		var StringBuilder buf = new StringBuilder()
+		
+		buf.append("use ").append(resName).append(" for ").append(assignment.toString)
+		
+		return buf.toString
+	}
+	
+}

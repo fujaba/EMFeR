@@ -394,10 +394,19 @@ public class EMFeR
       }
 
       addToTodo(startState);
+      
+      long startTimeMillis = System.currentTimeMillis();
 
       // apply trafos
       doToDo: while (!getTodo().isEmpty() && this.reachabilityGraph.getStates().size() <= maxNoOfNewStates)
       {
+         long currentTimeMillis = System.currentTimeMillis();
+         if (currentTimeMillis - startTimeMillis > 10 * 1000)
+         {
+            System.out.println("number of explored states: " + reachabilityGraph.getStates().size());
+            startTimeMillis = currentTimeMillis;
+         }
+         
          ReachableState current = null;
 
          try
@@ -533,7 +542,7 @@ public class EMFeR
                // new state is really new
                if (metric != null)
                {
-                  double metricValue = metric.compute(newReachableState);
+                  double metricValue = metric.compute(newReachableState.getRoot());
                   newReachableState.setMetricValue(metricValue);
                }
 
