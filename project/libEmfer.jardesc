@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <jardesc>
     <jar path="C:/Users/zuendorf/IdeaProjects/ttc18/jastadd-mquat-solver-emfer/libs/libEMFER.jar"/>
-    <options buildIfNeeded="true" compress="true" descriptionLocation="/EMFeR/libEmfer.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/EMFeR/libEmfer.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
     <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
@@ -10,7 +10,7 @@
             <packagesToUnSeal/>
         </sealing>
     </manifest>
-    <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
+    <selectedElements exportClassFiles="false" exportJavaFiles="true" exportOutputFolder="true">
         <folder path="/EMFeR/libs"/>
         <file path="/EMFeR/plugin.properties"/>
         <file path="/EMFeR/carBlue6_006.png"/>

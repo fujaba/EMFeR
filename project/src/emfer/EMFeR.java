@@ -357,6 +357,14 @@ public class EMFeR
 
       return this;
    }
+   
+   long timeLimit = -1;
+   
+   public EMFeR withTimeLimit(long limit)
+   {
+      timeLimit = limit;
+      return this;
+   }
 
 
    public int explore()
@@ -396,11 +404,18 @@ public class EMFeR
       addToTodo(startState);
       
       long startTimeMillis = System.currentTimeMillis();
+      long totalStartMillis = startTimeMillis;
 
       // apply trafos
       doToDo: while (!getTodo().isEmpty() && this.reachabilityGraph.getStates().size() <= maxNoOfNewStates)
       {
          long currentTimeMillis = System.currentTimeMillis();
+         
+         if (timeLimit > 0 && currentTimeMillis - totalStartMillis >= timeLimit)
+         {
+            break;
+         }
+         
          if (currentTimeMillis - startTimeMillis > 10 * 1000)
          {
             System.out.println("number of explored states: " + reachabilityGraph.getStates().size());
